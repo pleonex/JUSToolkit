@@ -215,10 +215,17 @@ namespace JUSToolkit.CLI.JUS
             };
             exportAlarDtx2Png.Handler = CommandHandler.Create<string, string, bool>(BatchCommands.ExportAlarDtx2Png);
 
+            var uncompressEverything = new Command("uncompress-everything", "Batch uncompress every file") {
+                new Option<string>("--input", "the input directory with all the files", ArgumentArity.ExactlyOne),
+            };
+            uncompressEverything.Handler = CommandHandler.Create<string>(BatchCommands.UncompressFiles);
+
+
             return new Command("batch", "Batch import/export PNG to/from Alar") {
                 importPng2Alar3,
                 exportAlarDig2Png,
                 exportAlarDtx2Png,
+                uncompressEverything
             };
         }
 
