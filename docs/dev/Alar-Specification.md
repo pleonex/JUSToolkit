@@ -63,24 +63,19 @@ First file: koma/bb_00.dtx
 
 ** The real size is 14bytes but we have a 00 byte (null terminated)
 
-### List of Alar3 Files
-
-- koma.aar
-- vscall.aar
-
 ## ALAR 2
 
-This format is useful to store few files. We have a small header, the info of the files and then the files one after another.
+This format is used for pack files inside of ALAR 3 pack files. We have a small header, the info of the files and then the files one after another.
 
-| Offset | Type       | Description     |
-| ------ | ---------- | --------------- |
-| 0x00   | char[4]    | ALAR            |
-| 0x04   | byte       | Version (2)     |
-| 0x05   | byte       | Minor version   |
-| 0x06   | short      | Number of files |
-| 0x08   | byte[8]    | IDs?            |
-| 0x10   | FileInfo[] | File info list  |
-| ...    | FileData[] | File data       |
+| Offset | Type                 | Description          |
+| ------ | -------------------- | -------------------- |
+| 0x00   | char[4]              | ALAR                 |
+| 0x04   | byte                 | Version (2)          |
+| 0x05   | byte                 | Minor version (1, 3) |
+| 0x06   | short                | Number of files      |
+| 0x08   | byte[8]              | IDs?                 |
+| 0x10   | FileInfo[fileNumber] | File info list       |
+| ...    | FileData[fileNumber] | File data            |
 
 ### File Info
 
@@ -153,8 +148,3 @@ File data #2: deck_obj.amt
 | 0x232  | 32   | 6465636B 5F6F626A 2E616D74 + 20 zeros | deck_obj.amt     |
 | 0x252  | 2    | 7A22                                  | Unknown          |
 | 0x254  | 272  | 44535458...                           | Stream           |
-
-### List of Alar2 Files
-
-- battle/deck_obj.aar
-- symbol02.aar
