@@ -87,8 +87,11 @@ namespace JUSToolkit.Containers.Converters
                 throw new FormatException($"Unsupported version: {version:X}");
             }
 
-            alar = new Alar2(reader.ReadUInt16());
-            alar.MinorVersion = version.Minor;
+            ushort numFiles = reader.ReadUInt16();
+
+            alar = new Alar2(numFiles) {
+                MinorVersion = version.Minor,
+            };
 
             for (int i = 0; i < 8; i++) {
                 alar.IDs[i] = reader.ReadByte();

@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using JUS.Tool.Graphics.Converters;
 using JUSToolkit.BatchConverters;
 using JUSToolkit.Containers;
@@ -179,6 +180,35 @@ namespace JUSToolkit.CLI.JUS
             using BinaryFormat binary = newAlar.ConvertWith(new Alar3ToBinary());
 
             binary.Stream.WriteTo(Path.Combine(output, "imported_" + originalAlar.Name));
+
+            Console.WriteLine("Done!");
+        }
+
+        /// <summary>
+        /// Uncompress every file.
+        /// </summary>
+        /// <param name="input">The path to the PNG we want to insert.</param>
+        public static void UncompressFiles(string input)
+        {
+            if (string.IsNullOrEmpty(input)) {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            Node files = NodeFactory.FromDirectory(input, x => Regex.IsMatch(x, @"\.(dtx|dig|atm)$"), "data", true);
+
+            foreach (Node file in Navigator.IterateNodes(files)) {
+                if (!file.IsContainer) {
+                    Console.WriteLine(file.Path);
+                    if (CompressionUtils.IsCompressed(file)) {
+                        file.TransformWith(new LzssDecompression());
+                        // Replace a node with BF ok
+                        // Sobreescribirlo en disco? probar y buscar en Discord
+                        string path = Path.Combine(input.Replace("/data", string.Empty), file.Path[1..]);
+                        file.Stream.WriteTo(path);
+                        // file.Stream.WriteTo(file.Path);
+                    }
+                }
+            }
 
             Console.WriteLine("Done!");
         }

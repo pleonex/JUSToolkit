@@ -16,24 +16,25 @@ if [ "$1" == "debug" ]; then
     echo "DEBUG mode activated"
 fi
 
-# ----------------------------
-# VARIABLES: modify as necessary
-# ----------------------------
+# ---------
+# VARIABLES
+# ---------
+# Absolute path for the beta root directory. 
+# In this directory we will have the Weblate git repository, a folder for the generated .bin and another folder for the Demos (DEMO_PATH).
+BETA_PATH='/' # -------------------> Modify this
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BASE_DIR="$(dirname "$SCRIPT_DIR")"
 
 # Absolute Path of the JUSToolKit
 JUS_PATH="$BASE_DIR/src/JUS.CLI"
-# Absolute path for the beta root directory. 
-# In this directory we will have the Weblate git repository, a folder for the generated .bin and another folder for the Demos (DEMO_PATH).
-BETA_PATH='/'
 # Weblate git directory
 GIT_REPO_PATH=$BETA_PATH'/jus-translation-repo'
 # Directory where the demo will be saved
 DEMO_PATH=$BETA_PATH'/demos'
+
 # Emulator path
 EMULATOR_PATH=melonDS.AppImage # MacOS: /Applications/melonDS.app/Contents/MacOS/melonDS
-
 # Path of the English ROM
 ROM_PATH=$JUS_PATH/bin/Debug/net8.0/jump_en.nds
 
@@ -87,8 +88,8 @@ import_texts_to_game() {
     local text_format=$1
     local output_bin=$2
 
-    echo "Importing $text_format..."
     ./JUS.CLI jus texts batchImport --directory "$TEXT_DIRECTORY/$text_format" --output "$BETA_PATH/new_rom/$output_bin"
+    printf "\n"
     ./JUS.CLI jus game import --game "$DEMO_PATH/new_game.nds" --input "$BETA_PATH/new_rom/$output_bin" --output "$DEMO_PATH"
 }
 
@@ -125,28 +126,28 @@ echo ''
 echo '5 - INFODECK-INFO:'
 import_texts_to_game "InfoDeck-Info" "InfoDeckInfo_bin"
 
-# DECK texts
-echo ''
-echo '6 - DECK'
-# Insertar a BIN
-./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-jadv.po --output $BETA_PATH/new_rom/deck_bin/jadv/
-./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-jard.po --output $BETA_PATH/new_rom/deck_bin/jard/
-./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-jard_p.po --pdeck --output $BETA_PATH/new_rom/deck_bin/jard_p/
-./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-jarg.po --output $BETA_PATH/new_rom/deck_bin/jarg/
-./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-jarg_p.po --pdeck --output $BETA_PATH/new_rom/deck_bin/jarg_p/
-./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-play.po --output $BETA_PATH/new_rom/deck_bin/play/
-./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-priv.po --output $BETA_PATH/new_rom/deck_bin/priv/
-./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-smpl.po --output $BETA_PATH/new_rom/deck_bin/smpl/
-./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-smpl_p.po --pdeck --output $BETA_PATH/new_rom/deck_bin/smpl_p/
-./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-test.po --output $BETA_PATH/new_rom/deck_bin/test/
-# Importar al juego
-./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/jadv --output $DEMO_PATH
-./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/jard --output $DEMO_PATH
-./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/jarg --output $DEMO_PATH
-./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/play --output $DEMO_PATH
-./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/priv --output $DEMO_PATH
-./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/smpl --output $DEMO_PATH
-./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/test --output $DEMO_PATH
+# # DECK texts
+# echo ''
+# echo '6 - DECK'
+# # Insertar a BIN
+# ./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-jadv.po --output $BETA_PATH/new_rom/deck_bin/jadv/
+# ./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-jard.po --output $BETA_PATH/new_rom/deck_bin/jard/
+# ./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-jard_p.po --pdeck --output $BETA_PATH/new_rom/deck_bin/jard_p/
+# ./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-jarg.po --output $BETA_PATH/new_rom/deck_bin/jarg/
+# ./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-jarg_p.po --pdeck --output $BETA_PATH/new_rom/deck_bin/jarg_p/
+# ./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-play.po --output $BETA_PATH/new_rom/deck_bin/play/
+# ./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-priv.po --output $BETA_PATH/new_rom/deck_bin/priv/
+# ./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-smpl.po --output $BETA_PATH/new_rom/deck_bin/smpl/
+# ./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-smpl_p.po --pdeck --output $BETA_PATH/new_rom/deck_bin/smpl_p/
+# ./JUS.CLI jus texts deckImport --po $TEXT_DIRECTORY/deck/deck-test.po --output $BETA_PATH/new_rom/deck_bin/test/
+# # Importar al juego
+# ./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/jadv --output $DEMO_PATH
+# ./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/jard --output $DEMO_PATH
+# ./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/jarg --output $DEMO_PATH
+# ./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/play --output $DEMO_PATH
+# ./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/priv --output $DEMO_PATH
+# ./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/smpl --output $DEMO_PATH
+# ./JUS.CLI jus game import --game $DEMO_PATH/new_game.nds --input $BETA_PATH/new_rom/deck_bin/test --output $DEMO_PATH
 
 # JQUIZ
 echo ''

@@ -30,7 +30,7 @@ The sprite data is 4 bytes:
 | Offset | Type     | Description                                        |
 | ------ | -------- | -------------------------------------------------- |
 | 0x00   | char[4]  | DSIG                                               |
-| 0x04   | byte     | Unknown                                            |
+| 0x04   | byte     | Version                                            |
 | 0x05   | byte     | nds image format. Different than 0x10, then 8 bpp. |
 | 0x06   | short    | number of palettes                                 |
 | 0x08   | short    | width                                              |
