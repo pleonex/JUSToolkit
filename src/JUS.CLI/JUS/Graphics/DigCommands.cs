@@ -49,7 +49,7 @@ namespace JUSToolkit.CLI.JUS
             using Node pixelsPaletteNode = NodeFactory.FromFile(dig, FileOpenMode.Read)
                 .TransformWith(binaryDig2Bitmap);
 
-            pixelsPaletteNode.Stream.WriteTo(output + ".png");
+            pixelsPaletteNode.Stream.WriteTo(Path.Combine(output, Path.GetFileNameWithoutExtension(mapsNode.Name) + ".png"));
 
             Console.WriteLine("Done!");
         }

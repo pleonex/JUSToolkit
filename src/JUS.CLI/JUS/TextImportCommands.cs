@@ -155,7 +155,7 @@ namespace JUSToolkit.CLI.JUS
         /// Gets the directory name of the po file (parent). "bin-deck.po" will return "deck". Also, removes the _p.
         /// </summary>
         /// <param name="name">The string containing potentially "bin-deck-", "bin-info-", "deck-play"... prefixes.</param>
-        /// <returns>The directory name. If the input string is null or empty, the original string is returned.</returns>
+        /// <returns>The directory name. Returns null if the input string is null or empty, or the name format is not correct.</returns>
         private static string GetParentName(string name)
         {
             if (string.IsNullOrEmpty(name) || !name.Contains('-')) {
