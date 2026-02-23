@@ -100,7 +100,9 @@ namespace JUSToolkit.Containers
             }
 
             if (!replaced) {
-                Console.WriteLine($"{nNew.Name} node not found in the container");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"❌ {nNew.Name} node not found in the container");
+                Console.ResetColor();
             }
         }
     }
