@@ -186,6 +186,7 @@ if [ "$DEBUG" == false ]; then
 fi
 
 echo -e '\n\033[1;32m✅ Finished! File created at \033[0m'$DEMO_PATH/$DEMO_NAME
+printf -- "------------------------------\n\n"
 
 # Opening the new game
 $EMULATOR_PATH "$DEMO_PATH/$DEMO_NAME"
