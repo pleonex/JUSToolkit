@@ -17,9 +17,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System;
 using System.Collections.Generic;
 using JUSToolkit.Texts.Formats;
+using JUSToolkit.Utils;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
@@ -168,12 +168,12 @@ namespace JUSToolkit.Texts.Converters
 
                     if (entry.Context.Contains("enunciado")) {
                         if (sentence.Length > 39 && !hasPhoto) {
-                            Console.WriteLine($"Limit of 39 chars reached in {file.Name}: {entry.Context}");
+                            Logger.DisplayError($"Limit of 39 chars reached in {file.Name}: {entry.Context}");
                             sentence = sentence[0..39];
                         }
 
                         if (sentence.Length > 24 && hasPhoto) {
-                            Console.WriteLine($"Limit of 24 chars reached in {file.Name}: {entry.Context}");
+                            Logger.DisplayError($"Limit of 24 chars reached in {file.Name}: {entry.Context}");
                             sentence = sentence[0..24];
                         }
 
@@ -182,7 +182,7 @@ namespace JUSToolkit.Texts.Converters
 
                     if (entry.Context.Contains("respuesta")) {
                         if (sentence.Length > 39) {
-                            Console.WriteLine($"Limit of 39 chars reached in {file.Name}: {entry.Context}");
+                            Logger.DisplayError($"Limit of 39 chars reached in {file.Name}: {entry.Context}");
                             sentence = sentence[0..39];
                         }
 

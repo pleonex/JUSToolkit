@@ -1,6 +1,6 @@
 ﻿using System;
+using JUSToolkit.Utils;
 using Yarhl.FileSystem;
-using Yarhl.IO;
 
 namespace JUSToolkit.Containers
 {
@@ -112,9 +112,7 @@ namespace JUSToolkit.Containers
             }
 
             if (!replaced) {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"❌ {nNew.Name} node not found in the container");
-                Console.ResetColor();
+                Logger.DisplayError($"❌ {nNew.Name} node not found in the container");
             }
         }
     }
