@@ -30,7 +30,7 @@ namespace JUSToolkit.Texts.Formats
         public static readonly int EntrySize = 0xC;
 
         /// <inheritdoc/>
-        public int MaxLineLength => 38;
+        public int MaxLineLength => 17;
 
         /// <summary>
         /// Gets or sets the name.
