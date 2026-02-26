@@ -18,6 +18,11 @@ namespace JUSToolkit.Texts.Formats
         public static readonly int NumInfo = 2;
 
         /// <summary>
+        /// Maximum line length for info/author sections.
+        /// </summary>
+        public static readonly int MaxLineLengthInfo = 19;
+
+        /// <summary>
         /// Lines per description page.
         /// </summary>
         public static readonly int LinesPerPage = 9;
