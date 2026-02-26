@@ -83,22 +83,22 @@ namespace JUSToolkit.Texts.Converters
 
                 // TODO: Do we need to check for maximum lines?
 
-                foreach (string s in JusText.SplitStringToList(po.Entries[index + 1].Text.TrimEnd(), '\n', PieceEntry.LinesPerInfo)) {
+                foreach (string s in JusText.SplitStringToList(CheckLines(po.Entries[index + 1].Text, PieceEntry.LinesPerInfo, $"entry {index + 1}"), '\n', PieceEntry.LinesPerInfo)) {
                     string parsedText = Table.Instance.Encode(CheckLength(s, $"entry {index + 1}")); // TODO: MAX LENGTH cambiar para 19 info y author
                     entry.Authors.Add(parsedText);
                 }
 
-                foreach (string s in JusText.SplitStringToList(po.Entries[index + 2].Text.TrimEnd(), '\n', PieceEntry.LinesPerInfo)) {
+                foreach (string s in JusText.SplitStringToList(CheckLines(po.Entries[index + 2].Text, PieceEntry.LinesPerInfo, $"entry {index + 2}"), '\n', PieceEntry.LinesPerInfo)) {
                     string parsedText = Table.Instance.Encode(CheckLength(s, $"entry {index + 2}"));
                     entry.Info.Add(parsedText);
                 }
 
-                foreach (string s in JusText.SplitStringToList(po.Entries[index + 3].Text.TrimEnd(), '\n', PieceEntry.LinesPerPage)) {
+                foreach (string s in JusText.SplitStringToList(CheckLines(po.Entries[index + 3].Text, PieceEntry.LinesPerPage, $"entry {index + 3}"), '\n', PieceEntry.LinesPerPage)) {
                     string parsedText = Table.Instance.Encode(CheckLength(s, $"entry {index + 3}"));
                     entry.Page1.Add(parsedText);
                 }
 
-                foreach (string s in JusText.SplitStringToList(po.Entries[index + 4].Text.TrimEnd(), '\n', PieceEntry.LinesPerPage)) {
+                foreach (string s in JusText.SplitStringToList(CheckLines(po.Entries[index + 4].Text, PieceEntry.LinesPerPage, $"entry {index + 4}"), '\n', PieceEntry.LinesPerPage)) {
                     string parsedText = Table.Instance.Encode(CheckLength(s, $"entry {index + 4}"));
                     entry.Page2.Add(parsedText);
                 }
@@ -119,6 +119,17 @@ namespace JUSToolkit.Texts.Converters
             if (input.Length > maxLength) {
                 Logger.DisplayErrorMaxLength(maxLength, $"{context} - \"{input}\"");
                 return input[..maxLength];
+            }
+
+            return input;
+        }
+
+        private string CheckLines(string input, int maxLines, string context)
+        {
+            string[] lines = input.Split('\n');
+            if (lines.Length > maxLines) {
+                Logger.DisplayErrorMaxLines(maxLines, $"{context} - \"{input}\"");
+                return string.Join("\n", lines[..maxLines]);
             }
 
             return input;

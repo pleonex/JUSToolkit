@@ -27,13 +27,23 @@ namespace JUSToolkit.Utils
     public static class Logger
     {
         /// <summary>
-        /// Calls the DisplayError function, for a limit length reached in a string sentence.
+        /// Calls the DisplayError function, for a length limit reached in a string sentence.
         /// </summary>
         /// <param name="maxLength">Maximum length of the sentence.</param>
         /// <param name="sentence">The problematic sentence.</param>
         public static void DisplayErrorMaxLength(int maxLength, string sentence)
         {
             DisplayError($"Limit of {maxLength} chars reached: {sentence}.");
+        }
+
+        /// <summary>
+        /// Calls the DisplayError function, for a limit number of lines reached in a string.
+        /// </summary>
+        /// <param name="maxLines">Maximum number of lines.</param>
+        /// <param name="sentence">The problematic sentence.</param>
+        public static void DisplayErrorMaxLines(int maxLines, string sentence)
+        {
+            DisplayError($"Limit of {maxLines} lines reached: {sentence}.");
         }
 
         /// <summary>
