@@ -76,7 +76,7 @@ namespace JUSToolkit.Texts.Converters
                 foreach (string s in translatedLines) {
                     string sentence = Table.Instance.Encode(JusText.WriteCleanString(s));
                     if (sentence.Length > 38) {
-                        Logger.DisplayError($"Limit of 38 chars reached in entry {i}: {sentence}");
+                        Logger.DisplayErrorMaxLength(38, $"entry {i}: {sentence}");
                         sentence = sentence[0..38];
                     }
 

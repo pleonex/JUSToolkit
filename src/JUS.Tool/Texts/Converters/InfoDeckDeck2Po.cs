@@ -67,7 +67,7 @@ namespace JUSToolkit.Texts.Converters
                 List<string> originalLines = JusText.SplitStringToList(po.Entries[i].Original, '\n', infoDeck.LinesPerPage);
                 List<string> translatedLines = JusText.SplitStringToList(po.Entries[i].Text, '\n', infoDeck.LinesPerPage);
 
-                if (originalLines.Count != translatedLines.Count) {
+                if (originalLines.Count != translatedLines.Count) { // TODO: why is this necessary?
                     Logger.DisplayError($"Wrong number of lines in {po.Entries[i].Text}");
                     continue;
                 }

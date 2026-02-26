@@ -18,9 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using JUSToolkit.Texts.Converters;
 
 namespace JUSToolkit.Utils
 {
@@ -29,6 +26,16 @@ namespace JUSToolkit.Utils
     /// </summary>
     public static class Logger
     {
+        /// <summary>
+        /// Calls the DisplayError function, for a limit length reached in a string sentence.
+        /// </summary>
+        /// <param name="maxLength">Maximum length of the sentence.</param>
+        /// <param name="sentence">The problematic sentence.</param>
+        public static void DisplayErrorMaxLength(int maxLength, string sentence)
+        {
+            DisplayError($"Limit of {maxLength} chars reached: {sentence}.");
+        }
+
         /// <summary>
         /// Displays the error in red, with an emoji.
         /// </summary>

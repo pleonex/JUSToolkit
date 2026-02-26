@@ -66,8 +66,8 @@ namespace JUSToolkit.Texts.Converters
                 entry = new KomatxtEntry();
                 string sentence = Table.Instance.Encode(po.Entries[i].Text);
 
-                if (sentence.Length > KomatxtEntry.LineLength) {
-                    Logger.DisplayError($"Limit of {KomatxtEntry.LineLength} chars reached: {sentence}.");
+                if (sentence.Length > entry.MaxLineLength) {
+                    Logger.DisplayErrorMaxLength(entry.MaxLineLength, sentence);
                     break;
                 }
 
@@ -86,13 +86,13 @@ namespace JUSToolkit.Texts.Converters
         /// <summary>
         /// Each line needs to be 17 character long, with no spaces.
         /// </summary>
-        /// <param name="string">Line to clean.</param>
+        /// <param name="input">Line to clean.</param>
         /// <returns>Transformed string.</returns>
         private string AdjustLength(string input)
         {
-            char paddingChar = '|';
+            const char paddingChar = '|';
 
-            return input.Replace(" ", paddingChar.ToString()).PadRight(KomatxtEntry.LineLength, paddingChar);
+            return input.Replace(" ", paddingChar.ToString()).PadRight(new KomatxtEntry().MaxLineLength, paddingChar);
         }
     }
 }
