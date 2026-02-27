@@ -127,29 +127,16 @@ namespace JUSToolkit.Tests.Graphics
                     continue;
                 }
 
-                dtx.TransformWith<BinaryDtx4ToSpriteImage>();
-                IndexedPaletteImage image = dtx.Children["image"].GetFormatAs<IndexedPaletteImage>();
-
-                // We ignore the sprite info from the DSTX and we take the one
-                // from the kshape
-                Sprite sprite = shapes.GetSprite(komaElement.KShapeGroupId, komaElement.KShapeElementId);
+                var converter = new Dtx4ToBitmap(shapes, komaFormat, komaElement.KomaName);
+                BinaryFormat png = converter.Convert(dtx.GetFormatAs<IBinary>());
 
                 // If the child Node komaElement.KShapeGroupId does not exist, then we create it
                 if (resultContainer.Root.Children[$"{komaElement.KShapeGroupId}"] == null) {
                     resultContainer.Root.Add(new Node($"{komaElement.KShapeGroupId}"));
                 }
 
-                var spriteParams = new Sprite2IndexedImageParams {
-                    RelativeCoordinates = SpriteRelativeCoordinatesKind.TopLeft,
-                    FullImage = image,
-                };
-                var indexedImageParams = new IndexedImageBitmapParams {
-                    Palettes = image,
-                };
-                Node resultImage = new Node(komaElement.KomaName, sprite)
-                    .TransformWith(new Sprite2IndexedImage(spriteParams))
-                    .TransformWith(new IndexedImage2Bitmap(indexedImageParams));
-                resultContainer.Root.Children[$"{komaElement.KShapeGroupId}"].Add(resultImage);
+                resultContainer.Root.Children[$"{komaElement.KShapeGroupId}"]
+                    .Add(new Node(komaElement.KomaName, png));
             }
 
             resultContainer.Root.Should().MatchInfo(expected);

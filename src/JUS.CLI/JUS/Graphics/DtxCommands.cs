@@ -279,29 +279,15 @@ namespace JUSToolkit.CLI.JUS
                     continue;
                 }
 
-                _ = dtx.TransformWith<BinaryDtx4ToSpriteImage>();
-                IndexedPaletteImage image = dtx.Children["image"].GetFormatAs<IndexedPaletteImage>();
-
-                // We ignore the sprite info from the DSTX and we take the one
-                // from the kshape
-                Sprite sprite = shapes.GetSprite(komaElement.KShapeGroupId, komaElement.KShapeElementId);
+                var converter = new Dtx4ToBitmap(shapes, komaFormat, komaElement.KomaName);
+                using BinaryFormat png = converter.Convert(dtx.GetFormatAs<IBinary>());
 
                 string outputFilePath = Path.Combine(
                     output,
                     $"{komaElement.KShapeGroupId}",
                     komaElement.KomaName + ".png");
 
-                var spriteParams = new Sprite2IndexedImageParams {
-                    RelativeCoordinates = SpriteRelativeCoordinatesKind.TopLeft,
-                    FullImage = image,
-                };
-                var indexedImageParams = new IndexedImageBitmapParams {
-                    Palettes = image,
-                };
-                new Node("sprite", sprite)
-                    .TransformWith(new Sprite2IndexedImage(spriteParams))
-                    .TransformWith(new IndexedImage2Bitmap(indexedImageParams))
-                    .Stream.WriteTo(outputFilePath);
+                png.Stream.WriteTo(outputFilePath);
             }
 
             Console.WriteLine("Done!");
