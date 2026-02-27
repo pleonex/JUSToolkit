@@ -112,6 +112,7 @@ namespace JUSToolkit.Containers
                     // That's why specify the parent (directory name)
                     else if (parent != null && parent == nOld.Parent.Name && nOld.Name == nNew.Name) {
                         alarFileOld.ReplaceStream(nNew.Stream);
+                        replaced = true;
                     }
 
                     nextFileOffset = alarFileOld.Offset + alarFileOld.Size;
