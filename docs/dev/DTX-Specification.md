@@ -109,7 +109,7 @@ The tile coordinates are (8, 16) to (15, 23).
 
 ### DTX 04 - Komas
 
-Ver [Koma Specification](Koma-Specification.md) para más detalles.
+See [Koma Specification](Koma-Specification.md) for more details.
 
 | Offset | Type    | Description                                             |
 | ------ | ------- | ------------------------------------------------------- |

@@ -28,7 +28,7 @@ using Yarhl.IO;
 namespace JUSToolkit.Graphics.Converters
 {
     /// <summary>
-    /// Converts between a IBinary (file with the dtx) and a NCF of Bitmaps (PNG).
+    /// Converts between a IBinary (file with the dtx3) and a NCF of Bitmaps (PNG).
     /// </summary>
     public class Dtx2Bitmaps :
         IConverter<IBinary, NodeContainerFormat>
