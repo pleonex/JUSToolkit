@@ -326,13 +326,6 @@ namespace JUSToolkit.CLI.JUS
             PathValidator.ValidateFile(koma);
             PathValidator.ValidateFile(kshape);
 
-            // Sprites + pixels + palette
-            using Node dtx4 = NodeFactory.FromFile(dtx, FileOpenMode.Read)
-            .TransformWith<LzssDecompression>()
-            .TransformWith<BinaryDtx4ToSpriteImage>(); // NCF with sprite+image
-
-            IndexedPaletteImage image = dtx4.Children["image"].GetFormatAs<IndexedPaletteImage>();
-
             KShapeSprites shapes = NodeFactory.FromFile(kshape)
                 .TransformWith<BinaryKShape2SpriteCollection>()
                 .GetFormatAs<KShapeSprites>();
@@ -341,24 +334,13 @@ namespace JUSToolkit.CLI.JUS
                 .TransformWith<Binary2Koma>()
                 .GetFormatAs<Koma>();
 
-            KomaElement komaElement = komaFormat.First(n => n.KomaName == Path.GetFileNameWithoutExtension(dtx)) ?? throw new FormatException("Can't find the dtx in the koma.bin");
+            string dtxName = Path.GetFileNameWithoutExtension(dtx);
 
-            // We ignore the sprite info from the DSTX and we take the one
-            // from the kshape
-            Sprite sprite = shapes.GetSprite(komaElement.KShapeGroupId, komaElement.KShapeElementId);
+            using Node dtx4 = NodeFactory.FromFile(dtx, FileOpenMode.Read)
+                .TransformWith<LzssDecompression>()
+                .TransformWith(new Dtx4ToBitmap(shapes, komaFormat, dtxName));
 
-            var spriteParams = new Sprite2IndexedImageParams {
-                RelativeCoordinates = SpriteRelativeCoordinatesKind.TopLeft,
-                FullImage = image,
-            };
-            var indexedImageParams = new IndexedImageBitmapParams {
-                Palettes = image,
-            };
-
-            new Node("sprite", sprite)
-                .TransformWith(new Sprite2IndexedImage(spriteParams))
-                .TransformWith(new IndexedImage2Bitmap(indexedImageParams))
-                .Stream.WriteTo(Path.Combine(output, Path.GetFileNameWithoutExtension(dtx) + ".png"));
+            dtx4.Stream.WriteTo(Path.Combine(output, dtxName + ".png"));
 
             Console.WriteLine("Done!");
         }

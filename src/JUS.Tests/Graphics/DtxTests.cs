@@ -166,13 +166,6 @@ namespace JUSToolkit.Tests.Graphics
 
             var info = BinaryInfo.FromYaml(infoPath);
 
-            // Sprites + pixels + palette
-            using Node dtx4 = NodeFactory.FromFile(dtxPath, FileOpenMode.Read)
-            .TransformWith<LzssDecompression>()
-            .TransformWith<BinaryDtx4ToSpriteImage>(); // NCF with sprite+image
-
-            IndexedPaletteImage image = dtx4.Children["image"].GetFormatAs<IndexedPaletteImage>();
-
             KShapeSprites shapes = NodeFactory.FromFile(kshape)
                 .TransformWith<BinaryKShape2SpriteCollection>()
                 .GetFormatAs<KShapeSprites>();
@@ -181,22 +174,13 @@ namespace JUSToolkit.Tests.Graphics
                 .TransformWith<Binary2Koma>()
                 .GetFormatAs<Koma>();
 
-            KomaElement komaElement = komaFormat.First(n => n.KomaName == Path.GetFileNameWithoutExtension(dtxPath)) ?? throw new FormatException("Can't find the dtx in the koma.bin");
+            string dtxName = Path.GetFileNameWithoutExtension(dtxPath);
 
-            Sprite sprite = shapes.GetSprite(komaElement.KShapeGroupId, komaElement.KShapeElementId);
+            using Node dtx4 = NodeFactory.FromFile(dtxPath, FileOpenMode.Read)
+                .TransformWith<LzssDecompression>()
+                .TransformWith(new Dtx4ToBitmap(shapes, komaFormat, dtxName));
 
-            var spriteParams = new Sprite2IndexedImageParams {
-                RelativeCoordinates = SpriteRelativeCoordinatesKind.TopLeft,
-                FullImage = image,
-            };
-            var indexedImageParams = new IndexedImageBitmapParams {
-                Palettes = image,
-            };
-
-            new Node("sprite", sprite)
-                .TransformWith(new Sprite2IndexedImage(spriteParams))
-                .TransformWith(new IndexedImage2Bitmap(indexedImageParams))
-                .Stream.Should().MatchInfo(info);
+            dtx4.Stream.Should().MatchInfo(info);
         }
 
         [TestCaseSource(nameof(GetDtx4Files))]
