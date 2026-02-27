@@ -1,6 +1,6 @@
 ﻿using System;
+using JUSToolkit.Utils;
 using Yarhl.FileSystem;
-using Yarhl.IO;
 
 namespace JUSToolkit.Containers
 {
@@ -105,6 +105,7 @@ namespace JUSToolkit.Containers
                     // That's why specify the parent (directory name)
                     else if (parent != null && parent == nOld.Parent.Name && nOld.Name == nNew.Name) {
                         alarFileOld.ReplaceStream(nNew.Stream);
+                        replaced = true;
                     }
 
                     nextFileOffset = alarFileOld.Offset + alarFileOld.Size;
@@ -112,7 +113,7 @@ namespace JUSToolkit.Containers
             }
 
             if (!replaced) {
-                Console.WriteLine($"{nNew.Name} node not found in the container");
+                Logger.DisplayError($"❌ {nNew.Name} node not found in the container");
             }
         }
     }

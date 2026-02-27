@@ -17,7 +17,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+using System;
 using JUSToolkit.Texts.Formats;
+using JUSToolkit.Utils;
 using Yarhl.FileFormat;
 using Yarhl.Media.Text;
 
@@ -65,26 +67,40 @@ namespace JUSToolkit.Texts.Converters
             PieceEntry entry;
             string[] metadata;
 
+            // Each Manga has 5 entries:
+            // Title - 19 chars
+            // Authors
+            // Dates
+            // Description Page 1
+            // Description Page 2
+
             piece.Count = po.Entries.Count / 5;
 
             for (int i = 0; i < piece.Count; i++) {
                 entry = new PieceEntry();
-                entry.Title = po.Entries[i * 5].Text;
+                int index = i * 5;
+                entry.Title = po.Entries[index].Text;
 
-                foreach (string s in JusText.SplitStringToList(po.Entries[(i * 5) + 1].Text, '\n', 2)) {
-                    entry.Authors.Add(Table.Instance.Encode(s));
+                // TODO: Do we need to check for maximum lines?
+
+                foreach (string s in JusText.SplitStringToList(CheckLines(po.Entries[index + 1].Text.TrimEnd(), PieceEntry.LinesPerInfo, $"entry {index + 1}"), '\n', PieceEntry.LinesPerInfo)) {
+                    string parsedText = Table.Instance.Encode(CheckLength(s, PieceEntry.MaxLineLengthInfo, $"entry {index + 1}"));
+                    entry.Authors.Add(parsedText);
                 }
 
-                foreach (string s in JusText.SplitStringToList(po.Entries[(i * 5) + 2].Text, '\n', 2)) {
-                    entry.Info.Add(Table.Instance.Encode(s));
+                foreach (string s in JusText.SplitStringToList(CheckLines(po.Entries[index + 2].Text.TrimEnd(), PieceEntry.LinesPerInfo, $"entry {index + 2}"), '\n', PieceEntry.LinesPerInfo)) {
+                    string parsedText = Table.Instance.Encode(CheckLength(s, PieceEntry.MaxLineLengthInfo, $"entry {index + 2}"));
+                    entry.Info.Add(parsedText);
                 }
 
-                foreach (string s in JusText.SplitStringToList(po.Entries[(i * 5) + 3].Text, '\n', 9)) {
-                    entry.Page1.Add(Table.Instance.Encode(s));
+                foreach (string s in JusText.SplitStringToList(CheckLines(po.Entries[index + 3].Text.TrimEnd(), PieceEntry.LinesPerPage, $"entry {index + 3}"), '\n', PieceEntry.LinesPerPage)) {
+                    string parsedText = Table.Instance.Encode(CheckLength(s, new PieceEntry().MaxLineLength, $"entry {index + 3}"));
+                    entry.Page1.Add(parsedText);
                 }
 
-                foreach (string s in JusText.SplitStringToList(po.Entries[(i * 5) + 4].Text, '\n', 9)) {
-                    entry.Page2.Add(Table.Instance.Encode(s));
+                foreach (string s in JusText.SplitStringToList(CheckLines(po.Entries[index + 4].Text.TrimEnd(), PieceEntry.LinesPerPage, $"entry {index + 4}"), '\n', PieceEntry.LinesPerPage)) {
+                    string parsedText = Table.Instance.Encode(CheckLength(s, new PieceEntry().MaxLineLength, $"entry {index + 4}"));
+                    entry.Page2.Add(parsedText);
                 }
 
                 metadata = JusText.ParseMetadata(po.Entries[i * 5].ExtractedComments);
@@ -95,6 +111,27 @@ namespace JUSToolkit.Texts.Converters
             }
 
             return piece;
+        }
+
+        private string CheckLength(string input, int maxLength, string context)
+        {
+            if (input.Length > maxLength) {
+                Logger.DisplayErrorMaxLength(maxLength, $"{context} - \"{input}\"");
+                return input[..maxLength];
+            }
+
+            return input;
+        }
+
+        private string CheckLines(string input, int maxLines, string context)
+        {
+            string[] lines = input.Split('\n');
+            if (lines.Length > maxLines) {
+                Logger.DisplayErrorMaxLines(maxLines, $"{context} - \"{input}\"");
+                return string.Join("\n", lines[..maxLines]);
+            }
+
+            return input;
         }
     }
 }

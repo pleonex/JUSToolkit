@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2026 Priverop
+// Copyright (c) 2026 Priverop
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,31 +20,13 @@
 namespace JUSToolkit.Texts.Formats
 {
     /// <summary>
-    /// Single entry in a Komatxt file.
+    /// Interface for Text entries.
     /// </summary>
-    public class KomatxtEntry : IEntry
+    public interface IEntry
     {
         /// <summary>
-        /// Entry size in bytes.
+        /// Gets the maximum length of each line of text in the game.
         /// </summary>
-        public static readonly int EntrySize = 0xC;
-
-        /// <inheritdoc/>
-        public int MaxLineLength => 17;
-
-        /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the ??.
-        /// </summary>
-        public int Unk1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the ??.
-        /// </summary>
-        public int Unk2 { get; set; }
+        int MaxLineLength { get; }
     }
 }

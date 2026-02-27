@@ -17,9 +17,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System;
 using System.Collections.Generic;
 using JUSToolkit.Texts.Formats;
+using JUSToolkit.Utils;
 using Yarhl.FileFormat;
 using Yarhl.Media.Text;
 
@@ -69,14 +69,14 @@ namespace JUSToolkit.Texts.Converters
                 List<string> translatedLines = JusText.SplitStringToList(po.Entries[i].Text, '\n', infoDeck.LinesPerPage);
 
                 if (originalLines.Count != translatedLines.Count) {
-                    Console.WriteLine($"Wrong number of lines in {po.Entries[i].Text}");
+                    Logger.DisplayError($"Wrong number of lines in {po.Entries[i].Text}");
                     continue;
                 }
 
                 foreach (string s in translatedLines) {
                     string sentence = Table.Instance.Encode(JusText.WriteCleanString(s));
                     if (sentence.Length > 38) {
-                        Console.WriteLine($"Limit of 38 chars reached in entry {i}: {sentence}");
+                        Logger.DisplayErrorMaxLength(38, $"entry {i}: {sentence}");
                         sentence = sentence[0..38];
                     }
 

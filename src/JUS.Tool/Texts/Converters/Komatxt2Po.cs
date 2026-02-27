@@ -17,9 +17,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System;
-
 using JUSToolkit.Texts.Formats;
+using JUSToolkit.Utils;
 using Yarhl.FileFormat;
 using Yarhl.Media.Text;
 
@@ -67,10 +66,8 @@ namespace JUSToolkit.Texts.Converters
                 entry = new KomatxtEntry();
                 string sentence = Table.Instance.Encode(po.Entries[i].Text);
 
-                if (sentence.Length > KomatxtEntry.LineLength) {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"❌ Limit of {KomatxtEntry.LineLength} chars reached: {sentence}.");
-                    Console.ResetColor();
+                if (sentence.Length > entry.MaxLineLength) {
+                    Logger.DisplayErrorMaxLength(entry.MaxLineLength, sentence);
                     break;
                 }
 
@@ -89,13 +86,13 @@ namespace JUSToolkit.Texts.Converters
         /// <summary>
         /// Each line needs to be 17 character long, with no spaces.
         /// </summary>
-        /// <param name="string">Line to clean.</param>
+        /// <param name="input">Line to clean.</param>
         /// <returns>Transformed string.</returns>
         private string AdjustLength(string input)
         {
-            char paddingChar = '|';
+            const char paddingChar = '|';
 
-            return input.Replace(" ", paddingChar.ToString()).PadRight(KomatxtEntry.LineLength, paddingChar);
+            return input.Replace(" ", paddingChar.ToString()).PadRight(new KomatxtEntry().MaxLineLength, paddingChar);
         }
     }
 }
