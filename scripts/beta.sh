@@ -123,8 +123,11 @@ import_texts_to_game "InfoDeck" "InfoDeck_bin"
 
 # INFODECK (INFO)
 echo ''
-echo '5 - INFODECK-INFO:'
-import_texts_to_game "InfoDeck-Info" "InfoDeckInfo_bin"
+echo '5 - INFODECK-INFO (solo jump-en):'
+./JUS.CLI jus texts import --po "$TEXT_DIRECTORY/InfoDeck-Info/bin-info-jump-en.bin.po" --output "$BETA_PATH/new_rom/InfoDeckInfo_bin"
+mv "$BETA_PATH/new_rom/InfoDeckInfo_bin/bin-info-jump-en.bin" "$BETA_PATH/new_rom/InfoDeckInfo_bin/bin-info-jump.bin"
+./JUS.CLI jus game import --game "$DEMO_PATH/new_game.nds" --input "$BETA_PATH/new_rom/InfoDeckInfo_bin" --output "$DEMO_PATH"
+# import_texts_to_game "InfoDeck-Info" "InfoDeckInfo_bin"
 
 # # DECK texts
 # echo ''
