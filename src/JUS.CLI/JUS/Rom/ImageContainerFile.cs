@@ -217,22 +217,20 @@ namespace JUSToolkit.CLI.JUS.Rom
         /// <summary>
         /// Constructs the names of the _m_ and _n_ files for the given base node name and extension.
         /// </summary>
-        /// <param name="nodeName">The base name of the node (e.g., "bb_03.png").</param>
-        /// <param name="extension">The file extension (e.g., ".png", ".atm").</param>
+        /// <param name="nodeName">The base name of the node ("bb_03.png").</param>
+        /// <param name="extension">The file extension (".png", ".atm").</param>
         /// <returns>An array of strings containing the names of the base, _m_, and _n_ files.</returns>
         private static string[] GetSpecialFileNames(string nodeName, string extension)
         {
             string manga = nodeName[..2]; // "bb"
             char number = nodeName[4]; // '3'
 
-            // Use the dictionary to find the corresponding index for _m_ and _n_
             if (!SpecialDigNumbers.Any(kv => kv.Value == number)) {
                 throw new InvalidOperationException($"Value {number} is not found in SpecialDigNumbers.");
             }
 
             char specialNumber = SpecialDigNumbers.First(kv => kv.Value == number).Key;
 
-            // Construct the names of the _m_ and _n_ files
             string nameOfMFile = $"{manga}_m_0{specialNumber}{extension}";
             string nameOfNFile = $"{manga}_n_0{specialNumber}{extension}";
 
@@ -252,13 +250,11 @@ namespace JUSToolkit.CLI.JUS.Rom
         {
             string[] fileNames = GetSpecialFileNames(png.Name, ".png");
 
-            // Retrieve the corresponding Nodes with the original name
             Node mNode = png.Parent.Children["demo-" + fileNames[1]] ??
                     throw new FormatException("Special m file not found: " + fileNames[1]);
             Node nNode = png.Parent.Children["demo-" + fileNames[2]] ??
                     throw new FormatException("Special nfile not found: " + fileNames[2]);
 
-            // Return the array of Nodes
             return new[] { png, mNode, nNode };
         }
 
