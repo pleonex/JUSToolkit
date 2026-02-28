@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using JUSToolkit.Graphics;
 using JUSToolkit.Graphics.Converters;
 using Texim.Sprites;
 using Yarhl.FileFormat;
@@ -28,7 +27,7 @@ namespace JUS.Tool.Graphics.Converters
         /// </summary>
         /// <param name="originalDtx">Original DTX to copy all the info from.</param>
         /// <param name="segmentsMetadata">Metadata of the Segments so we can modify them.</param>
-        public Dtx3TxToBinary(BinaryFormat originalDtx, List<SpriteDummy> segmentsMetadata)
+        public Dtx3TxToBinary(BinaryFormat originalDtx, List<Sprite> segmentsMetadata)
         {
             OriginalDTX = originalDtx;
             SegmentsMetadata = segmentsMetadata;
@@ -36,7 +35,7 @@ namespace JUS.Tool.Graphics.Converters
 
         private BinaryFormat OriginalDTX { get; set; }
 
-        private List<SpriteDummy> SegmentsMetadata { get; set; }
+        private List<Sprite> SegmentsMetadata { get; set; }
 
         /// <summary>
         /// Converts a DTX3 format to a binary format.
@@ -65,14 +64,14 @@ namespace JUS.Tool.Graphics.Converters
 
                 long segmentInfoOffset = 2 * SegmentsMetadata.Count; // relative to 0x0A
 
-                foreach (SpriteDummy sprite in SegmentsMetadata) {
+                foreach (Sprite sprite in SegmentsMetadata) {
                     writer.WriteOfType<ushort>((ushort)segmentInfoOffset);
                     segmentInfoOffset += 2 + (sprite.Segments.Count * 6);
                 }
 
-                foreach (SpriteDummy sprite in SegmentsMetadata) {
+                foreach (Sprite sprite in SegmentsMetadata) {
                     writer.WriteOfType<short>((short)sprite.Segments.Count);
-                    foreach (ImageSegment segment in sprite.Segments) {
+                    foreach (IImageSegment segment in sprite.Segments) {
                         writer.WriteOfType<ushort>((ushort)segment.TileIndex);
                         writer.WriteOfType<sbyte>((sbyte)segment.CoordinateX);
                         writer.WriteOfType<sbyte>((sbyte)segment.CoordinateY);

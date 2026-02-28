@@ -437,13 +437,14 @@ namespace JUSToolkit.CLI.JUS
             segmentInfo.Stream.WriteTo(Path.Combine(output, Path.GetFileName(dtx)) + ".yaml");
         }
 
-        private static List<SpriteDummy> GetYamlInfo(string path)
+        private static List<Sprite> GetYamlInfo(string path)
         {
             string yaml = File.ReadAllText(path);
             return new DeserializerBuilder()
                 .WithNamingConvention(UnderscoredNamingConvention.Instance)
+                .WithTypeMapping<IImageSegment, ImageSegment>()
                 .Build()
-                .Deserialize<List<SpriteDummy>>(yaml);
+                .Deserialize<List<Sprite>>(yaml);
         }
     }
 }

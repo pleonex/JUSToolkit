@@ -443,12 +443,13 @@ namespace JUSToolkit.Tests.Graphics
             generatedStream.Stream.Compare(originalStream).Should().BeTrue();
         }
 
-        private static List<SpriteDummy> GetYamlInfo(string yamlText)
+        private static List<Sprite> GetYamlInfo(string yamlText)
         {
             return new DeserializerBuilder()
                 .WithNamingConvention(UnderscoredNamingConvention.Instance)
+                .WithTypeMapping<IImageSegment, ImageSegment>()
                 .Build()
-                .Deserialize<List<SpriteDummy>>(yamlText);
+                .Deserialize<List<Sprite>>(yamlText);
         }
     }
 }
