@@ -22,7 +22,7 @@ namespace JUS.Tool.Graphics.Converters
         private const int Type = 0x03;
         private const int PointerOffset = 0x0A;
         private readonly Binary2Dig digConverter = new();
-        private List<SpriteDummy> spriteCollection;
+        private List<Sprite> spriteCollection;
 
         /// <summary>
         /// Converts a <see cref="BinaryFormat"/> (file) to a dtx3 <see cref="NodeContainerFormat"/>.
@@ -56,15 +56,22 @@ namespace JUS.Tool.Graphics.Converters
 
             var segmentsInfo = new DataStream();
             var yamlWriter = new TextDataWriter(segmentsInfo);
-            spriteCollection = new List<SpriteDummy>();
+            spriteCollection = new List<Sprite>();
 
             for (int i = 0; i < numSprites; i++) {
+                Sprite sprite = ReadSprite(reader);
+
                 switch (image.Swizzling) {
                     case DigSwizzling.Tiled:
-                        sprites.Root.Add(new Node($"sp_{i:00}", ReadSprite(reader)));
+                        for (int j = 0; j < sprite.Segments.Count; j++) {
+                            sprite.Segments[j].Layer = sprite.Segments.Count - j;
+                        }
+
+                        sprites.Root.Add(new Node($"sp_{i:00}", sprite));
                         break;
                     case DigSwizzling.Linear:
-                        sprites.Root.Add(new Node($"tx_{i:00}", ReadTexture(reader, image)));
+                        sprites.Root.Add(new Node($"tx_{i:00}", CreateTexture(sprite, image)));
+                        spriteCollection.Add(sprite);
                         break;
                     default:
                         throw new FormatException("Invalid swizzling");
@@ -84,6 +91,22 @@ namespace JUS.Tool.Graphics.Converters
             container.Root.Add(new Node("yaml", new BinaryFormat(segmentsInfo)));
 
             return container;
+        }
+
+        private static Dig CreateTexture(Sprite sprite, Dig fullImage)
+        {
+            var frame = new Dig(fullImage) {
+                Pixels = new IndexedPixel[256 * 256],
+                Width = 256,
+                Height = 256,
+            };
+
+            foreach (IImageSegment seg in sprite.Segments) {
+                var subImage = new Dig(fullImage, seg.Width, seg.Height, seg.TileIndex);
+                frame.PasteImage(subImage, seg.CoordinateX, seg.CoordinateY, seg.HorizontalFlip, seg.VerticalFlip, seg.PaletteIndex);
+            }
+
+            return frame;
         }
 
         private Sprite ReadSprite(DataReader reader)
@@ -112,7 +135,6 @@ namespace JUS.Tool.Graphics.Converters
                     Height = height,
                     VerticalFlip = vFlip,
                     HorizontalFlip = hFlip,
-                    Layer = numSegments - i,
                 };
                 sprite.Segments.Add(segment);
             }
@@ -122,57 +144,6 @@ namespace JUS.Tool.Graphics.Converters
             reader.Stream.PopPosition();
 
             return sprite;
-        }
-
-        // ToDo: I guess we could merge these two methods and add some ifs?
-
-        // These false sprites (we call them Textures) have a Linear image, so we can't
-        // use the Texim Sprite system. That's why we compose regular images.
-        private Dig ReadTexture(DataReader reader, Dig fullImage)
-        {
-            var frame = new Dig(fullImage) {
-                Pixels = new IndexedPixel[256 * 256],
-                Width = 256,
-                Height = 256,
-            };
-
-            int spriteOffset = reader.ReadUInt16() + PointerOffset;
-            reader.Stream.PushToPosition(spriteOffset);
-            ushort numSegments = reader.ReadUInt16();
-            SpriteDummy sprite = new SpriteDummy();
-
-            for (int i = 0; i < numSegments; i++) {
-                ushort tileIndex = reader.ReadUInt16();
-                sbyte xPos = reader.ReadSByte();
-                sbyte yPos = reader.ReadSByte();
-                byte shape = reader.ReadByte();
-                byte paletteIndex = reader.ReadByte();
-                (int width, int height) = GetSize(shape & 0x0F);
-                (bool hFlip, bool vFlip) = GetFlip(shape >> 4);
-
-                var segment = new Dig(fullImage, width, height, tileIndex);
-
-                frame.PasteImage(segment, xPos, yPos, hFlip, vFlip, paletteIndex);
-
-                // Export Segment Info to a YAML file so we can make edits later
-                var imageSegment = new ImageSegment() {
-                    TileIndex = tileIndex,
-                    CoordinateX = xPos,
-                    CoordinateY = yPos,
-                    PaletteIndex = paletteIndex,
-                    Width = width,
-                    Height = height,
-                    VerticalFlip = vFlip,
-                    HorizontalFlip = hFlip,
-                };
-
-                sprite.Segments.Add(imageSegment);
-            }
-
-            reader.Stream.PopPosition();
-            spriteCollection.Add(sprite);
-
-            return frame;
         }
 
         private (int width, int height) GetSize(int shape)
