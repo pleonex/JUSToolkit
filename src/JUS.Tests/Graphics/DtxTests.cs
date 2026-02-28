@@ -33,8 +33,6 @@ using Texim.Palettes;
 using Texim.Pixels;
 using Texim.Processing;
 using Texim.Sprites;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
@@ -414,7 +412,7 @@ namespace JUSToolkit.Tests.Graphics
             reader.Stream.Position = 0;
 
             // Import with Yaml
-            var yamlConverter = new Dtx3TxToBinary(originalDtx, GetYamlInfo(reader.ReadToEnd()));
+            var yamlConverter = new Dtx3TxToBinary(originalDtx, BinaryToDtx3.DeserializeYaml(reader.ReadToEnd()));
 
             BinaryFormat generatedStream = yamlConverter.Convert(dtx.GetFormatAs<NodeContainerFormat>());
 
@@ -443,13 +441,5 @@ namespace JUSToolkit.Tests.Graphics
             generatedStream.Stream.Compare(originalStream).Should().BeTrue();
         }
 
-        private static List<Sprite> GetYamlInfo(string yamlText)
-        {
-            return new DeserializerBuilder()
-                .WithNamingConvention(UnderscoredNamingConvention.Instance)
-                .WithTypeMapping<IImageSegment, ImageSegment>()
-                .Build()
-                .Deserialize<List<Sprite>>(yamlText);
-        }
     }
 }

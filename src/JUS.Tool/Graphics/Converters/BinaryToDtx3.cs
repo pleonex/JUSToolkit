@@ -93,6 +93,20 @@ namespace JUS.Tool.Graphics.Converters
             return container;
         }
 
+        /// <summary>
+        /// Deserializes a YAML string into a list of <see cref="Sprite"/>.
+        /// </summary>
+        /// <param name="yaml">The YAML string to deserialize.</param>
+        /// <returns>A list of <see cref="Sprite"/>.</returns>
+        public static List<Sprite> DeserializeYaml(string yaml)
+        {
+            return new DeserializerBuilder()
+                .WithNamingConvention(UnderscoredNamingConvention.Instance)
+                .WithTypeMapping<IImageSegment, ImageSegment>()
+                .Build()
+                .Deserialize<List<Sprite>>(yaml);
+        }
+
         private static Dig CreateTexture(Sprite sprite, Dig fullImage)
         {
             var frame = new Dig(fullImage) {

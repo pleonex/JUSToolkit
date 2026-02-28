@@ -31,8 +31,6 @@ using Texim.Palettes;
 using Texim.Pixels;
 using Texim.Processing;
 using Texim.Sprites;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
@@ -230,7 +228,7 @@ namespace JUSToolkit.CLI.JUS
             if (!string.IsNullOrEmpty(yaml)) {
                 PathValidator.ValidateFile(yaml);
 
-                converter = new Dtx3TxToBinary(dtxClone, GetYamlInfo(yaml));
+                converter = new Dtx3TxToBinary(dtxClone, BinaryToDtx3.DeserializeYaml(File.ReadAllText(yaml)));
             } else {
                 converter = new Dtx3TxToBinary(dtxClone);
             }
@@ -435,16 +433,6 @@ namespace JUSToolkit.CLI.JUS
             BinaryFormat segmentInfo = dtx3.Children["yaml"].GetFormatAs<BinaryFormat>();
 
             segmentInfo.Stream.WriteTo(Path.Combine(output, Path.GetFileName(dtx)) + ".yaml");
-        }
-
-        private static List<Sprite> GetYamlInfo(string path)
-        {
-            string yaml = File.ReadAllText(path);
-            return new DeserializerBuilder()
-                .WithNamingConvention(UnderscoredNamingConvention.Instance)
-                .WithTypeMapping<IImageSegment, ImageSegment>()
-                .Build()
-                .Deserialize<List<Sprite>>(yaml);
         }
     }
 }
