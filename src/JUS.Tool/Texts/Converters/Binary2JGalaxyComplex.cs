@@ -22,7 +22,6 @@ using System.IO;
 using System.Reflection;
 using JUSToolkit.Texts.Formats;
 using Yarhl.FileFormat;
-using Yarhl.FileSystem;
 using Yarhl.IO;
 
 namespace JUSToolkit.Texts.Converters
@@ -112,12 +111,11 @@ namespace JUSToolkit.Texts.Converters
                 }
 
                 if (i == 1) {
-                    // Abrimos el fichero ese jgalaxy_unknown.bin
-                    // Lo escribimos
-                    string programDir = AppDomain.CurrentDomain.BaseDirectory;
-                    string resPath = Path.GetFullPath(programDir + "/../../../../JUS.Tool/Utils/jgalaxy_unknown");
-                    using Node node = NodeFactory.FromFile(resPath);
-                    node.Stream.WriteTo(writer.Stream);
+                    // There is a big chunk of bytes that are unknown for me, we add them from an embedded resource
+                    using Stream resource = Assembly.GetExecutingAssembly()
+                        .GetManifestResourceStream("JUS.Tool.Utils.jgalaxy_unknown")
+                        ?? throw new InvalidOperationException("Missing embedded resource: jgalaxy_unknown");
+                    resource.CopyTo(writer.Stream);
                 }
             }
 
