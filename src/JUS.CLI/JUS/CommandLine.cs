@@ -225,7 +225,7 @@ namespace JUSToolkit.CLI.JUS
                 importPng2Alar3,
                 exportAlarDig2Png,
                 exportAlarDtx2Png,
-                uncompressEverything
+                uncompressEverything,
             };
         }
 
@@ -238,7 +238,7 @@ namespace JUSToolkit.CLI.JUS
             };
             import.Handler = CommandHandler.Create<string, string, string>(RomCommands.Import);
 
-            var importFont = new Command("importFont", "Import the translated font to the Rom") {
+            var importFont = new Command("import-font", "Import the translated font to the Rom") {
                 new Option<string>("--game", "the path of the rom", ArgumentArity.ExactlyOne),
                 new Option<string>("--font", "the font to insert", ArgumentArity.ExactlyOne),
                 new Option<string>("--output", "the output folder", ArgumentArity.ExactlyOne),
@@ -259,20 +259,20 @@ namespace JUSToolkit.CLI.JUS
             };
             export.Handler = CommandHandler.Create<string, string>(TextExportCommands.Export);
 
-            var exportJQuiz = new Command("exportJQuiz", "Export JQuiz .bin file to multiple .po files") {
+            var exportJQuiz = new Command("export-jquiz", "Export JQuiz .bin file to multiple .po files") {
                 new Option<string>("--bin", "the input jquiz.bin file", ArgumentArity.ExactlyOne),
                 new Option<string>("--output", "the output folder", ArgumentArity.ExactlyOne),
             };
             exportJQuiz.Handler = CommandHandler.Create<string, string>(TextExportCommands.JQuizExport);
 
-            var deckExport = new Command("deckExport", "Export .bin files from a folder, to a single .po file") {
+            var deckExport = new Command("export-deck", "Export deck/pdeck .bin files from a folder, to a single .po file") {
                 new Option<string>("--directory", "the directory with the .bin files", ArgumentArity.ExactlyOne),
                 new Option<bool>("--pdeck", "true for pdeck files", ArgumentArity.ZeroOrOne),
                 new Option<string>("--output", "the output folder", ArgumentArity.ExactlyOne),
             };
             deckExport.Handler = CommandHandler.Create<string, bool, string>(TextExportCommands.DeckExport);
 
-            var batchExport = new Command("batchExport", "Export .bin files from a folder, to .po files") {
+            var batchExport = new Command("batch-export", "Batch export .bin files from a folder, to .po files") {
                 new Option<string>("--directory", "the input directory with the .bin files", ArgumentArity.ExactlyOne),
                 new Option<string>("--output", "the output folder", ArgumentArity.ExactlyOne),
             };
@@ -284,20 +284,20 @@ namespace JUSToolkit.CLI.JUS
             };
             import.Handler = CommandHandler.Create<string, string>(TextImportCommands.Import);
 
-            var deckImport = new Command("deckImport", "Import a single po file, to multiple .bin files") {
+            var deckImport = new Command("import-deck", "Import a single po file, to multiple .bin files") {
                 new Option<string>("--po", "the po file", ArgumentArity.ExactlyOne),
                 new Option<bool>("--pdeck", "true for pdeck files", ArgumentArity.ZeroOrOne),
                 new Option<string>("--output", "the output folder", ArgumentArity.ExactlyOne),
             };
             deckImport.Handler = CommandHandler.Create<string, bool, string>(TextImportCommands.DeckImport);
 
-            var batchImport = new Command("batchImport", "Import .bin files from a folder, to a .po file") {
+            var batchImport = new Command("batch-import", "Import .bin files from a folder, to a .po file") {
                 new Option<string>("--directory", "the input directory with the .bin files", ArgumentArity.ExactlyOne),
                 new Option<string>("--output", "the output folder", ArgumentArity.ExactlyOne),
             };
             batchImport.Handler = CommandHandler.Create<string, string>(TextImportCommands.BatchImport);
 
-            var importJQuiz = new Command("importjquiz", "Import the jquiz Po folder into a .bin") {
+            var importJQuiz = new Command("import-jquiz", "Import the jquiz Po folder into a .bin") {
                 new Option<string>("--container", "the container of the .po files", ArgumentArity.ExactlyOne),
                 new Option<string>("--output", "the output folder", ArgumentArity.ExactlyOne),
             };
