@@ -33,6 +33,8 @@ using Texim.Palettes;
 using Texim.Pixels;
 using Texim.Processing;
 using Texim.Sprites;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
@@ -441,5 +443,45 @@ namespace JUSToolkit.Tests.Graphics
             generatedStream.Stream.Compare(originalStream).Should().BeTrue();
         }
 
+        [Test]
+        public void DeserializeYamlTest()
+        {
+            var segment = new ImageSegment {
+                TileIndex = 4,
+                CoordinateX = -10,
+                CoordinateY = 20,
+                PaletteIndex = 0,
+                Width = 32,
+                Height = 16,
+                HorizontalFlip = true,
+                VerticalFlip = false,
+            };
+
+            var sprite = new Sprite { Width = 256, Height = 256 };
+            sprite.Segments.Add(segment);
+
+            string yaml = new SerializerBuilder()
+                .WithNamingConvention(UnderscoredNamingConvention.Instance)
+                .Build()
+                .Serialize(new List<Sprite> { sprite });
+
+            List<Sprite> result = BinaryToDtx3.DeserializeYaml(yaml);
+
+            result.Should().HaveCount(1);
+            result[0].Width.Should().Be(256);
+            result[0].Height.Should().Be(256);
+            result[0].Segments.Should().HaveCount(1);
+
+            IImageSegment expectedSegment = result[0].Segments[0];
+            expectedSegment.Should().BeOfType<ImageSegment>();
+            expectedSegment.TileIndex.Should().Be(4);
+            expectedSegment.CoordinateX.Should().Be(-10);
+            expectedSegment.CoordinateY.Should().Be(20);
+            expectedSegment.PaletteIndex.Should().Be(0);
+            expectedSegment.Width.Should().Be(32);
+            expectedSegment.Height.Should().Be(16);
+            expectedSegment.HorizontalFlip.Should().BeTrue();
+            expectedSegment.VerticalFlip.Should().BeFalse();
+        }
     }
 }
