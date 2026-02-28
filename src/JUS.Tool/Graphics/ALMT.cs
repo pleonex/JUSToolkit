@@ -1,4 +1,4 @@
-﻿using Texim.Compressions.Nitro;
+﻿using Texim.Games.Nitro.Backgrounds.ScreenMaps;
 
 namespace JUSToolkit.Graphics
 {
@@ -31,14 +31,16 @@ namespace JUSToolkit.Graphics
         /// <summary>
         /// Initializes a new instance of the <see cref="Almt"/> class.
         /// </summary>
-        public Almt() {
+        public Almt()
+        {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Almt"/> class cloning another Almt object.
         /// </summary>
         /// <param name="atm">Almt object to clone.</param>
-        public Almt(Almt atm) {
+        public Almt(Almt atm)
+        {
             Magic = atm.Magic;
             Unknown = atm.Unknown;
             Unknown2 = atm.Unknown2;

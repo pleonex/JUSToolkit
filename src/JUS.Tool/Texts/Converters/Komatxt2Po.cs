@@ -89,7 +89,7 @@ namespace JUSToolkit.Texts.Converters
         /// <summary>
         /// Each line needs to be 17 character long, with no spaces.
         /// </summary>
-        /// <param name="string">Line to clean.</param>
+        /// <param name="input">Line to clean.</param>
         /// <returns>Transformed string.</returns>
         private string AdjustLength(string input)
         {

@@ -18,9 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 using System;
-using Texim.Compressions.Nitro;
-using Texim.Formats;
+using Texim.Games.Nitro.Backgrounds.ScreenMaps;
 using Texim.Images;
+using Texim.Images.Standard;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
@@ -54,8 +54,7 @@ namespace JUSToolkit.Graphics.Converters
         /// <returns><see cref="Dig"/>.</returns>
         public BinaryFormat Convert(IBinary source)
         {
-            if (source is null)
-            {
+            if (source is null) {
                 throw new ArgumentNullException(nameof(source));
             }
 
@@ -70,17 +69,13 @@ namespace JUSToolkit.Graphics.Converters
                 .TransformWith<LzssDecompression>()
                 .TransformWith<Binary2Almt>();
 
-            var mapsParams = new MapDecompressionParams
-            {
+            var mapsParams = new MapDecompressionParams {
                 Map = mapsNode.GetFormatAs<Almt>(),
                 TileSize = mapsNode.GetFormatAs<Almt>().TileSize,
             };
-            var bitmapParams = new IndexedImageBitmapParams
-            {
-                Palettes = pixelsPaletteNode.GetFormatAs<IndexedPaletteImage>(),
-            };
+
             var mapCompression = new MapDecompression(mapsParams);
-            var image2Bitmap = new IndexedImage2Bitmap(bitmapParams);
+            var image2Bitmap = new IndexedImage2BinaryPng(pixelsPaletteNode.GetFormatAs<IndexedPaletteImage>());
             pixelsPaletteNode.TransformWith(mapCompression)
                 .TransformWith(image2Bitmap);
 

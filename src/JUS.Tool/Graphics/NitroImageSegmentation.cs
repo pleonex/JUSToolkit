@@ -31,7 +31,7 @@ namespace JUSToolkit.Graphics
     /// </summary>
     public class NitroImageSegmentation : IImageSegmentation
     {
-        private sealed record SplitSize(int TransparentLimit, int Size);
+        private sealed record SplitSize(int transparentLimit, int size);
 
         // List of tries for width and height.
         // The algorithm search a size where from the limit border to the size border
@@ -53,7 +53,7 @@ namespace JUSToolkit.Graphics
 
         public SpriteRelativeCoordinatesKind RelativeCoordinates { get; set; } = SpriteRelativeCoordinatesKind.Center;
 
-        public (Sprite Sprite, FullImage TrimmedImage) Segment(FullImage frame)
+        public (Sprite Sprite, RgbImage TrimmedImage) Segment(RgbImage frame)
         {
             if (SearchNoTransparentPoint(frame, 0) == -1) {
                 var emptySprite = new Sprite {
@@ -61,11 +61,11 @@ namespace JUSToolkit.Graphics
                     Height = 0,
                     Segments = new Collection<IImageSegment>(),
                 };
-                var emptyImage = new FullImage(0, 0);
+                var emptyImage = new RgbImage(0, 0);
                 return (emptySprite, emptyImage);
             }
 
-            FullImage objImage;
+            RgbImage objImage;
             int startX = 0, startY = 0;
             if (SkipTrimming) {
                 objImage = frame;
@@ -84,7 +84,7 @@ namespace JUSToolkit.Graphics
             return (sprite, objImage);
         }
 
-        private List<IImageSegment> CreateObjects(FullImage frame, int startX, int startY, int x, int y, int maxHeight)
+        private List<IImageSegment> CreateObjects(RgbImage frame, int startX, int startY, int x, int y, int maxHeight)
         {
             var segments = new List<IImageSegment>();
 
@@ -160,7 +160,7 @@ namespace JUSToolkit.Graphics
         }
 
         private (int Width, int Height, bool IsValid) GetObjectSize(
-            FullImage frame,
+            RgbImage frame,
             int x,
             int y,
             int maxWidth,
@@ -179,37 +179,37 @@ namespace JUSToolkit.Graphics
                 for (int i = minWidthConstraint; i < SplitMode.Length && width == 0; i++) {
                     // If the potential segment is bigger than the remaining, check next size.
                     // Except if it's the latest (smaller).
-                    if (i + 1 != SplitMode.Length && SplitMode[i].Size > maxWidth - x) {
+                    if (i + 1 != SplitMode.Length && SplitMode[i].size > maxWidth - x) {
                         continue;
                     }
 
                     // If it's not transparent from the limit to the end size, found it!
-                    int nonTransparentRange = SplitMode[i].Size - SplitMode[i].TransparentLimit;
-                    if (!IsTransparent(frame, x + SplitMode[i].TransparentLimit, nonTransparentRange, y, maxHeight)) {
-                        width = SplitMode[i].Size;
+                    int nonTransparentRange = SplitMode[i].size - SplitMode[i].transparentLimit;
+                    if (!IsTransparent(frame, x + SplitMode[i].transparentLimit, nonTransparentRange, y, maxHeight)) {
+                        width = SplitMode[i].size;
                     }
                 }
 
                 // Everything is transparent, skip like it were a valid OAM (so we can split further)
                 // We use the higher allowed width.
                 if (width == 0) {
-                    return (SplitMode[minWidthConstraint].Size, maxHeight, false);
+                    return (SplitMode[minWidthConstraint].size, maxHeight, false);
                 }
 
                 // Get object height
                 height = 0;
                 for (int i = 0; i < SplitMode.Length && height == 0; i++) {
-                    if (i + 1 != SplitMode.Length && SplitMode[i].Size > maxHeight) {
+                    if (i + 1 != SplitMode.Length && SplitMode[i].size > maxHeight) {
                         continue;
                     }
 
-                    if (!IsValidSize(width, SplitMode[i].Size)) {
+                    if (!IsValidSize(width, SplitMode[i].size)) {
                         continue;
                     }
 
-                    int nonTransparentRange = SplitMode[i].Size - SplitMode[i].TransparentLimit;
-                    if (!IsTransparent(frame, x, width, y + SplitMode[i].TransparentLimit, nonTransparentRange)) {
-                        height = SplitMode[i].Size;
+                    int nonTransparentRange = SplitMode[i].size - SplitMode[i].transparentLimit;
+                    if (!IsTransparent(frame, x, width, y + SplitMode[i].transparentLimit, nonTransparentRange)) {
+                        height = SplitMode[i].size;
                     }
                 }
 
@@ -256,7 +256,7 @@ namespace JUSToolkit.Graphics
             };
         }
 
-        private static (int X, int Y, FullImage Trimmed) TrimImage(FullImage image)
+        private static (int X, int Y, RgbImage Trimmed) TrimImage(RgbImage image)
         {
             // Get border points to get dimensions
             int xStart = SearchNoTransparentPoint(image, 1);
@@ -288,7 +288,7 @@ namespace JUSToolkit.Graphics
                 }
             }
 
-            var newImage = new FullImage(width, height) {
+            var newImage = new RgbImage(width, height) {
                 Pixels = newPixels,
             };
 
@@ -296,7 +296,7 @@ namespace JUSToolkit.Graphics
         }
 
         private static int SearchNoTransparentPoint(
-            FullImage image,
+            RgbImage image,
             int direction,
             int xStart = 0,
             int yStart = 0,
@@ -373,7 +373,7 @@ namespace JUSToolkit.Graphics
         }
 
         private static bool IsTransparent(
-            FullImage image,
+            RgbImage image,
             int xStart,
             int xRange,
             int yStart,

@@ -28,7 +28,8 @@ using JUSToolkit.Containers.Converters;
 using JUSToolkit.Graphics;
 using JUSToolkit.Graphics.Converters;
 using JUSToolkit.Utils;
-using Texim.Formats;
+using Texim.Images;
+using Texim.Images.Standard;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
@@ -101,14 +102,8 @@ namespace JUSToolkit.CLI.JUS
 
                                 Dig originalImage = dtx3.Children["image"].GetFormatAs<Dig>();
 
-                                var indexedImageParams = new IndexedImageBitmapParams {
-                                    Palettes = originalImage,
-                                };
-
                                 if (originalImage.Swizzling == DigSwizzling.Linear) {
-
-                                    BinaryFormat image = new IndexedImage2Bitmap(indexedImageParams).Convert(originalImage);
-
+                                    BinaryFormat image = new IndexedImage2BinaryPng(originalImage).Convert(originalImage);
                                     image.Stream.WriteTo(Path.Combine(baseOutputPath, $"{originalAlarName}-{child.Name}-tx.png"));
                                 }
                             } else {
@@ -120,7 +115,6 @@ namespace JUSToolkit.CLI.JUS
                                     nodeSprite.Stream.WriteTo(Path.Combine(baseOutputPath, $"{originalAlarName}-{child.Name}-{nodeSprite.Name}.png"));
                                 }
                             }
-
                         } catch (Exception ex) {
                             Console.WriteLine($"Error processing DTX file {originalAlarName}/{child.Name}: {ex.Message}");
                         }
@@ -201,11 +195,8 @@ namespace JUSToolkit.CLI.JUS
                     Console.WriteLine(file.Path);
                     if (CompressionUtils.IsCompressed(file)) {
                         file.TransformWith(new LzssDecompression());
-                        // Replace a node with BF ok
-                        // Sobreescribirlo en disco? probar y buscar en Discord
                         string path = Path.Combine(input.Replace("/data", string.Empty), file.Path[1..]);
                         file.Stream.WriteTo(path);
-                        // file.Stream.WriteTo(file.Path);
                     }
                 }
             }

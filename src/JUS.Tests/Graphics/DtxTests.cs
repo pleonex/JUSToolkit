@@ -27,11 +27,11 @@ using JUSToolkit.Containers.Converters;
 using JUSToolkit.Graphics;
 using JUSToolkit.Graphics.Converters;
 using NUnit.Framework;
-using Texim.Formats;
 using Texim.Images;
+using Texim.Images.Quantization;
+using Texim.Images.Standard;
 using Texim.Palettes;
 using Texim.Pixels;
-using Texim.Processing;
 using Texim.Sprites;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -204,20 +204,17 @@ namespace JUSToolkit.Tests.Graphics
                 RelativeCoordinates = SpriteRelativeCoordinatesKind.TopLeft,
                 FullImage = originalImage,
             };
-            var indexedImageParams = new IndexedImageBitmapParams {
-                Palettes = originalImage,
-            };
 
             var pngNode = new Node("sprite", sprite)
                 .TransformWith(new Sprite2IndexedImage(spriteParams))
-                .TransformWith(new IndexedImage2Bitmap(indexedImageParams));
+                .TransformWith(new IndexedImage2BinaryPng(originalImage));
 
             pngNode.Stream.Position = 0;
 
             // Import
             var quantization = new FixedPaletteQuantization(originalImage.Palettes[0]);
-            pngNode.TransformWith<Bitmap2FullImage>()
-                .TransformWith(new FullImage2IndexedPalette(quantization));
+            pngNode.TransformWith<StandardBinaryImage2RgbImage>()
+                .TransformWith(new StandardBinaryImage2IndexedPaletteImage(quantization));
             IndexedPaletteImage newImage = pngNode.GetFormatAs<IndexedPaletteImage>();
 
             var segmentedImage = new List<IndexedPixel>();
@@ -291,9 +288,6 @@ namespace JUSToolkit.Tests.Graphics
                 RelativeCoordinates = SpriteRelativeCoordinatesKind.Center,
                 FullImage = originalImage,
             };
-            var indexedImageParams = new IndexedImageBitmapParams {
-                Palettes = originalImage,
-            };
 
             var newPixels = new List<IndexedPixel>();
 
@@ -301,7 +295,7 @@ namespace JUSToolkit.Tests.Graphics
                 CanvasWidth = 256,
                 CanvasHeight = 256,
             };
-            var spriteConverterParameters = new FullImage2SpriteParams {
+            var spriteConverterParameters = new RgbImage2SpriteParams {
                 Palettes = palettes,
                 IsImageTiled = true,
                 MinimumPixelsPerSegment = 64,
@@ -319,7 +313,7 @@ namespace JUSToolkit.Tests.Graphics
                 // Cloning the node so we can transform it
                 originalBitmaps.Root.Add(new Node(spriteNode.Name, spriteNode.GetFormatAs<Sprite>())
                             .TransformWith(new Sprite2IndexedImage(spriteParams))
-                            .TransformWith(new IndexedImage2Bitmap(indexedImageParams)));
+                            .TransformWith(new IndexedImage2BinaryPng(originalImage)));
             }
 
             using var cloneBitmaps = (NodeContainerFormat)originalBitmaps.DeepClone();
@@ -327,10 +321,10 @@ namespace JUSToolkit.Tests.Graphics
             // 2 - Import the PNGs into the DTX
             foreach (Node pngNode in cloneBitmaps.Root.Children) {
                 pngNode.Stream.Position = 0;
-                pngNode.TransformWith<Bitmap2FullImage>();
+                pngNode.TransformWith<StandardBinaryImage2RgbImage>();
 
-                // FullImage -> Sprite
-                var converter = new FullImage2Sprite(spriteConverterParameters);
+                // RgbImage -> Sprite
+                var converter = new RgbImage2Sprite(spriteConverterParameters);
                 pngNode.TransformWith(converter);
                 Sprite sprite = pngNode.GetFormatAs<Sprite>();
 
@@ -362,15 +356,14 @@ namespace JUSToolkit.Tests.Graphics
                 RelativeCoordinates = SpriteRelativeCoordinatesKind.Center,
                 FullImage = updatedImage,
             };
-            var indexedImageParams2 = new IndexedImageBitmapParams {
-                Palettes = updatedImage,
-            };
+
             for (int i = 0; i < newDtx.Root.Children["sprites"].Children.Count; i++) {
                 var spriteNode = newDtx.Root.Children["sprites"].Children[i];
+
                 // Cloning the node so we can transform it
                 var pngNode = new Node(spriteNode.Name, spriteNode.GetFormatAs<Sprite>())
                             .TransformWith(new Sprite2IndexedImage(spriteParams2))
-                            .TransformWith(new IndexedImage2Bitmap(indexedImageParams2));
+                            .TransformWith(new IndexedImage2BinaryPng(updatedImage));
 
                 pngNode.Stream.Compare(originalBitmaps.Root.Children[i].Stream).Should().BeTrue();
             }
@@ -388,11 +381,8 @@ namespace JUSToolkit.Tests.Graphics
                 .TransformWith(new BinaryToDtx3());
 
             Dig image = dtx.Children["image"].GetFormatAs<Dig>();
-            var indexedImageParams = new IndexedImageBitmapParams {
-                Palettes = image,
-            };
 
-            BinaryFormat generatedStream = new IndexedImage2Bitmap(indexedImageParams).Convert(image);
+            BinaryFormat generatedStream = new IndexedImage2BinaryPng(image).Convert(image);
 
             generatedStream.Should().MatchInfo(info);
         }

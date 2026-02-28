@@ -220,7 +220,6 @@ namespace JUSToolkit.CLI.JUS
             };
             uncompressEverything.Handler = CommandHandler.Create<string>(BatchCommands.UncompressFiles);
 
-
             return new Command("batch", "Batch import/export PNG to/from Alar") {
                 importPng2Alar3,
                 exportAlarDig2Png,

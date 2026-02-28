@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using Texim.Compressions.Nitro;
+using Texim.Games.Nitro.Backgrounds.ScreenMaps;
 using Texim.Images;
 using Texim.Palettes;
 using Texim.Pixels;
@@ -62,6 +63,7 @@ namespace JUSToolkit.Graphics
         /// Initializes a new instance of the <see cref="Dig"/> class cloning another Dig object.
         /// </summary>
         /// <param name="dig">Dig object to clone.</param>
+        [SetsRequiredMembers]
         public Dig(Dig dig)
         {
             Unknown = dig.Unknown;
@@ -84,6 +86,7 @@ namespace JUSToolkit.Graphics
         /// </summary>
         /// <param name="dig">Dig object to clone.</param>
         /// <param name="image">IndexedImage object to clone.</param>
+        [SetsRequiredMembers]
         public Dig(Dig dig, IIndexedImage image)
             : this(dig)
         {
@@ -100,6 +103,7 @@ namespace JUSToolkit.Graphics
         /// <param name="height">Height of the subimage.</param>
         /// <param name="tileIndex">Tile index where the subimage starts from.</param>
         /// <exception cref="FormatException"><paramref name="dig"/> doesn't have a valid format.</exception>
+        [SetsRequiredMembers]
         public Dig(Dig dig, int width, int height, int tileIndex)
             : this(dig)
         {
@@ -109,7 +113,7 @@ namespace JUSToolkit.Graphics
             Width = width;
             switch (dig.Bpp) {
                 case DigBpp.Bpp4:
-                    encoding = Indexed4Bpp.Instance;
+                    encoding = Indexed4BppEncoding.Instance;
                     size = width * height / 2;
                     nWidth = width / 2;
                     totalWidth = dig.Width / 2;
@@ -117,7 +121,7 @@ namespace JUSToolkit.Graphics
                     xTileIndex = (tileIndex % (totalWidth / 4)) * 4;
                     break;
                 case DigBpp.Bpp8:
-                    encoding = Indexed4Bpp.Instance;
+                    encoding = Indexed8BppEncoding.Instance;
                     size = width * height;
                     nWidth = width;
                     totalWidth = dig.Width;
@@ -199,7 +203,7 @@ namespace JUSToolkit.Graphics
                 for (int y = 0; y < subimage.Height; y++) {
                     int inIdx = (y * subimage.Width) + x;
                     IndexedPixel pixel = subimage.Pixels[inIdx];
-                    if (pixel.Alpha == 0 || pixel.Index == 0) {
+                    if (pixel.Alpha == 0 || pixel.ColorIndex == 0) {
                         continue;
                     }
 
@@ -289,7 +293,7 @@ namespace JUSToolkit.Graphics
         public void SetPalette(byte paletteIndex)
         {
             for (int i = 0; i < Pixels.Length; i++)
-                Pixels[i] = new IndexedPixel(Pixels[i].Index, Pixels[i].Alpha, paletteIndex);
+                Pixels[i] = new IndexedPixel(Pixels[i].ColorIndex, Pixels[i].Alpha, paletteIndex);
         }
     }
 }

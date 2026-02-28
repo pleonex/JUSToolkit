@@ -24,9 +24,9 @@ using JUSToolkit.Containers;
 using JUSToolkit.Graphics;
 using JUSToolkit.Graphics.Converters;
 using JUSToolkit.Utils;
-using Texim.Compressions.Nitro;
-using Texim.Formats;
+using Texim.Games.Nitro.Backgrounds.ScreenMaps;
 using Texim.Images;
+using Texim.Images.Standard;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
@@ -122,8 +122,8 @@ namespace JUSToolkit.BatchConverters
                 .TransformWith<Binary2Dig>()
                 .GetFormatAs<Dig>() ?? throw new FormatException("Invalid dig file");
 
-            // Transform PNG into a FullImage (Pixels + Map) using the Dig Palette
-            var compressionParams = new FullImageMapCompressionParams {
+            // Transform PNG into a RgbImage (Pixels + Map) using the Dig Palette
+            var compressionParams = new RgbImageMapCompressionParams {
                 Palettes = mergedImage,
             };
 
@@ -135,10 +135,10 @@ namespace JUSToolkit.BatchConverters
                     throw new FormatException("Invalid png file");
                 }
 
-                // Transform the PNG into FullImage (Pixels + Map) using the palette of the original DIG
+                // Transform the PNG into RgbImage (Pixels + Map) using the palette of the original DIG
                 pngs[i].Stream.Position = 0;
-                _ = pngs[i].TransformWith<Bitmap2FullImage>()
-                    .TransformWith(new FullImageMapCompression(compressionParams));
+                _ = pngs[i].TransformWith<StandardBinaryImage2RgbImage>()
+                    .TransformWith(new RgbImageMapCompression(compressionParams));
 
                 // Pixels
                 newImage = pngs[i].Children[0].GetFormatAs<IndexedImage>();
@@ -153,7 +153,7 @@ namespace JUSToolkit.BatchConverters
                     mergedImage = mergedImage.InsertTransparentTile(map);
                 }
 
-                compressionParams = new FullImageMapCompressionParams {
+                compressionParams = new RgbImageMapCompressionParams {
                     MergeImage = mergedImage,
                     Palettes = mergedImage,
                 };

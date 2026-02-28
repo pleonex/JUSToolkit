@@ -25,11 +25,11 @@ using JUS.Tool.Graphics.Converters;
 using JUSToolkit.Containers.Converters;
 using JUSToolkit.Graphics;
 using JUSToolkit.Graphics.Converters;
-using Texim.Formats;
 using Texim.Images;
+using Texim.Images.Quantization;
+using Texim.Images.Standard;
 using Texim.Palettes;
 using Texim.Pixels;
-using Texim.Processing;
 using Texim.Sprites;
 using Yarhl.FileSystem;
 using Yarhl.IO;
@@ -83,15 +83,11 @@ namespace JUSToolkit.CLI.JUS
 
             Dig originalImage = dtx3.Children["image"].GetFormatAs<Dig>();
 
-            var indexedImageParams = new IndexedImageBitmapParams {
-                Palettes = originalImage,
-            };
-
             if (originalImage.Swizzling != DigSwizzling.Linear) {
                 throw new FormatException("Image is not DTX03TX");
             }
 
-            BinaryFormat image = new IndexedImage2Bitmap(indexedImageParams).Convert(originalImage);
+            BinaryFormat image = new IndexedImage2BinaryPng(originalImage).Convert(originalImage);
 
             image.Stream.WriteTo(Path.Combine(output, Path.GetFileNameWithoutExtension(dtx) + "_tx.png"));
 
@@ -132,7 +128,7 @@ namespace JUSToolkit.CLI.JUS
                 CanvasWidth = 256,
                 CanvasHeight = 256,
             };
-            var spriteConverterParameters = new FullImage2SpriteParams {
+            var spriteConverterParameters = new RgbImage2SpriteParams {
                 Palettes = palettes,
                 IsImageTiled = true,
                 MinimumPixelsPerSegment = 64,
@@ -145,11 +141,11 @@ namespace JUSToolkit.CLI.JUS
             foreach (string pngPath in Directory.GetFiles(input)) {
                 Node pngNode = NodeFactory.FromFile(pngPath, FileOpenMode.Read);
 
-                // PNG -> FullImage (array of colors)
-                pngNode.TransformWith<Bitmap2FullImage>();
+                // PNG -> RgbImage (array of colors)
+                pngNode.TransformWith<StandardBinaryImage2RgbImage>();
 
-                // FullImage -> Sprite
-                var converter = new FullImage2Sprite(spriteConverterParameters);
+                // RgbImage -> Sprite
+                var converter = new RgbImage2Sprite(spriteConverterParameters);
                 pngNode.TransformWith(converter);
                 Sprite sprite = pngNode.GetFormatAs<Sprite>();
 
@@ -213,7 +209,7 @@ namespace JUSToolkit.CLI.JUS
 
             // Get the IndexedPixels
             var quantization = new FixedPaletteQuantization(originalImage.Palettes[0]);
-            pngNode.TransformWith<Bitmap2FullImage>().TransformWith(new FullImage2IndexedPalette(quantization));
+            pngNode.TransformWith<StandardBinaryImage2RgbImage>().TransformWith(new StandardBinaryImage2IndexedPaletteImage(quantization));
             IndexedPaletteImage newImage = pngNode.GetFormatAs<IndexedPaletteImage>();
 
             // Update the original base image
@@ -368,7 +364,7 @@ namespace JUSToolkit.CLI.JUS
 
             // Get the IndexedPixels
             var quantization = new FixedPaletteQuantization(originalImage.Palettes[0]);
-            pngNode.TransformWith<Bitmap2FullImage>().TransformWith(new FullImage2IndexedPalette(quantization));
+            pngNode.TransformWith<StandardBinaryImage2RgbImage>().TransformWith(new StandardBinaryImage2IndexedPaletteImage(quantization));
             IndexedPaletteImage newImage = pngNode.GetFormatAs<IndexedPaletteImage>();
 
             // Sprite from KShape

@@ -44,7 +44,7 @@ namespace JUSToolkit.Tests.Assertions
                 // YAML deserializer always gets the value as a string
                 foreach (System.Collections.Generic.KeyValuePair<string, object> entry in info.Tags) {
                     Subject.Tags.Should().ContainKey(entry.Key);
-                    Subject.Tags[entry.Key].ToString().Should().Be(entry.Value);
+                    Subject.Tags[entry.Key].ToString().Should().Be(entry.Value.ToString());
                 }
             }
 

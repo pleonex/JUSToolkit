@@ -19,8 +19,8 @@
 // SOFTWARE.
 using System;
 using System.Linq;
-using Texim.Formats;
 using Texim.Images;
+using Texim.Images.Standard;
 using Texim.Sprites;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
@@ -81,13 +81,10 @@ namespace JUSToolkit.Graphics.Converters
                 RelativeCoordinates = SpriteRelativeCoordinatesKind.TopLeft,
                 FullImage = image,
             };
-            var indexedImageParams = new IndexedImageBitmapParams {
-                Palettes = image,
-            };
 
             return new Node("sprite", sprite)
                 .TransformWith(new Sprite2IndexedImage(spriteParams))
-                .TransformWith(new IndexedImage2Bitmap(indexedImageParams))
+                .TransformWith(new IndexedImage2BinaryPng(image))
                 .GetFormatAs<BinaryFormat>();
         }
     }

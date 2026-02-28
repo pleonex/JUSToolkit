@@ -24,9 +24,9 @@ using JUSToolkit.Containers;
 using JUSToolkit.Graphics;
 using JUSToolkit.Graphics.Converters;
 using JUSToolkit.Utils;
-using Texim.Compressions.Nitro;
-using Texim.Formats;
+using Texim.Games.Nitro.Backgrounds.ScreenMaps;
 using Texim.Images;
+using Texim.Images.Standard;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
@@ -141,15 +141,15 @@ namespace JUSToolkit.BatchConverters
                     .TransformWith<Binary2Almt>()
                     .GetFormatAs<Almt>() ?? throw new FormatException("Invalid atm file");
 
-            // Transform PNG into a FullImage (Pixels + Map) using the Dig Palette
-            var compressionParams = new FullImageMapCompressionParams {
+            // Transform PNG into a RgbImage (Pixels + Map) using the Dig Palette
+            var compressionParams = new RgbImageMapCompressionParams {
                 Palettes = originalDig,
             };
 
             png.Stream.Position = 0;
             Node compressed = png
-                .TransformWith<Bitmap2FullImage>()
-                .TransformWith(new FullImageMapCompression(compressionParams));
+                .TransformWith<StandardBinaryImage2RgbImage>()
+                .TransformWith(new RgbImageMapCompression(compressionParams));
             IndexedImage newImage = compressed.Children[0].GetFormatAs<IndexedImage>();
             ScreenMap map = compressed.Children[1].GetFormatAs<ScreenMap>();
 

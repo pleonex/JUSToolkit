@@ -19,7 +19,8 @@
 // SOFTWARE.
 using System;
 using JUS.Tool.Graphics.Converters;
-using Texim.Formats;
+using Texim.Images;
+using Texim.Images.Standard;
 using Texim.Sprites;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
@@ -54,9 +55,6 @@ namespace JUSToolkit.Graphics.Converters
                 RelativeCoordinates = SpriteRelativeCoordinatesKind.Center,
                 FullImage = image,
             };
-            var indexedImageParams = new IndexedImageBitmapParams {
-                Palettes = image,
-            };
 
             var bitmaps = new NodeContainerFormat();
 
@@ -66,7 +64,7 @@ namespace JUSToolkit.Graphics.Converters
                         // Cloning the node so we can transform it
                         bitmaps.Root.Add(new Node(nodeSprite.Name, nodeSprite.GetFormatAs<Sprite>())
                             .TransformWith(new Sprite2IndexedImage(spriteParams))
-                            .TransformWith(new IndexedImage2Bitmap(indexedImageParams)));
+                            .TransformWith(new IndexedImage2BinaryPng(image)));
                     }
 
                     break;
@@ -74,7 +72,7 @@ namespace JUSToolkit.Graphics.Converters
                     foreach (Node nodeTexture in dtx3.Root.Children["sprites"].Children) {
                         // Cloning the node so we can transform it
                         bitmaps.Root.Add(new Node(nodeTexture.Name, nodeTexture.GetFormatAs<Dig>())
-                            .TransformWith(new IndexedImage2Bitmap(indexedImageParams)));
+                            .TransformWith(new IndexedImage2BinaryPng(image)));
                     }
 
                     break;

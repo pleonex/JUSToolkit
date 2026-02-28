@@ -25,8 +25,6 @@ using FluentAssertions;
 using JUSToolkit.Graphics;
 using JUSToolkit.Graphics.Converters;
 using NUnit.Framework;
-using Texim.Compressions.Nitro;
-using Texim.Formats;
 using Texim.Images;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;

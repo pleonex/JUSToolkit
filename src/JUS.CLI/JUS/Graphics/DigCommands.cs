@@ -21,9 +21,9 @@ using System;
 using System.IO;
 using JUSToolkit.Graphics;
 using JUSToolkit.Graphics.Converters;
-using Texim.Compressions.Nitro;
-using Texim.Formats;
+using Texim.Games.Nitro.Backgrounds.ScreenMaps;
 using Texim.Images;
+using Texim.Images.Standard;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
@@ -86,13 +86,13 @@ namespace JUSToolkit.CLI.JUS
                 throw new FormatException("Invalid atm file");
             }
 
-            var compressionParams = new FullImageMapCompressionParams {
+            var compressionParams = new RgbImageMapCompressionParams {
                 Palettes = originalDig,
             };
 
             Node compressed = NodeFactory.FromFile(input, FileOpenMode.Read)
-                .TransformWith<Bitmap2FullImage>()
-                .TransformWith(new FullImageMapCompression(compressionParams));
+                .TransformWith<StandardBinaryImage2RgbImage>()
+                .TransformWith(new RgbImageMapCompression(compressionParams));
             IndexedImage newImage = compressed.Children[0].GetFormatAs<IndexedImage>();
             ScreenMap map = compressed.Children[1].GetFormatAs<ScreenMap>();
 
@@ -134,7 +134,7 @@ namespace JUSToolkit.CLI.JUS
                 .TransformWith<Binary2Dig>()
                 .GetFormatAs<Dig>();
 
-            var compressionParams = new FullImageMapCompressionParams {
+            var compressionParams = new RgbImageMapCompressionParams {
                 Palettes = mergedImage,
             };
 
@@ -142,10 +142,10 @@ namespace JUSToolkit.CLI.JUS
 
             // 2 - Iterate the input PNGs
             for (int i = 0; i < input.Length; i++) {
-                // Transform the PNG into FullImage (Pixels + Map) using the palette of the original DIG
+                // Transform the PNG into RgbImage (Pixels + Map) using the palette of the original DIG
                 Node png = NodeFactory.FromFile(input[i], FileOpenMode.Read)
-                    .TransformWith<Bitmap2FullImage>()
-                    .TransformWith(new FullImageMapCompression(compressionParams));
+                    .TransformWith<StandardBinaryImage2RgbImage>()
+                    .TransformWith(new RgbImageMapCompression(compressionParams));
 
                 // Pixels
                 newImage = png.Children[0].GetFormatAs<IndexedImage>();
@@ -160,7 +160,7 @@ namespace JUSToolkit.CLI.JUS
                     mergedImage = mergedImage.InsertTransparentTile(map);
                 }
 
-                compressionParams = new FullImageMapCompressionParams {
+                compressionParams = new RgbImageMapCompressionParams {
                     MergeImage = mergedImage,
                     Palettes = mergedImage,
                 };
