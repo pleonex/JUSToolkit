@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 using System;
+using SceneGate.Ekona.Compression;
 using JUSToolkit.Utils;
 using Yarhl.FileFormat;
 using Yarhl.IO;
@@ -56,7 +57,7 @@ namespace JUSToolkit.Graphics.Converters
             }
 
             // Discard the first 4 bytes of the header (the DSCP magic ID)
-            return LzssUtils.Lzss(new DataStream(source, 4, source.Length - 4), "-d");
+            return (DataStream)new LzssDecoder().Convert(new DataStream(source, 4, source.Length - 4));
         }
     }
 }

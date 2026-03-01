@@ -18,7 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 using System;
+using System.IO;
 using System.Text;
+using SceneGate.Ekona.Compression;
 using Yarhl.FileFormat;
 using Yarhl.IO;
 
@@ -53,7 +55,7 @@ namespace JUSToolkit.Graphics.Converters
         {
             ArgumentNullException.ThrowIfNull(source);
 
-            DataStream compressed = LzssUtils.Lzss(source, "-evn");
+            Stream compressed = new LzssEncoder().Convert(source);
 
             // Write the DSCP magic ID header
             var memoryStream = new DataStream();
@@ -61,7 +63,8 @@ namespace JUSToolkit.Graphics.Converters
             memoryStream.Seek(0);
             memoryStream.Write(Encoding.ASCII.GetBytes("DSCP"), 0, 4);
 
-            compressed.WriteTo(memoryStream);
+            compressed.Position = 0;
+            compressed.CopyTo(memoryStream);
 
             return memoryStream;
         }
