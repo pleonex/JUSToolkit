@@ -5,6 +5,8 @@
         <Company>None</Company>
         <Copyright>Copyright (C) 2025 Priverop</Copyright>
 
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
 
         <!-- Due to known issues, .NET 6 SDK may give a false warning
