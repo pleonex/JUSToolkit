@@ -43,29 +43,29 @@ namespace JUSToolkit.CLI.JUS
 
         private static Command CreateGraphicCommand()
         {
-            var exportKomasContainer = new Option<string>("--container", "the input koma.aar container");
-            var exportKomasKoma = new Option<string>("--koma", "the koma.bin file");
-            var exportKomasKshape = new Option<string>("--kshape", "the kshape.bin file");
-            var exportKomasOutput = new Option<string>("--output", "the output folder");
+            var exportKomasContainer = new Option<string>("--container") { Description = "the input koma.aar container" };
+            var exportKomasKoma = new Option<string>("--koma") { Description = "the koma.bin file" };
+            var exportKomasKshape = new Option<string>("--kshape") { Description = "the kshape.bin file" };
+            var exportKomasOutput = new Option<string>("--output") { Description = "the output folder" };
             var exportKomas = new Command("export-komas", "Export komas") {
                 exportKomasContainer,
                 exportKomasKoma,
                 exportKomasKshape,
                 exportKomasOutput,
             };
-            exportKomas.SetAction(ctx => {
+            exportKomas.SetAction(parseResult => {
                 DtxCommands.ExportKomas(
-                    ctx.GetValue(exportKomasContainer),
-                    ctx.GetValue(exportKomasKoma),
-                    ctx.GetValue(exportKomasKshape),
-                    ctx.GetValue(exportKomasOutput));
+                    parseResult.GetValue(exportKomasContainer),
+                    parseResult.GetValue(exportKomasKoma),
+                    parseResult.GetValue(exportKomasKshape),
+                    parseResult.GetValue(exportKomasOutput));
             });
 
-            var importKomasPng = new Option<string>("--png", "the png to import");
-            var importKomasDtx = new Option<string>("--dtx", "the original file.dtx");
-            var importKomasKoma = new Option<string>("--koma", "the koma.bin file");
-            var importKomasKshape = new Option<string>("--kshape", "the kshape.bin file");
-            var importKomasOutput = new Option<string>("--output", "the output folder");
+            var importKomasPng = new Option<string>("--png") { Description = "the png to import" };
+            var importKomasDtx = new Option<string>("--dtx") { Description = "the original file.dtx" };
+            var importKomasKoma = new Option<string>("--koma") { Description = "the koma.bin file" };
+            var importKomasKshape = new Option<string>("--kshape") { Description = "the kshape.bin file" };
+            var importKomasOutput = new Option<string>("--output") { Description = "the output folder" };
             var importDtx4 = new Command("import-komas", "Import komas") {
                 importKomasPng,
                 importKomasDtx,
@@ -73,110 +73,110 @@ namespace JUSToolkit.CLI.JUS
                 importKomasKshape,
                 importKomasOutput,
             };
-            importDtx4.SetAction(ctx => {
+            importDtx4.SetAction(parseResult => {
                 DtxCommands.ImportKoma(
-                    ctx.GetValue(importKomasPng),
-                    ctx.GetValue(importKomasDtx),
-                    ctx.GetValue(importKomasKoma),
-                    ctx.GetValue(importKomasKshape),
-                    ctx.GetValue(importKomasOutput));
+                    parseResult.GetValue(importKomasPng),
+                    parseResult.GetValue(importKomasDtx),
+                    parseResult.GetValue(importKomasKoma),
+                    parseResult.GetValue(importKomasKshape),
+                    parseResult.GetValue(importKomasOutput));
             });
 
-            var exportDtx4Dtx = new Option<string>("--dtx", "the input file.dtx");
-            var exportDtx4Koma = new Option<string>("--koma", "the koma.bin file");
-            var exportDtx4Kshape = new Option<string>("--kshape", "the kshape.bin file");
-            var exportDtx4Output = new Option<string>("--output", "the output folder");
+            var exportDtx4Dtx = new Option<string>("--dtx") { Description = "the input file.dtx" };
+            var exportDtx4Koma = new Option<string>("--koma") { Description = "the koma.bin file" };
+            var exportDtx4Kshape = new Option<string>("--kshape") { Description = "the kshape.bin file" };
+            var exportDtx4Output = new Option<string>("--output") { Description = "the output folder" };
             var exportDtx4 = new Command("export-dtx4", "Export dtx") {
                 exportDtx4Dtx,
                 exportDtx4Koma,
                 exportDtx4Kshape,
                 exportDtx4Output,
             };
-            exportDtx4.SetAction(ctx => {
+            exportDtx4.SetAction(parseResult => {
                 DtxCommands.ExportDtx4(
-                    ctx.GetValue(exportDtx4Dtx),
-                    ctx.GetValue(exportDtx4Koma),
-                    ctx.GetValue(exportDtx4Kshape),
-                    ctx.GetValue(exportDtx4Output));
+                    parseResult.GetValue(exportDtx4Dtx),
+                    parseResult.GetValue(exportDtx4Koma),
+                    parseResult.GetValue(exportDtx4Kshape),
+                    parseResult.GetValue(exportDtx4Output));
             });
 
-            var exportDtx3Dtx = new Option<string>("--dtx", "the input file.dtx");
-            var exportDtx3Output = new Option<string>("--output", "the output folder");
+            var exportDtx3Dtx = new Option<string>("--dtx") { Description = "the input file.dtx" };
+            var exportDtx3Output = new Option<string>("--output") { Description = "the output folder" };
             var exportDtx3 = new Command("export-dtx3", "Export dtx") {
                 exportDtx3Dtx,
                 exportDtx3Output,
             };
-            exportDtx3.SetAction(ctx => {
+            exportDtx3.SetAction(parseResult => {
                 DtxCommands.ExportDtx3(
-                    ctx.GetValue(exportDtx3Dtx),
-                    ctx.GetValue(exportDtx3Output));
+                    parseResult.GetValue(exportDtx3Dtx),
+                    parseResult.GetValue(exportDtx3Output));
             });
 
-            var exportDtx3TxDtx = new Option<string>("--dtx", "the input file.dtx");
-            var exportDtx3TxOutput = new Option<string>("--output", "the output folder");
+            var exportDtx3TxDtx = new Option<string>("--dtx") { Description = "the input file.dtx" };
+            var exportDtx3TxOutput = new Option<string>("--output") { Description = "the output folder" };
             var exportDtx3TxImage = new Command("export-dtx3tx-image", "Export dtx3 image") {
                 exportDtx3TxDtx,
                 exportDtx3TxOutput,
             };
-            exportDtx3TxImage.SetAction(ctx => {
+            exportDtx3TxImage.SetAction(parseResult => {
                 DtxCommands.ExportDtx3TxImage(
-                    ctx.GetValue(exportDtx3TxDtx),
-                    ctx.GetValue(exportDtx3TxOutput));
+                    parseResult.GetValue(exportDtx3TxDtx),
+                    parseResult.GetValue(exportDtx3TxOutput));
             });
 
-            var importDtx3Input = new Option<string>("--input", "the folder with the .pngs to import");
-            var importDtx3Dtx = new Option<string>("--dtx", "the input file.dtx");
-            var importDtx3Output = new Option<string>("--output", "the output folder");
+            var importDtx3Input = new Option<string>("--input") { Description = "the folder with the .pngs to import" };
+            var importDtx3Dtx = new Option<string>("--dtx") { Description = "the input file.dtx" };
+            var importDtx3Output = new Option<string>("--output") { Description = "the output folder" };
             var importDtx3 = new Command("import-dtx3", "Import dtx3") {
                 importDtx3Input,
                 importDtx3Dtx,
                 importDtx3Output,
             };
-            importDtx3.SetAction(ctx => {
+            importDtx3.SetAction(parseResult => {
                 DtxCommands.ImportDtx3(
-                    ctx.GetValue(importDtx3Input),
-                    ctx.GetValue(importDtx3Dtx),
-                    ctx.GetValue(importDtx3Output));
+                    parseResult.GetValue(importDtx3Input),
+                    parseResult.GetValue(importDtx3Dtx),
+                    parseResult.GetValue(importDtx3Output));
             });
 
-            var importDtx3TxInput = new Option<string>("--input", "the folder with the .pngs to import");
-            var importDtx3TxDtx = new Option<string>("--dtx", "the input file.dtx");
-            var importDtx3TxYaml = new Option<string>("--yaml", "segments metadata");
-            var importDtx3TxOutput = new Option<string>("--output", "the output folder");
+            var importDtx3TxInput = new Option<string>("--input") { Description = "the folder with the .pngs to import" };
+            var importDtx3TxDtx = new Option<string>("--dtx") { Description = "the input file.dtx" };
+            var importDtx3TxYaml = new Option<string>("--yaml") { Description = "segments metadata" };
+            var importDtx3TxOutput = new Option<string>("--output") { Description = "the output folder" };
             var importDtx3Tx = new Command("import-dtx3tx", "Import dtx3") {
                 importDtx3TxInput,
                 importDtx3TxDtx,
                 importDtx3TxYaml,
                 importDtx3TxOutput,
             };
-            importDtx3Tx.SetAction(ctx => {
+            importDtx3Tx.SetAction(parseResult => {
                 DtxCommands.ImportDtx3Tx(
-                    ctx.GetValue(importDtx3TxInput),
-                    ctx.GetValue(importDtx3TxDtx),
-                    ctx.GetValue(importDtx3TxYaml),
-                    ctx.GetValue(importDtx3TxOutput));
+                    parseResult.GetValue(importDtx3TxInput),
+                    parseResult.GetValue(importDtx3TxDtx),
+                    parseResult.GetValue(importDtx3TxYaml),
+                    parseResult.GetValue(importDtx3TxOutput));
             });
 
-            var exportDigDig = new Option<string>("--dig", "the input file.dig");
-            var exportDigAtm = new Option<string>("--atm", "the input map.atm file");
-            var exportDigOutput = new Option<string>("--output", "the output folder");
+            var exportDigDig = new Option<string>("--dig") { Description = "the input file.dig" };
+            var exportDigAtm = new Option<string>("--atm") { Description = "the input map.atm file" };
+            var exportDigOutput = new Option<string>("--output") { Description = "the output folder" };
             var exportDsigAlmt = new Command("export-dig", "Export dsig+almt") {
                 exportDigDig,
                 exportDigAtm,
                 exportDigOutput,
             };
-            exportDsigAlmt.SetAction(ctx => {
+            exportDsigAlmt.SetAction(parseResult => {
                 DigCommands.ExportDig(
-                    ctx.GetValue(exportDigDig),
-                    ctx.GetValue(exportDigAtm),
-                    ctx.GetValue(exportDigOutput));
+                    parseResult.GetValue(exportDigDig),
+                    parseResult.GetValue(exportDigAtm),
+                    parseResult.GetValue(exportDigOutput));
             });
 
-            var importDigInput = new Option<string>("--input", "the png to import");
-            var importDigInsertTransparent = new Option<bool>("--insertTransparent", "insert a transparent tile at the start of the .dig");
-            var importDigDig = new Option<string>("--dig", "the original file.dig");
-            var importDigAtm = new Option<string>("--atm", "the original file.atm");
-            var importDigOutput = new Option<string>("--output", "the output folder");
+            var importDigInput = new Option<string>("--input") { Description = "the png to import" };
+            var importDigInsertTransparent = new Option<bool>("--insertTransparent") { Description = "insert a transparent tile at the start of the .dig" };
+            var importDigDig = new Option<string>("--dig") { Description = "the original file.dig" };
+            var importDigAtm = new Option<string>("--atm") { Description = "the original file.atm" };
+            var importDigOutput = new Option<string>("--output") { Description = "the output folder" };
             var importDig = new Command("import-dig", "Import dsig+almt") {
                 importDigInput,
                 importDigInsertTransparent,
@@ -184,20 +184,20 @@ namespace JUSToolkit.CLI.JUS
                 importDigAtm,
                 importDigOutput,
             };
-            importDig.SetAction(ctx => {
+            importDig.SetAction(parseResult => {
                 DigCommands.ImportDig(
-                    ctx.GetValue(importDigInput),
-                    ctx.GetValue(importDigInsertTransparent),
-                    ctx.GetValue(importDigDig),
-                    ctx.GetValue(importDigAtm),
-                    ctx.GetValue(importDigOutput));
+                    parseResult.GetValue(importDigInput),
+                    parseResult.GetValue(importDigInsertTransparent),
+                    parseResult.GetValue(importDigDig),
+                    parseResult.GetValue(importDigAtm),
+                    parseResult.GetValue(importDigOutput));
             });
 
-            var mergeDigInput = new Option<string[]>("--input", "the png to import") { Arity = ArgumentArity.OneOrMore };
-            var mergeDigInsertTransparent = new Option<bool>("--insertTransparent", "insert a transparent tile at the start of the .dig");
-            var mergeDigDig = new Option<string>("--dig", "the original file.dig");
-            var mergeDigAtm = new Option<string[]>("--atm", "the original file.atm") { Arity = ArgumentArity.OneOrMore };
-            var mergeDigOutput = new Option<string>("--output", "the output folder");
+            var mergeDigInput = new Option<string[]>("--input") { Description = "the png to import", Arity = ArgumentArity.OneOrMore };
+            var mergeDigInsertTransparent = new Option<bool>("--insertTransparent") { Description = "insert a transparent tile at the start of the .dig" };
+            var mergeDigDig = new Option<string>("--dig") { Description = "the original file.dig" };
+            var mergeDigAtm = new Option<string[]>("--atm") { Description = "the original file.atm", Arity = ArgumentArity.OneOrMore };
+            var mergeDigOutput = new Option<string>("--output") { Description = "the output folder" };
             var mergeDig = new Command("merge-dig", "Import Import dsig with multiple almt") {
                 mergeDigInput,
                 mergeDigInsertTransparent,
@@ -205,25 +205,25 @@ namespace JUSToolkit.CLI.JUS
                 mergeDigAtm,
                 mergeDigOutput,
             };
-            mergeDig.SetAction(ctx => {
+            mergeDig.SetAction(parseResult => {
                 DigCommands.MergeDig(
-                    ctx.GetValue(mergeDigInput),
-                    ctx.GetValue(mergeDigInsertTransparent),
-                    ctx.GetValue(mergeDigDig),
-                    ctx.GetValue(mergeDigAtm),
-                    ctx.GetValue(mergeDigOutput));
+                    parseResult.GetValue(mergeDigInput),
+                    parseResult.GetValue(mergeDigInsertTransparent),
+                    parseResult.GetValue(mergeDigDig),
+                    parseResult.GetValue(mergeDigAtm),
+                    parseResult.GetValue(mergeDigOutput));
             });
 
-            var exportYamlDtx3Dtx = new Option<string>("--dtx", "the input file.dtx");
-            var exportYamlDtx3Output = new Option<string>("--output", "the output folder");
+            var exportYamlDtx3Dtx = new Option<string>("--dtx") { Description = "the input file.dtx" };
+            var exportYamlDtx3Output = new Option<string>("--output") { Description = "the output folder" };
             var exportYamlDtx3 = new Command("export-yaml-dtx3", "Export the sprite metadata") {
                 exportYamlDtx3Dtx,
                 exportYamlDtx3Output,
             };
-            exportYamlDtx3.SetAction(ctx => {
+            exportYamlDtx3.SetAction(parseResult => {
                 DtxCommands.ExportYamlDtx3(
-                    ctx.GetValue(exportYamlDtx3Dtx),
-                    ctx.GetValue(exportYamlDtx3Output));
+                    parseResult.GetValue(exportYamlDtx3Dtx),
+                    parseResult.GetValue(exportYamlDtx3Output));
             });
 
             return new Command("graphics", "Import/Export graphic files") {
@@ -243,85 +243,85 @@ namespace JUSToolkit.CLI.JUS
 
         private static Command CreateContainerCommand()
         {
-            var exportContainer = new Option<string>("--container", "the input alar container");
-            var exportOutput = new Option<string>("--output", "the output folder");
+            var exportContainer = new Option<string>("--container") { Description = "the input alar container" };
+            var exportOutput = new Option<string>("--output") { Description = "the output folder" };
             var export = new Command("export", "Export alar container, any version") {
                 exportContainer,
                 exportOutput,
             };
-            export.SetAction(ctx => {
+            export.SetAction(parseResult => {
                 ContainerCommands.Export(
-                    ctx.GetValue(exportContainer),
-                    ctx.GetValue(exportOutput));
+                    parseResult.GetValue(exportContainer),
+                    parseResult.GetValue(exportOutput));
             });
 
-            var exportAlar3Container = new Option<string>("--container", "the input alar3 container");
-            var exportAlar3Output = new Option<string>("--output", "the output folder");
+            var exportAlar3Container = new Option<string>("--container") { Description = "the input alar3 container" };
+            var exportAlar3Output = new Option<string>("--output") { Description = "the output folder" };
             var exportAlar3 = new Command("export-alar3", "Export alar3") {
                 exportAlar3Container,
                 exportAlar3Output,
             };
-            exportAlar3.SetAction(ctx => {
+            exportAlar3.SetAction(parseResult => {
                 ContainerCommands.ExportAlar3(
-                    ctx.GetValue(exportAlar3Container),
-                    ctx.GetValue(exportAlar3Output));
+                    parseResult.GetValue(exportAlar3Container),
+                    parseResult.GetValue(exportAlar3Output));
             });
 
-            var exportAlar2Container = new Option<string>("--container", "the input alar2 container");
-            var exportAlar2Output = new Option<string>("--output", "the output folder");
+            var exportAlar2Container = new Option<string>("--container") { Description = "the input alar2 container" };
+            var exportAlar2Output = new Option<string>("--output") { Description = "the output folder" };
             var exportAlar2 = new Command("export-alar2", "Export alar2") {
                 exportAlar2Container,
                 exportAlar2Output,
             };
-            exportAlar2.SetAction(ctx => {
+            exportAlar2.SetAction(parseResult => {
                 ContainerCommands.ExportAlar2(
-                    ctx.GetValue(exportAlar2Container),
-                    ctx.GetValue(exportAlar2Output));
+                    parseResult.GetValue(exportAlar2Container),
+                    parseResult.GetValue(exportAlar2Output));
             });
 
-            var importContainer = new Option<string>("--container", "the input alar container");
-            var importInput = new Option<string>("--input", "the input directory to insert");
-            var importOutput = new Option<string>("--output", "the output folder");
+            var importContainer = new Option<string>("--container") { Description = "the input alar container" };
+            var importInput = new Option<string>("--input") { Description = "the input directory to insert" };
+            var importOutput = new Option<string>("--output") { Description = "the output folder" };
             var import = new Command("import", "import alar") {
                 importContainer,
                 importInput,
                 importOutput,
             };
-            import.SetAction(ctx => {
+            import.SetAction(parseResult => {
                 ContainerCommands.Import(
-                    ctx.GetValue(importContainer),
-                    ctx.GetValue(importInput),
-                    ctx.GetValue(importOutput));
+                    parseResult.GetValue(importContainer),
+                    parseResult.GetValue(importInput),
+                    parseResult.GetValue(importOutput));
             });
 
-            var importAlar2Container = new Option<string>("--container", "the input alar2 container");
-            var importAlar2Input = new Option<string>("--input", "the input directory to insert");
-            var importAlar2Output = new Option<string>("--output", "the output folder");
+            var importAlar2Container = new Option<string>("--container") { Description = "the input alar2 container" };
+            var importAlar2Input = new Option<string>("--input") { Description = "the input directory to insert" };
+            var importAlar2Output = new Option<string>("--output") { Description = "the output folder" };
             var importAlar2 = new Command("import-alar2", "import alar2") {
                 importAlar2Container,
                 importAlar2Input,
                 importAlar2Output,
             };
-            importAlar2.SetAction(ctx => {
+            importAlar2.SetAction(parseResult => {
                 ContainerCommands.ImportAlar2(
-                    ctx.GetValue(importAlar2Container),
-                    ctx.GetValue(importAlar2Input),
-                    ctx.GetValue(importAlar2Output));
+                    parseResult.GetValue(importAlar2Container),
+                    parseResult.GetValue(importAlar2Input),
+                    parseResult.GetValue(importAlar2Output));
             });
 
-            var importAlar3Container = new Option<string>("--container", "the input alar3 container");
-            var importAlar3Input = new Option<string>("--input", "the input directory to insert");
-            var importAlar3Output = new Option<string>("--output", "the output folder");
+            var importAlar3Container = new Option<string>("--container") { Description = "the input alar3 container" };
+            var importAlar3Input = new Option<string>("--input") { Description = "the input directory to insert" };
+            var importAlar3Output = new Option<string>("--output") { Description = "the output folder" };
             var importAlar3 = new Command("import-alar3", "import alar3") {
                 importAlar3Container,
                 importAlar3Input,
                 importAlar3Output,
             };
-            importAlar3.SetAction(ctx => {
+            importAlar3.SetAction(parseResult => {
                 ContainerCommands.ImportAlar3(
-                    ctx.GetValue(importAlar3Container),
-                    ctx.GetValue(importAlar3Input),
-                    ctx.GetValue(importAlar3Output));
+                    parseResult.GetValue(importAlar3Container),
+                    parseResult.GetValue(importAlar3Input),
+                    parseResult.GetValue(importAlar3Output));
             });
 
             return new Command("containers", "Unpack/Repack container files") {
@@ -336,55 +336,55 @@ namespace JUSToolkit.CLI.JUS
 
         private static Command CreateBatchCommand()
         {
-            var importPng2Alar3Container = new Option<string>("--container", "the original alar3 container");
-            var importPng2Alar3Input = new Option<string>("--input", "the input directory to insert");
-            var importPng2Alar3Output = new Option<string>("--output", "the output folder");
+            var importPng2Alar3Container = new Option<string>("--container") { Description = "the original alar3 container" };
+            var importPng2Alar3Input = new Option<string>("--input") { Description = "the input directory to insert" };
+            var importPng2Alar3Output = new Option<string>("--output") { Description = "the output folder" };
             var importPng2Alar3 = new Command("import-png-alar3", "Batch import PNG to alar3") {
                 importPng2Alar3Container,
                 importPng2Alar3Input,
                 importPng2Alar3Output,
             };
-            importPng2Alar3.SetAction(ctx => {
+            importPng2Alar3.SetAction(parseResult => {
                 BatchCommands.ImportPng2Alar3(
-                    ctx.GetValue(importPng2Alar3Container),
-                    ctx.GetValue(importPng2Alar3Input),
-                    ctx.GetValue(importPng2Alar3Output));
+                    parseResult.GetValue(importPng2Alar3Container),
+                    parseResult.GetValue(importPng2Alar3Input),
+                    parseResult.GetValue(importPng2Alar3Output));
             });
 
-            var exportAlarDig2PngContainer = new Option<string>("--container", "the alar container");
-            var exportAlarDig2PngOutput = new Option<string>("--output", "the output folder");
+            var exportAlarDig2PngContainer = new Option<string>("--container") { Description = "the alar container" };
+            var exportAlarDig2PngOutput = new Option<string>("--output") { Description = "the output folder" };
             var exportAlarDig2Png = new Command("export-alar-dig-png", "Batch export PNGs from alar digs files") {
                 exportAlarDig2PngContainer,
                 exportAlarDig2PngOutput,
             };
-            exportAlarDig2Png.SetAction(ctx => {
+            exportAlarDig2Png.SetAction(parseResult => {
                 BatchCommands.ExportAlarDig2Png(
-                    ctx.GetValue(exportAlarDig2PngContainer),
-                    ctx.GetValue(exportAlarDig2PngOutput));
+                    parseResult.GetValue(exportAlarDig2PngContainer),
+                    parseResult.GetValue(exportAlarDig2PngOutput));
             });
 
-            var exportAlarDtx2PngContainer = new Option<string>("--container", "the alar container");
-            var exportAlarDtx2PngOutput = new Option<string>("--output", "the output folder");
-            var exportAlarDtx2PngGetImage = new Option<bool>("--getImage", "only export the image");
+            var exportAlarDtx2PngContainer = new Option<string>("--container") { Description = "the alar container" };
+            var exportAlarDtx2PngOutput = new Option<string>("--output") { Description = "the output folder" };
+            var exportAlarDtx2PngGetImage = new Option<bool>("--getImage") { Description = "only export the image" };
             var exportAlarDtx2Png = new Command("export-alar-dtx-png", "Batch export PNGs from alar dtxs files") {
                 exportAlarDtx2PngContainer,
                 exportAlarDtx2PngOutput,
                 exportAlarDtx2PngGetImage,
             };
-            exportAlarDtx2Png.SetAction(ctx => {
+            exportAlarDtx2Png.SetAction(parseResult => {
                 BatchCommands.ExportAlarDtx2Png(
-                    ctx.GetValue(exportAlarDtx2PngContainer),
-                    ctx.GetValue(exportAlarDtx2PngOutput),
-                    ctx.GetValue(exportAlarDtx2PngGetImage));
+                    parseResult.GetValue(exportAlarDtx2PngContainer),
+                    parseResult.GetValue(exportAlarDtx2PngOutput),
+                    parseResult.GetValue(exportAlarDtx2PngGetImage));
             });
 
-            var uncompressEverythingInput = new Option<string>("--input", "the input directory with all the files");
+            var uncompressEverythingInput = new Option<string>("--input") { Description = "the input directory with all the files" };
             var uncompressEverything = new Command("uncompress-everything", "Batch uncompress every file") {
                 uncompressEverythingInput,
             };
-            uncompressEverything.SetAction(ctx => {
+            uncompressEverything.SetAction(parseResult => {
                 BatchCommands.UncompressFiles(
-                    ctx.GetValue(uncompressEverythingInput));
+                    parseResult.GetValue(uncompressEverythingInput));
             });
 
             return new Command("batch", "Batch import/export PNG to/from Alar") {
@@ -397,34 +397,34 @@ namespace JUSToolkit.CLI.JUS
 
         private static Command CreateRomCommand()
         {
-            var importGame = new Option<string>("--game", "the path of the rom");
-            var importInput = new Option<string>("--input", "the input directory to insert");
-            var importOutput = new Option<string>("--output", "the output folder");
+            var importGame = new Option<string>("--game") { Description = "the path of the rom" };
+            var importInput = new Option<string>("--input") { Description = "the input directory to insert" };
+            var importOutput = new Option<string>("--output") { Description = "the output folder" };
             var import = new Command("import", "Import files to the Rom") {
                 importGame,
                 importInput,
                 importOutput,
             };
-            import.SetAction(ctx => {
+            import.SetAction(parseResult => {
                 RomCommands.Import(
-                    ctx.GetValue(importGame),
-                    ctx.GetValue(importInput),
-                    ctx.GetValue(importOutput));
+                    parseResult.GetValue(importGame),
+                    parseResult.GetValue(importInput),
+                    parseResult.GetValue(importOutput));
             });
 
-            var importFontGame = new Option<string>("--game", "the path of the rom");
-            var importFontFont = new Option<string>("--font", "the font to insert");
-            var importFontOutput = new Option<string>("--output", "the output folder");
+            var importFontGame = new Option<string>("--game") { Description = "the path of the rom" };
+            var importFontFont = new Option<string>("--font") { Description = "the font to insert" };
+            var importFontOutput = new Option<string>("--output") { Description = "the output folder" };
             var importFont = new Command("import-font", "Import the translated font to the Rom") {
                 importFontGame,
                 importFontFont,
                 importFontOutput,
             };
-            importFont.SetAction(ctx => {
+            importFont.SetAction(parseResult => {
                 RomCommands.ImportFont(
-                    ctx.GetValue(importFontGame),
-                    ctx.GetValue(importFontFont),
-                    ctx.GetValue(importFontOutput));
+                    parseResult.GetValue(importFontGame),
+                    parseResult.GetValue(importFontFont),
+                    parseResult.GetValue(importFontOutput));
             });
 
             return new Command("game", "Import files to the Game") {
@@ -435,106 +435,106 @@ namespace JUSToolkit.CLI.JUS
 
         private static Command CreateTextCommand()
         {
-            var exportBin = new Option<string>("--bin", "the input .bin file");
-            var exportOutput = new Option<string>("--output", "the output folder");
+            var exportBin = new Option<string>("--bin") { Description = "the input .bin file" };
+            var exportOutput = new Option<string>("--output") { Description = "the output folder" };
             var export = new Command("export", "Export .bin file to a .po file") {
                 exportBin,
                 exportOutput,
             };
-            export.SetAction(ctx => {
+            export.SetAction(parseResult => {
                 TextExportCommands.Export(
-                    ctx.GetValue(exportBin),
-                    ctx.GetValue(exportOutput));
+                    parseResult.GetValue(exportBin),
+                    parseResult.GetValue(exportOutput));
             });
 
-            var exportJQuizBin = new Option<string>("--bin", "the input jquiz.bin file");
-            var exportJQuizOutput = new Option<string>("--output", "the output folder");
+            var exportJQuizBin = new Option<string>("--bin") { Description = "the input jquiz.bin file" };
+            var exportJQuizOutput = new Option<string>("--output") { Description = "the output folder" };
             var exportJQuiz = new Command("export-jquiz", "Export JQuiz .bin file to multiple .po files") {
                 exportJQuizBin,
                 exportJQuizOutput,
             };
-            exportJQuiz.SetAction(ctx => {
+            exportJQuiz.SetAction(parseResult => {
                 TextExportCommands.JQuizExport(
-                    ctx.GetValue(exportJQuizBin),
-                    ctx.GetValue(exportJQuizOutput));
+                    parseResult.GetValue(exportJQuizBin),
+                    parseResult.GetValue(exportJQuizOutput));
             });
 
-            var deckExportDirectory = new Option<string>("--directory", "the directory with the .bin files");
-            var deckExportPdeck = new Option<bool>("--pdeck", "true for pdeck files");
-            var deckExportOutput = new Option<string>("--output", "the output folder");
+            var deckExportDirectory = new Option<string>("--directory") { Description = "the directory with the .bin files" };
+            var deckExportPdeck = new Option<bool>("--pdeck") { Description = "true for pdeck files" };
+            var deckExportOutput = new Option<string>("--output") { Description = "the output folder" };
             var deckExport = new Command("export-deck", "Export deck/pdeck .bin files from a folder, to a single .po file") {
                 deckExportDirectory,
                 deckExportPdeck,
                 deckExportOutput,
             };
-            deckExport.SetAction(ctx => {
+            deckExport.SetAction(parseResult => {
                 TextExportCommands.DeckExport(
-                    ctx.GetValue(deckExportDirectory),
-                    ctx.GetValue(deckExportPdeck),
-                    ctx.GetValue(deckExportOutput));
+                    parseResult.GetValue(deckExportDirectory),
+                    parseResult.GetValue(deckExportPdeck),
+                    parseResult.GetValue(deckExportOutput));
             });
 
-            var batchExportDirectory = new Option<string>("--directory", "the input directory with the .bin files");
-            var batchExportOutput = new Option<string>("--output", "the output folder");
+            var batchExportDirectory = new Option<string>("--directory") { Description = "the input directory with the .bin files" };
+            var batchExportOutput = new Option<string>("--output") { Description = "the output folder" };
             var batchExport = new Command("batch-export", "Batch export .bin files from a folder, to .po files") {
                 batchExportDirectory,
                 batchExportOutput,
             };
-            batchExport.SetAction(ctx => {
+            batchExport.SetAction(parseResult => {
                 TextExportCommands.BatchExport(
-                    ctx.GetValue(batchExportDirectory),
-                    ctx.GetValue(batchExportOutput));
+                    parseResult.GetValue(batchExportDirectory),
+                    parseResult.GetValue(batchExportOutput));
             });
 
-            var importPo = new Option<string>("--po", "the input .po file");
-            var importOutput = new Option<string>("--output", "the output folder");
+            var importPo = new Option<string>("--po") { Description = "the input .po file" };
+            var importOutput = new Option<string>("--output") { Description = "the output folder" };
             var import = new Command("import", "Import a .po file into a .bin") {
                 importPo,
                 importOutput,
             };
-            import.SetAction(ctx => {
+            import.SetAction(parseResult => {
                 TextImportCommands.Import(
-                    ctx.GetValue(importPo),
-                    ctx.GetValue(importOutput));
+                    parseResult.GetValue(importPo),
+                    parseResult.GetValue(importOutput));
             });
 
-            var deckImportPo = new Option<string>("--po", "the po file");
-            var deckImportPdeck = new Option<bool>("--pdeck", "true for pdeck files");
-            var deckImportOutput = new Option<string>("--output", "the output folder");
+            var deckImportPo = new Option<string>("--po") { Description = "the po file" };
+            var deckImportPdeck = new Option<bool>("--pdeck") { Description = "true for pdeck files" };
+            var deckImportOutput = new Option<string>("--output") { Description = "the output folder" };
             var deckImport = new Command("import-deck", "Import a single po file, to multiple .bin files") {
                 deckImportPo,
                 deckImportPdeck,
                 deckImportOutput,
             };
-            deckImport.SetAction(ctx => {
+            deckImport.SetAction(parseResult => {
                 TextImportCommands.DeckImport(
-                    ctx.GetValue(deckImportPo),
-                    ctx.GetValue(deckImportPdeck),
-                    ctx.GetValue(deckImportOutput));
+                    parseResult.GetValue(deckImportPo),
+                    parseResult.GetValue(deckImportPdeck),
+                    parseResult.GetValue(deckImportOutput));
             });
 
-            var batchImportDirectory = new Option<string>("--directory", "the input directory with the .bin files");
-            var batchImportOutput = new Option<string>("--output", "the output folder");
+            var batchImportDirectory = new Option<string>("--directory") { Description = "the input directory with the .bin files" };
+            var batchImportOutput = new Option<string>("--output") { Description = "the output folder" };
             var batchImport = new Command("batch-import", "Import .bin files from a folder, to a .po file") {
                 batchImportDirectory,
                 batchImportOutput,
             };
-            batchImport.SetAction(ctx => {
+            batchImport.SetAction(parseResult => {
                 TextImportCommands.BatchImport(
-                    ctx.GetValue(batchImportDirectory),
-                    ctx.GetValue(batchImportOutput));
+                    parseResult.GetValue(batchImportDirectory),
+                    parseResult.GetValue(batchImportOutput));
             });
 
-            var importJQuizContainer = new Option<string>("--container", "the container of the .po files");
-            var importJQuizOutput = new Option<string>("--output", "the output folder");
+            var importJQuizContainer = new Option<string>("--container") { Description = "the container of the .po files" };
+            var importJQuizOutput = new Option<string>("--output") { Description = "the output folder" };
             var importJQuiz = new Command("import-jquiz", "Import the jquiz Po folder into a .bin") {
                 importJQuizContainer,
                 importJQuizOutput,
             };
-            importJQuiz.SetAction(ctx => {
+            importJQuiz.SetAction(parseResult => {
                 TextImportCommands.ImportJQuiz(
-                    ctx.GetValue(importJQuizContainer),
-                    ctx.GetValue(importJQuizOutput));
+                    parseResult.GetValue(importJQuizContainer),
+                    parseResult.GetValue(importJQuizOutput));
             });
 
             return new Command("texts", "Export or import bin files to Po") {
