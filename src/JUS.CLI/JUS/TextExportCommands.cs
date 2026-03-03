@@ -68,7 +68,7 @@ namespace JUSToolkit.CLI.JUS
             // Get the last directory or file name from the path
             string lastDirectory = Path.GetFileName(directory);
 
-            Node inputFiles = NodeFactory.FromDirectory(directory, "*.bin");
+            using Node inputFiles = NodeFactory.FromDirectory(directory, "*.bin");
             inputFiles.SortChildren((x, y) => string.Compare(x.Name, y.Name, StringComparison.CurrentCulture));
             Console.WriteLine(inputFiles.Children.Count.ToString() + " files to transform.");
 
@@ -76,7 +76,7 @@ namespace JUSToolkit.CLI.JUS
             IConverter poConverter = pdeck ? new PDeck2Po() : new Deck2Po();
 
             // NodeContainerFormat with all the (P)Deck files
-            var container = new Node("parent", new NodeContainerFormat());
+            using var container = new Node("parent", new NodeContainerFormat());
 
             foreach (Node file in inputFiles.Children) {
                 Console.WriteLine(file.Name);
@@ -89,7 +89,7 @@ namespace JUSToolkit.CLI.JUS
             Node poFormat = container.TransformWith(poConverter);
 
             // Po -> Binary
-            BinaryFormat poBinaryFormat = new Po2Binary().Convert(poFormat.GetFormatAs<Po>());
+            using BinaryFormat poBinaryFormat = new Po2Binary().Convert(poFormat.GetFormatAs<Po>());
 
             string outputFile = Path.Combine(output, $"deck-{lastDirectory}.po");
             poBinaryFormat.Stream.WriteTo(outputFile);
@@ -127,7 +127,7 @@ namespace JUSToolkit.CLI.JUS
         /// <param name="output">The output directory.</param>
         public static void BatchExport(string directory, string output)
         {
-            Node inputFiles = NodeFactory.FromDirectory(directory, "*.bin");
+            using Node inputFiles = NodeFactory.FromDirectory(directory, "*.bin");
             Console.WriteLine(inputFiles.Children.Count.ToString() + " files to transform.");
 
             foreach (Node file in inputFiles.Children) {
@@ -158,7 +158,7 @@ namespace JUSToolkit.CLI.JUS
             var poFormat = (Po)ConvertFormat.With(poConverterName, textFormat);
 
             // Po -> Binary
-            BinaryFormat poBinaryFormat = new Po2Binary().Convert(poFormat);
+            using BinaryFormat poBinaryFormat = new Po2Binary().Convert(poFormat);
 
             string outputFile = Path.Combine(output, filename + ".po");
             poBinaryFormat.Stream.WriteTo(outputFile);
