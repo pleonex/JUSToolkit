@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using JUSToolkit.Graphics;
 using JUSToolkit.Graphics.Converters;
 using Texim.Pixels;

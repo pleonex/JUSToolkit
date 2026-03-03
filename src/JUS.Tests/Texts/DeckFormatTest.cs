@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using JUSToolkit.Texts.Converters;
 using JUSToolkit.Texts.Formats;
 using NUnit.Framework;

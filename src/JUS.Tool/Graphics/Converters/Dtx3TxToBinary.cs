@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using JUSToolkit.Graphics.Converters;
 using Texim.Sprites;
 using Yarhl.FileFormat;

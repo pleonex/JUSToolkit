@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Yarhl.FileFormat;
 
 namespace JUSToolkit.Texts.Formats

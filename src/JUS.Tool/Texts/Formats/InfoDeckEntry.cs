@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 
 namespace JUSToolkit.Texts.Formats
 {
