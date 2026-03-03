@@ -56,7 +56,8 @@ namespace JUSToolkit.Tests.Containers
 
             using Node jquiz = NodeFactory.FromFile(jquizPath, FileOpenMode.Read);
 
-            jquiz.Invoking(n => n.TransformWith<Binary2JQuiz>()).Should().NotThrow();
+            var act = () => jquiz.TransformWith<Binary2JQuiz>();
+            act.Should().NotThrow();
             jquiz.GetFormatAs<JQuiz>().Entries.Should().NotBeEmpty().And.HaveCount(3006);
         }
 
@@ -119,7 +120,7 @@ namespace JUSToolkit.Tests.Containers
             }
 
             // Comparing Binaries
-            Assert.True(expectedBin.Stream.Compare(actualBin.Stream), $"JQuiz is not identical: {node.Path}");
+            Assert.That(expectedBin.Stream.Compare(actualBin.Stream), Is.True, $"JQuiz is not identical: {node.Path}");
         }
     }
 }

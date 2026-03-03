@@ -19,7 +19,7 @@ namespace JUS.Tests.Texts
             string programDir = AppDomain.CurrentDomain.BaseDirectory;
             resPath = Path.GetFullPath(programDir + "/../../../Resources/Texts/Pname/pname.bin");
 
-            Assert.True(File.Exists(resPath), "The resource file does not exist", resPath);
+            Assert.That(File.Exists(resPath), Is.True, "The file does not exist");
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace JUS.Tests.Texts
             }
 
             // Comparing Binaries
-            Assert.True(expectedBin.Stream.Compare(actualBin.Stream), $"Pname is not identical: {node.Path}");
+            Assert.That(expectedBin.Stream.Compare(actualBin.Stream), Is.True, $"Pname is not identical: {node.Path}");
         }
     }
 }

@@ -84,7 +84,8 @@ namespace JUSToolkit.Tests.Containers
 
             using var alar = NodeFactory.FromFile(alarPath, FileOpenMode.Read);
 
-            alar.Invoking(n => n.TransformWith<Binary2Alar3>()).Should().NotThrow();
+            var act = () => alar.TransformWith<Binary2Alar3>();
+            act.Should().NotThrow();
             alar.Should().MatchInfo(expected);
         }
 
@@ -132,7 +133,7 @@ namespace JUSToolkit.Tests.Containers
 
             alarFile.ReplaceStream(streamB);
 
-            Assert.AreEqual(3, alarFile.Size);
+            Assert.That(alarFile.Size, Is.EqualTo(3));
             alarFile.Stream.Compare(streamB).Should().BeTrue();
             alarFile.Stream.Compare(streamA).Should().BeFalse();
         }
@@ -165,46 +166,46 @@ namespace JUSToolkit.Tests.Containers
 
             // Comprobamos que todo se haya creado bien:
             // Cuántos hijos tiene el Alar3
-            Assert.AreEqual(totalFiles, alar.Root.Children.Count);
+            Assert.That(alar.Root.Children.Count, Is.EqualTo(totalFiles));
 
             // Tamaños
-            Assert.AreEqual(5, alar.Root.Children[0].GetFormatAs<Alar3File>().Size);
-            Assert.AreEqual(5, alar.Root.Children[1].GetFormatAs<Alar3File>().Size);
-            Assert.AreEqual(5, alar.Root.Children[2].GetFormatAs<Alar3File>().Size);
-            Assert.AreEqual(5, alar.Root.Children[3].GetFormatAs<Alar3File>().Size);
+            Assert.That(alar.Root.Children[0].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[1].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[2].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[3].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
 
             // Offsets
-            Assert.AreEqual(0, alar.Root.Children[0].GetFormatAs<Alar3File>().Offset);
-            Assert.AreEqual(5, alar.Root.Children[1].GetFormatAs<Alar3File>().Offset);
-            Assert.AreEqual(10, alar.Root.Children[2].GetFormatAs<Alar3File>().Offset);
-            Assert.AreEqual(15, alar.Root.Children[3].GetFormatAs<Alar3File>().Offset);
+            Assert.That(alar.Root.Children[0].GetFormatAs<Alar3File>().Offset, Is.EqualTo(0));
+            Assert.That(alar.Root.Children[1].GetFormatAs<Alar3File>().Offset, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[2].GetFormatAs<Alar3File>().Offset, Is.EqualTo(10));
+            Assert.That(alar.Root.Children[3].GetFormatAs<Alar3File>().Offset, Is.EqualTo(15));
 
             // Si el Nodo getFormat . Size está OK
             var child2 = modifiedFiles.Root.Children[0].GetFormatAs<Alar3File>();
-            Assert.AreEqual(10, child2.Size);
-            Assert.AreEqual(5, child2.Offset);
-            Assert.AreEqual(1, modifiedFiles.Root.Children.Count());
+            Assert.That(child2.Size, Is.EqualTo(10));
+            Assert.That(child2.Offset, Is.EqualTo(5));
+            Assert.That(modifiedFiles.Root.Children.Count, Is.EqualTo(1));
 
             // Insertamos el Nodo con InsertModification
             alar.InsertModification(modifiedFiles);
 
             // Comprobamos los ficheros totales
-            Assert.AreEqual(totalFiles, alar.Root.Children.Count());
+            Assert.That(alar.Root.Children.Count, Is.EqualTo(totalFiles));
 
             // Comprobamos los tamaños
-            Assert.AreEqual(5, alar.Root.Children[0].GetFormatAs<Alar3File>().Size);
-            Assert.AreEqual(10, alar.Root.Children[1].GetFormatAs<Alar3File>().Size);
-            Assert.AreEqual(5, alar.Root.Children[2].GetFormatAs<Alar3File>().Size);
-            Assert.AreEqual(5, alar.Root.Children[3].GetFormatAs<Alar3File>().Size);
+            Assert.That(alar.Root.Children[0].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[1].GetFormatAs<Alar3File>().Size, Is.EqualTo(10));
+            Assert.That(alar.Root.Children[2].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[3].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
 
             // Comprobamos el tema de los offsets (0, 5, 15, 20)
-            Assert.AreEqual(0, alar.Root.Children[0].GetFormatAs<Alar3File>().Offset);
-            Assert.AreEqual(5, alar.Root.Children[1].GetFormatAs<Alar3File>().Offset);
-            Assert.AreEqual(15, alar.Root.Children[2].GetFormatAs<Alar3File>().Offset);
-            Assert.AreEqual(20, alar.Root.Children[3].GetFormatAs<Alar3File>().Offset);
+            Assert.That(alar.Root.Children[0].GetFormatAs<Alar3File>().Offset, Is.EqualTo(0));
+            Assert.That(alar.Root.Children[1].GetFormatAs<Alar3File>().Offset, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[2].GetFormatAs<Alar3File>().Offset, Is.EqualTo(15));
+            Assert.That(alar.Root.Children[3].GetFormatAs<Alar3File>().Offset, Is.EqualTo(20));
 
             // Comprobamos el contenido del fichero insertado
-            Assert.AreEqual(newStream, alar.Root.Children[1].Stream);
+            Assert.That(alar.Root.Children[1].Stream, Is.EqualTo(newStream));
         }
 
         // Inserting Nodes in a ALAR3 with subdirectories. What if the same node.Name is in two different subdirectories of the same ALAR3?
@@ -222,7 +223,7 @@ namespace JUSToolkit.Tests.Containers
             // Tenemos que comprobar si se ha introducido correctamente
             // Obtenemos el fichero del alar3 y comprobamos el size
             Node newFile = Navigator.SearchNode(alar.Root, internalPath);
-            Assert.AreEqual(fileOriginal.Stream.Length, newFile.Stream.Length);
+            Assert.That(newFile.Stream.Length, Is.EqualTo(fileOriginal.Stream.Length));
         }
 
         // Unit test para la funcion de GetAlar3Path
@@ -245,10 +246,10 @@ namespace JUSToolkit.Tests.Containers
             string komaResult = (string)method.Invoke(null, new object[] { komaFilePath });
 
             // Assert
-            Assert.AreEqual("jgalaxy/ast_battle.aar", jgalaxyResult);
-            Assert.AreEqual("bin/deck/bb.bin", infodeckyResult);
-            Assert.AreEqual("vscall/obj_a.aar", vscallResult);
-            Assert.AreEqual("koma/bb_00.dtx", komaResult);
+            Assert.That(jgalaxyResult, Is.EqualTo("jgalaxy/ast_battle.aar"));
+            Assert.That(infodeckyResult, Is.EqualTo("bin/deck/bb.bin"));
+            Assert.That(vscallResult, Is.EqualTo("vscall/obj_a.aar"));
+            Assert.That(komaResult, Is.EqualTo("koma/bb_00.dtx"));
         }
     }
 }

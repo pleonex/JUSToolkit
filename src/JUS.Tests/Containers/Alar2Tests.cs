@@ -68,7 +68,8 @@ namespace JUSToolkit.Tests.Containers
 
             using var alar = NodeFactory.FromFile(alarPath, FileOpenMode.Read);
 
-            alar.Invoking(n => n.TransformWith<Binary2Alar2>()).Should().NotThrow();
+            var act = () => alar.TransformWith<Binary2Alar2>();
+            act.Should().NotThrow();
             alar.Should().MatchInfo(expected);
         }
 
@@ -116,7 +117,7 @@ namespace JUSToolkit.Tests.Containers
 
             alarFile.ReplaceStream(streamB);
 
-            Assert.AreEqual(3, alarFile.Size);
+            Assert.That(alarFile.Size, Is.EqualTo(3));
             alarFile.Stream.Compare(streamB).Should().BeTrue();
             alarFile.Stream.Compare(streamA).Should().BeFalse();
         }
@@ -147,43 +148,43 @@ namespace JUSToolkit.Tests.Containers
 
             // Comprobamos que todo se haya creado bien:
             // Cuántos hijos tiene el Alar2
-            Assert.AreEqual(totalFiles, alar.Root.Children.Count());
+            Assert.That(alar.Root.Children.Count, Is.EqualTo(totalFiles));
 
             // Tamaños
-            Assert.AreEqual(5, alar.Root.Children[0].GetFormatAs<Alar2File>().Size);
-            Assert.AreEqual(5, alar.Root.Children[1].GetFormatAs<Alar2File>().Size);
-            Assert.AreEqual(5, alar.Root.Children[2].GetFormatAs<Alar2File>().Size);
-            Assert.AreEqual(5, alar.Root.Children[3].GetFormatAs<Alar2File>().Size);
+            Assert.That(alar.Root.Children[0].GetFormatAs<Alar2File>().Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[1].GetFormatAs<Alar2File>().Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[2].GetFormatAs<Alar2File>().Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[3].GetFormatAs<Alar2File>().Size, Is.EqualTo(5));
 
             // Offsets
-            Assert.AreEqual(0, alar.Root.Children[0].GetFormatAs<Alar2File>().Offset);
-            Assert.AreEqual(5, alar.Root.Children[1].GetFormatAs<Alar2File>().Offset);
-            Assert.AreEqual(10, alar.Root.Children[2].GetFormatAs<Alar2File>().Offset);
-            Assert.AreEqual(15, alar.Root.Children[3].GetFormatAs<Alar2File>().Offset);
+            Assert.That(alar.Root.Children[0].GetFormatAs<Alar2File>().Offset, Is.EqualTo(0));
+            Assert.That(alar.Root.Children[1].GetFormatAs<Alar2File>().Offset, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[2].GetFormatAs<Alar2File>().Offset, Is.EqualTo(10));
+            Assert.That(alar.Root.Children[3].GetFormatAs<Alar2File>().Offset, Is.EqualTo(15));
 
             // Si el Nodo getFormat . Size está OK
             var child2 = modifiedFiles.Root.Children[0].GetFormatAs<Alar2File>();
-            Assert.AreEqual(10, child2.Size);
-            Assert.AreEqual(5, child2.Offset);
-            Assert.AreEqual(1, modifiedFiles.Root.Children.Count());
+            Assert.That(child2.Size, Is.EqualTo(10));
+            Assert.That(child2.Offset, Is.EqualTo(5));
+            Assert.That(modifiedFiles.Root.Children.Count, Is.EqualTo(1));
 
             // Insertamos el Nodo con InsertModification
             alar.InsertModification(modifiedFiles);
 
             // Comprobamos los ficheros totales
-            Assert.AreEqual(totalFiles, alar.Root.Children.Count());
+            Assert.That(alar.Root.Children.Count, Is.EqualTo(totalFiles));
 
             // Comprobamos los tamaños
-            Assert.AreEqual(5, alar.Root.Children[0].GetFormatAs<Alar2File>().Size);
-            Assert.AreEqual(10, alar.Root.Children[1].GetFormatAs<Alar2File>().Size);
-            Assert.AreEqual(5, alar.Root.Children[2].GetFormatAs<Alar2File>().Size);
-            Assert.AreEqual(5, alar.Root.Children[3].GetFormatAs<Alar2File>().Size);
+            Assert.That(alar.Root.Children[0].GetFormatAs<Alar2File>().Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[1].GetFormatAs<Alar2File>().Size, Is.EqualTo(10));
+            Assert.That(alar.Root.Children[2].GetFormatAs<Alar2File>().Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[3].GetFormatAs<Alar2File>().Size, Is.EqualTo(5));
 
             // Comprobamos el tema de los offsets (0, 5, 15, 20)
-            Assert.AreEqual(0, alar.Root.Children[0].GetFormatAs<Alar2File>().Offset);
-            Assert.AreEqual(5, alar.Root.Children[1].GetFormatAs<Alar2File>().Offset);
-            Assert.AreEqual(15, alar.Root.Children[2].GetFormatAs<Alar2File>().Offset);
-            Assert.AreEqual(20, alar.Root.Children[3].GetFormatAs<Alar2File>().Offset);
+            Assert.That(alar.Root.Children[0].GetFormatAs<Alar2File>().Offset, Is.EqualTo(0));
+            Assert.That(alar.Root.Children[1].GetFormatAs<Alar2File>().Offset, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[2].GetFormatAs<Alar2File>().Offset, Is.EqualTo(15));
+            Assert.That(alar.Root.Children[3].GetFormatAs<Alar2File>().Offset, Is.EqualTo(20));
         }
     }
 }

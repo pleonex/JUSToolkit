@@ -19,7 +19,7 @@ namespace JUS.Tests.Texts
             string programDir = AppDomain.CurrentDomain.BaseDirectory;
             resPath = Path.GetFullPath(programDir + "/../../../Resources/Texts/Commwin/");
 
-            Assert.True(Directory.Exists(resPath), "The resources folder does not exist", resPath);
+            Assert.That(Directory.Exists(resPath), Is.True, "The resources folder does not exist");
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace JUS.Tests.Texts
                     actualBin.Stream.WriteTo("test.bin");
 
                     // Comparing Binaries
-                    Assert.True(expectedBin.Stream.Compare(actualBin.Stream), $"Commwin are not identical: {node.Path}");
+                    Assert.That(expectedBin.Stream.Compare(actualBin.Stream), Is.True, $"Commwin are not identical: {node.Path}");
                 }
             }
         }
