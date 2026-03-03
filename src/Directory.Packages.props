@@ -7,18 +7,18 @@
         <PackageVersion Include="Texim.Games" Version="0.1.0-preview.320" />
         <PackageVersion Include="SceneGate.Ekona" Version="1.1.1-preview.77" />
 
-        <PackageVersion Include="FluentAssertions" Version="5.10.3" />
-        <PackageVersion Include="nunit" Version="3.13.2" />
-        <PackageVersion Include="NUnit3TestAdapter" Version="4.1.0" />
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.0.0"/>
+        <PackageVersion Include="FluentAssertions" Version="7.2.1" />
+        <PackageVersion Include="nunit" Version="4.4.0" />
+        <PackageVersion Include="NUnit3TestAdapter" Version="4.6.0" />
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0"/>
         <PackageVersion Include="YamlDotNet" Version="16.3.0" />
 
-        <PackageVersion Include="System.CommandLine" Version="2.0.0-beta1.21216.1" />
-        
-        <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
+        <PackageVersion Include="System.CommandLine" Version="2.0.3" />
 
-        <PackageVersion Include="StyleCop.Analyzers" Version="1.1.118" />
-        <PackageVersion Include="SonarAnalyzer.CSharp" Version="8.32.0.39516" />
-        <PackageVersion Include="Roslynator.Analyzers" Version="3.2.2" />
+        <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.102" />
+
+        <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
+        <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.20.0.135146" />
+        <PackageVersion Include="Roslynator.Analyzers" Version="4.15.0" />
     </ItemGroup>
 </Project>
