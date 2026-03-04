@@ -20,7 +20,7 @@
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Utils
+namespace JUS.Tool.Utils
 {
     /// <summary>
     /// Compression auxiliar methods.

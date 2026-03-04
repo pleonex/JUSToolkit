@@ -27,7 +27,7 @@ using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Tests.Containers
+namespace JUS.Tests.Containers
 {
     [TestFixture]
     public class Alar3Tests
@@ -93,7 +93,7 @@ namespace JUSToolkit.Tests.Containers
 
             using Node node = NodeFactory.FromFile(alarPath, FileOpenMode.Read);
 
-            Alar3 alar = node.GetFormatAs<IBinary>().ConvertWith(new Binary2Alar3());
+            Alar3 alar = node.GetFormatAs<IBinary>()!.ConvertWith(new Binary2Alar3());
             BinaryFormat generatedStream = alar.ConvertWith(new Alar3ToBinary());
 
             generatedStream.Stream.Length.Should().Be(node.Stream!.Length);
@@ -108,7 +108,7 @@ namespace JUSToolkit.Tests.Containers
             using Node alarOriginal = NodeFactory.FromFile(alarPath, FileOpenMode.Read);
             using Node fileOriginal = NodeFactory.FromDirectory(dirPath);
 
-            Alar3 alar = alarOriginal.GetFormatAs<IBinary>().ConvertWith(new Binary2Alar3());
+            Alar3 alar = alarOriginal.GetFormatAs<IBinary>()!.ConvertWith(new Binary2Alar3());
             alar.InsertModification(fileOriginal);
             BinaryFormat generatedStream = alar.ConvertWith(new Alar3ToBinary());
 
@@ -165,19 +165,19 @@ namespace JUSToolkit.Tests.Containers
             Assert.That(alar.Root.Children.Count, Is.EqualTo(totalFiles));
 
             // Tamaños
-            Assert.That(alar.Root.Children[0].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
-            Assert.That(alar.Root.Children[1].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
-            Assert.That(alar.Root.Children[2].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
-            Assert.That(alar.Root.Children[3].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[0].GetFormatAs<Alar3File>()!.Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[1].GetFormatAs<Alar3File>()!.Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[2].GetFormatAs<Alar3File>()!.Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[3].GetFormatAs<Alar3File>()!.Size, Is.EqualTo(5));
 
             // Offsets
-            Assert.That(alar.Root.Children[0].GetFormatAs<Alar3File>().Offset, Is.EqualTo(0));
-            Assert.That(alar.Root.Children[1].GetFormatAs<Alar3File>().Offset, Is.EqualTo(5));
-            Assert.That(alar.Root.Children[2].GetFormatAs<Alar3File>().Offset, Is.EqualTo(10));
-            Assert.That(alar.Root.Children[3].GetFormatAs<Alar3File>().Offset, Is.EqualTo(15));
+            Assert.That(alar.Root.Children[0].GetFormatAs<Alar3File>()!.Offset, Is.EqualTo(0));
+            Assert.That(alar.Root.Children[1].GetFormatAs<Alar3File>()!.Offset, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[2].GetFormatAs<Alar3File>()!.Offset, Is.EqualTo(10));
+            Assert.That(alar.Root.Children[3].GetFormatAs<Alar3File>()!.Offset, Is.EqualTo(15));
 
             // Si el Nodo getFormat . Size está OK
-            var child2 = modifiedFiles.Root.Children[0].GetFormatAs<Alar3File>();
+            var child2 = modifiedFiles.Root.Children[0].GetFormatAs<Alar3File>()!;
             Assert.That(child2.Size, Is.EqualTo(10));
             Assert.That(child2.Offset, Is.EqualTo(5));
             Assert.That(modifiedFiles.Root.Children.Count, Is.EqualTo(1));
@@ -189,16 +189,16 @@ namespace JUSToolkit.Tests.Containers
             Assert.That(alar.Root.Children.Count, Is.EqualTo(totalFiles));
 
             // Comprobamos los tamaños
-            Assert.That(alar.Root.Children[0].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
-            Assert.That(alar.Root.Children[1].GetFormatAs<Alar3File>().Size, Is.EqualTo(10));
-            Assert.That(alar.Root.Children[2].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
-            Assert.That(alar.Root.Children[3].GetFormatAs<Alar3File>().Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[0].GetFormatAs<Alar3File>()!.Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[1].GetFormatAs<Alar3File>()!.Size, Is.EqualTo(10));
+            Assert.That(alar.Root.Children[2].GetFormatAs<Alar3File>()!.Size, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[3].GetFormatAs<Alar3File>()!.Size, Is.EqualTo(5));
 
             // Comprobamos el tema de los offsets (0, 5, 15, 20)
-            Assert.That(alar.Root.Children[0].GetFormatAs<Alar3File>().Offset, Is.EqualTo(0));
-            Assert.That(alar.Root.Children[1].GetFormatAs<Alar3File>().Offset, Is.EqualTo(5));
-            Assert.That(alar.Root.Children[2].GetFormatAs<Alar3File>().Offset, Is.EqualTo(15));
-            Assert.That(alar.Root.Children[3].GetFormatAs<Alar3File>().Offset, Is.EqualTo(20));
+            Assert.That(alar.Root.Children[0].GetFormatAs<Alar3File>()!.Offset, Is.EqualTo(0));
+            Assert.That(alar.Root.Children[1].GetFormatAs<Alar3File>()!.Offset, Is.EqualTo(5));
+            Assert.That(alar.Root.Children[2].GetFormatAs<Alar3File>()!.Offset, Is.EqualTo(15));
+            Assert.That(alar.Root.Children[3].GetFormatAs<Alar3File>()!.Offset, Is.EqualTo(20));
 
             // Comprobamos el contenido del fichero insertado
             Assert.That(alar.Root.Children[1].Stream, Is.EqualTo(newStream));
@@ -213,13 +213,13 @@ namespace JUSToolkit.Tests.Containers
             using Node alarOriginal = NodeFactory.FromFile(alarPath, FileOpenMode.Read);
             using Node fileOriginal = NodeFactory.FromFile(fileToInsert, FileOpenMode.Read);
 
-            Alar3 alar = alarOriginal.GetFormatAs<IBinary>().ConvertWith(new Binary2Alar3());
+            Alar3 alar = alarOriginal.GetFormatAs<IBinary>()!.ConvertWith(new Binary2Alar3());
             alar.InsertModification(fileOriginal, parent);
 
             // Tenemos que comprobar si se ha introducido correctamente
             // Obtenemos el fichero del alar3 y comprobamos el size
             Node newFile = Navigator.SearchNode(alar.Root, internalPath);
-            Assert.That(newFile.Stream.Length, Is.EqualTo(fileOriginal.Stream.Length));
+            Assert.That(newFile.Stream!.Length, Is.EqualTo(fileOriginal.Stream!.Length));
         }
 
         // Unit test para la funcion de GetAlar3Path

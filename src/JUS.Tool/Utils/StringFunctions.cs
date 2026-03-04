@@ -20,7 +20,7 @@
 using System.Text.RegularExpressions;
 using JUSToolkit.Texts.Converters;
 
-namespace JUSToolkit.Utils
+namespace JUS.Tool.Utils
 {
     /// <summary>
     /// Helper methods for strings.

@@ -19,7 +19,7 @@
 // SOFTWARE.
 using System.Text;
 
-namespace JUSToolkit.Graphics.Converters
+namespace JUS.Tool.Utils
 {
     /// <summary>
     /// Hex and ascii viewer by Pleonex.
