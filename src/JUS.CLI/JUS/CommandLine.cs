@@ -55,10 +55,10 @@ namespace JUSToolkit.CLI.JUS
             };
             exportKomas.SetAction(parseResult => {
                 DtxCommands.ExportKomas(
-                    parseResult.GetValue(exportKomasContainer),
-                    parseResult.GetValue(exportKomasKoma),
-                    parseResult.GetValue(exportKomasKshape),
-                    parseResult.GetValue(exportKomasOutput));
+                    parseResult.GetValue(exportKomasContainer)!,
+                    parseResult.GetValue(exportKomasKoma)!,
+                    parseResult.GetValue(exportKomasKshape)!,
+                    parseResult.GetValue(exportKomasOutput)!);
             });
 
             var importKomasPng = new Option<string>("--png") { Description = "the png to import" };
@@ -75,11 +75,11 @@ namespace JUSToolkit.CLI.JUS
             };
             importDtx4.SetAction(parseResult => {
                 DtxCommands.ImportKoma(
-                    parseResult.GetValue(importKomasPng),
-                    parseResult.GetValue(importKomasDtx),
-                    parseResult.GetValue(importKomasKoma),
-                    parseResult.GetValue(importKomasKshape),
-                    parseResult.GetValue(importKomasOutput));
+                    parseResult.GetValue(importKomasPng)!,
+                    parseResult.GetValue(importKomasDtx)!,
+                    parseResult.GetValue(importKomasKoma)!,
+                    parseResult.GetValue(importKomasKshape)!,
+                    parseResult.GetValue(importKomasOutput)!);
             });
 
             var exportDtx4Dtx = new Option<string>("--dtx") { Description = "the input file.dtx" };
@@ -94,10 +94,10 @@ namespace JUSToolkit.CLI.JUS
             };
             exportDtx4.SetAction(parseResult => {
                 DtxCommands.ExportDtx4(
-                    parseResult.GetValue(exportDtx4Dtx),
-                    parseResult.GetValue(exportDtx4Koma),
-                    parseResult.GetValue(exportDtx4Kshape),
-                    parseResult.GetValue(exportDtx4Output));
+                    parseResult.GetValue(exportDtx4Dtx)!,
+                    parseResult.GetValue(exportDtx4Koma)!,
+                    parseResult.GetValue(exportDtx4Kshape)!,
+                    parseResult.GetValue(exportDtx4Output)!);
             });
 
             var exportDtx3Dtx = new Option<string>("--dtx") { Description = "the input file.dtx" };
@@ -108,8 +108,8 @@ namespace JUSToolkit.CLI.JUS
             };
             exportDtx3.SetAction(parseResult => {
                 DtxCommands.ExportDtx3(
-                    parseResult.GetValue(exportDtx3Dtx),
-                    parseResult.GetValue(exportDtx3Output));
+                    parseResult.GetValue(exportDtx3Dtx)!,
+                    parseResult.GetValue(exportDtx3Output)!);
             });
 
             var exportDtx3TxDtx = new Option<string>("--dtx") { Description = "the input file.dtx" };
@@ -120,8 +120,8 @@ namespace JUSToolkit.CLI.JUS
             };
             exportDtx3TxImage.SetAction(parseResult => {
                 DtxCommands.ExportDtx3TxImage(
-                    parseResult.GetValue(exportDtx3TxDtx),
-                    parseResult.GetValue(exportDtx3TxOutput));
+                    parseResult.GetValue(exportDtx3TxDtx)!,
+                    parseResult.GetValue(exportDtx3TxOutput)!);
             });
 
             var importDtx3Input = new Option<string>("--input") { Description = "the folder with the .pngs to import" };
@@ -134,9 +134,9 @@ namespace JUSToolkit.CLI.JUS
             };
             importDtx3.SetAction(parseResult => {
                 DtxCommands.ImportDtx3(
-                    parseResult.GetValue(importDtx3Input),
-                    parseResult.GetValue(importDtx3Dtx),
-                    parseResult.GetValue(importDtx3Output));
+                    parseResult.GetValue(importDtx3Input)!,
+                    parseResult.GetValue(importDtx3Dtx)!,
+                    parseResult.GetValue(importDtx3Output)!);
             });
 
             var importDtx3TxInput = new Option<string>("--input") { Description = "the folder with the .pngs to import" };
@@ -151,10 +151,10 @@ namespace JUSToolkit.CLI.JUS
             };
             importDtx3Tx.SetAction(parseResult => {
                 DtxCommands.ImportDtx3Tx(
-                    parseResult.GetValue(importDtx3TxInput),
-                    parseResult.GetValue(importDtx3TxDtx),
-                    parseResult.GetValue(importDtx3TxYaml),
-                    parseResult.GetValue(importDtx3TxOutput));
+                    parseResult.GetValue(importDtx3TxInput)!,
+                    parseResult.GetValue(importDtx3TxDtx)!,
+                    parseResult.GetValue(importDtx3TxYaml)!,
+                    parseResult.GetValue(importDtx3TxOutput)!);
             });
 
             var exportDigDig = new Option<string>("--dig") { Description = "the input file.dig" };
@@ -167,9 +167,9 @@ namespace JUSToolkit.CLI.JUS
             };
             exportDsigAlmt.SetAction(parseResult => {
                 DigCommands.ExportDig(
-                    parseResult.GetValue(exportDigDig),
-                    parseResult.GetValue(exportDigAtm),
-                    parseResult.GetValue(exportDigOutput));
+                    parseResult.GetValue(exportDigDig)!,
+                    parseResult.GetValue(exportDigAtm)!,
+                    parseResult.GetValue(exportDigOutput)!);
             });
 
             var importDigInput = new Option<string>("--input") { Description = "the png to import" };
@@ -186,11 +186,11 @@ namespace JUSToolkit.CLI.JUS
             };
             importDig.SetAction(parseResult => {
                 DigCommands.ImportDig(
-                    parseResult.GetValue(importDigInput),
+                    parseResult.GetValue(importDigInput)!,
                     parseResult.GetValue(importDigInsertTransparent),
-                    parseResult.GetValue(importDigDig),
-                    parseResult.GetValue(importDigAtm),
-                    parseResult.GetValue(importDigOutput));
+                    parseResult.GetValue(importDigDig)!,
+                    parseResult.GetValue(importDigAtm)!,
+                    parseResult.GetValue(importDigOutput)!);
             });
 
             var mergeDigInput = new Option<string[]>("--input") { Description = "the png to import", Arity = ArgumentArity.OneOrMore };
@@ -207,11 +207,11 @@ namespace JUSToolkit.CLI.JUS
             };
             mergeDig.SetAction(parseResult => {
                 DigCommands.MergeDig(
-                    parseResult.GetValue(mergeDigInput),
+                    parseResult.GetValue(mergeDigInput)!,
                     parseResult.GetValue(mergeDigInsertTransparent),
-                    parseResult.GetValue(mergeDigDig),
-                    parseResult.GetValue(mergeDigAtm),
-                    parseResult.GetValue(mergeDigOutput));
+                    parseResult.GetValue(mergeDigDig)!,
+                    parseResult.GetValue(mergeDigAtm)!,
+                    parseResult.GetValue(mergeDigOutput)!);
             });
 
             var exportYamlDtx3Dtx = new Option<string>("--dtx") { Description = "the input file.dtx" };
@@ -222,8 +222,8 @@ namespace JUSToolkit.CLI.JUS
             };
             exportYamlDtx3.SetAction(parseResult => {
                 DtxCommands.ExportYamlDtx3(
-                    parseResult.GetValue(exportYamlDtx3Dtx),
-                    parseResult.GetValue(exportYamlDtx3Output));
+                    parseResult.GetValue(exportYamlDtx3Dtx)!,
+                    parseResult.GetValue(exportYamlDtx3Output)!);
             });
 
             return new Command("graphics", "Import/Export graphic files") {
@@ -251,8 +251,8 @@ namespace JUSToolkit.CLI.JUS
             };
             export.SetAction(parseResult => {
                 ContainerCommands.Export(
-                    parseResult.GetValue(exportContainer),
-                    parseResult.GetValue(exportOutput));
+                    parseResult.GetValue(exportContainer)!,
+                    parseResult.GetValue(exportOutput)!);
             });
 
             var exportAlar3Container = new Option<string>("--container") { Description = "the input alar3 container" };
@@ -263,8 +263,8 @@ namespace JUSToolkit.CLI.JUS
             };
             exportAlar3.SetAction(parseResult => {
                 ContainerCommands.ExportAlar3(
-                    parseResult.GetValue(exportAlar3Container),
-                    parseResult.GetValue(exportAlar3Output));
+                    parseResult.GetValue(exportAlar3Container)!,
+                    parseResult.GetValue(exportAlar3Output)!);
             });
 
             var exportAlar2Container = new Option<string>("--container") { Description = "the input alar2 container" };
@@ -275,8 +275,8 @@ namespace JUSToolkit.CLI.JUS
             };
             exportAlar2.SetAction(parseResult => {
                 ContainerCommands.ExportAlar2(
-                    parseResult.GetValue(exportAlar2Container),
-                    parseResult.GetValue(exportAlar2Output));
+                    parseResult.GetValue(exportAlar2Container)!,
+                    parseResult.GetValue(exportAlar2Output)!);
             });
 
             var importContainer = new Option<string>("--container") { Description = "the input alar container" };
@@ -289,9 +289,9 @@ namespace JUSToolkit.CLI.JUS
             };
             import.SetAction(parseResult => {
                 ContainerCommands.Import(
-                    parseResult.GetValue(importContainer),
-                    parseResult.GetValue(importInput),
-                    parseResult.GetValue(importOutput));
+                    parseResult.GetValue(importContainer)!,
+                    parseResult.GetValue(importInput)!,
+                    parseResult.GetValue(importOutput)!);
             });
 
             var importAlar2Container = new Option<string>("--container") { Description = "the input alar2 container" };
@@ -304,9 +304,9 @@ namespace JUSToolkit.CLI.JUS
             };
             importAlar2.SetAction(parseResult => {
                 ContainerCommands.ImportAlar2(
-                    parseResult.GetValue(importAlar2Container),
-                    parseResult.GetValue(importAlar2Input),
-                    parseResult.GetValue(importAlar2Output));
+                    parseResult.GetValue(importAlar2Container)!,
+                    parseResult.GetValue(importAlar2Input)!,
+                    parseResult.GetValue(importAlar2Output)!);
             });
 
             var importAlar3Container = new Option<string>("--container") { Description = "the input alar3 container" };
@@ -319,9 +319,9 @@ namespace JUSToolkit.CLI.JUS
             };
             importAlar3.SetAction(parseResult => {
                 ContainerCommands.ImportAlar3(
-                    parseResult.GetValue(importAlar3Container),
-                    parseResult.GetValue(importAlar3Input),
-                    parseResult.GetValue(importAlar3Output));
+                    parseResult.GetValue(importAlar3Container)!,
+                    parseResult.GetValue(importAlar3Input)!,
+                    parseResult.GetValue(importAlar3Output)!);
             });
 
             return new Command("containers", "Unpack/Repack container files") {
@@ -346,9 +346,9 @@ namespace JUSToolkit.CLI.JUS
             };
             importPng2Alar3.SetAction(parseResult => {
                 BatchCommands.ImportPng2Alar3(
-                    parseResult.GetValue(importPng2Alar3Container),
-                    parseResult.GetValue(importPng2Alar3Input),
-                    parseResult.GetValue(importPng2Alar3Output));
+                    parseResult.GetValue(importPng2Alar3Container)!,
+                    parseResult.GetValue(importPng2Alar3Input)!,
+                    parseResult.GetValue(importPng2Alar3Output)!);
             });
 
             var exportAlarDig2PngContainer = new Option<string>("--container") { Description = "the alar container" };
@@ -359,8 +359,8 @@ namespace JUSToolkit.CLI.JUS
             };
             exportAlarDig2Png.SetAction(parseResult => {
                 BatchCommands.ExportAlarDig2Png(
-                    parseResult.GetValue(exportAlarDig2PngContainer),
-                    parseResult.GetValue(exportAlarDig2PngOutput));
+                    parseResult.GetValue(exportAlarDig2PngContainer)!,
+                    parseResult.GetValue(exportAlarDig2PngOutput)!);
             });
 
             var exportAlarDtx2PngContainer = new Option<string>("--container") { Description = "the alar container" };
@@ -373,8 +373,8 @@ namespace JUSToolkit.CLI.JUS
             };
             exportAlarDtx2Png.SetAction(parseResult => {
                 BatchCommands.ExportAlarDtx2Png(
-                    parseResult.GetValue(exportAlarDtx2PngContainer),
-                    parseResult.GetValue(exportAlarDtx2PngOutput),
+                    parseResult.GetValue(exportAlarDtx2PngContainer)!,
+                    parseResult.GetValue(exportAlarDtx2PngOutput)!,
                     parseResult.GetValue(exportAlarDtx2PngGetImage));
             });
 
@@ -384,7 +384,7 @@ namespace JUSToolkit.CLI.JUS
             };
             uncompressEverything.SetAction(parseResult => {
                 BatchCommands.UncompressFiles(
-                    parseResult.GetValue(uncompressEverythingInput));
+                    parseResult.GetValue(uncompressEverythingInput)!);
             });
 
             return new Command("batch", "Batch import/export PNG to/from Alar") {
@@ -407,9 +407,9 @@ namespace JUSToolkit.CLI.JUS
             };
             import.SetAction(parseResult => {
                 RomCommands.Import(
-                    parseResult.GetValue(importGame),
-                    parseResult.GetValue(importInput),
-                    parseResult.GetValue(importOutput));
+                    parseResult.GetValue(importGame)!,
+                    parseResult.GetValue(importInput)!,
+                    parseResult.GetValue(importOutput)!);
             });
 
             var importFontGame = new Option<string>("--game") { Description = "the path of the rom" };
@@ -422,9 +422,9 @@ namespace JUSToolkit.CLI.JUS
             };
             importFont.SetAction(parseResult => {
                 RomCommands.ImportFont(
-                    parseResult.GetValue(importFontGame),
-                    parseResult.GetValue(importFontFont),
-                    parseResult.GetValue(importFontOutput));
+                    parseResult.GetValue(importFontGame)!,
+                    parseResult.GetValue(importFontFont)!,
+                    parseResult.GetValue(importFontOutput)!);
             });
 
             return new Command("game", "Import files to the Game") {
@@ -443,8 +443,8 @@ namespace JUSToolkit.CLI.JUS
             };
             export.SetAction(parseResult => {
                 TextExportCommands.Export(
-                    parseResult.GetValue(exportBin),
-                    parseResult.GetValue(exportOutput));
+                    parseResult.GetValue(exportBin)!,
+                    parseResult.GetValue(exportOutput)!);
             });
 
             var exportJQuizBin = new Option<string>("--bin") { Description = "the input jquiz.bin file" };
@@ -455,8 +455,8 @@ namespace JUSToolkit.CLI.JUS
             };
             exportJQuiz.SetAction(parseResult => {
                 TextExportCommands.JQuizExport(
-                    parseResult.GetValue(exportJQuizBin),
-                    parseResult.GetValue(exportJQuizOutput));
+                    parseResult.GetValue(exportJQuizBin)!,
+                    parseResult.GetValue(exportJQuizOutput)!);
             });
 
             var deckExportDirectory = new Option<string>("--directory") { Description = "the directory with the .bin files" };
@@ -469,9 +469,9 @@ namespace JUSToolkit.CLI.JUS
             };
             deckExport.SetAction(parseResult => {
                 TextExportCommands.DeckExport(
-                    parseResult.GetValue(deckExportDirectory),
+                    parseResult.GetValue(deckExportDirectory)!,
                     parseResult.GetValue(deckExportPdeck),
-                    parseResult.GetValue(deckExportOutput));
+                    parseResult.GetValue(deckExportOutput)!);
             });
 
             var batchExportDirectory = new Option<string>("--directory") { Description = "the input directory with the .bin files" };
@@ -482,8 +482,8 @@ namespace JUSToolkit.CLI.JUS
             };
             batchExport.SetAction(parseResult => {
                 TextExportCommands.BatchExport(
-                    parseResult.GetValue(batchExportDirectory),
-                    parseResult.GetValue(batchExportOutput));
+                    parseResult.GetValue(batchExportDirectory)!,
+                    parseResult.GetValue(batchExportOutput)!);
             });
 
             var importPo = new Option<string>("--po") { Description = "the input .po file" };
@@ -494,8 +494,8 @@ namespace JUSToolkit.CLI.JUS
             };
             import.SetAction(parseResult => {
                 TextImportCommands.Import(
-                    parseResult.GetValue(importPo),
-                    parseResult.GetValue(importOutput));
+                    parseResult.GetValue(importPo)!,
+                    parseResult.GetValue(importOutput)!);
             });
 
             var deckImportPo = new Option<string>("--po") { Description = "the po file" };
@@ -508,9 +508,9 @@ namespace JUSToolkit.CLI.JUS
             };
             deckImport.SetAction(parseResult => {
                 TextImportCommands.DeckImport(
-                    parseResult.GetValue(deckImportPo),
+                    parseResult.GetValue(deckImportPo)!,
                     parseResult.GetValue(deckImportPdeck),
-                    parseResult.GetValue(deckImportOutput));
+                    parseResult.GetValue(deckImportOutput)!);
             });
 
             var batchImportDirectory = new Option<string>("--directory") { Description = "the input directory with the .bin files" };
@@ -521,8 +521,8 @@ namespace JUSToolkit.CLI.JUS
             };
             batchImport.SetAction(parseResult => {
                 TextImportCommands.BatchImport(
-                    parseResult.GetValue(batchImportDirectory),
-                    parseResult.GetValue(batchImportOutput));
+                    parseResult.GetValue(batchImportDirectory)!,
+                    parseResult.GetValue(batchImportOutput)!);
             });
 
             var importJQuizContainer = new Option<string>("--container") { Description = "the container of the .po files" };
@@ -533,8 +533,8 @@ namespace JUSToolkit.CLI.JUS
             };
             importJQuiz.SetAction(parseResult => {
                 TextImportCommands.ImportJQuiz(
-                    parseResult.GetValue(importJQuizContainer),
-                    parseResult.GetValue(importJQuizOutput));
+                    parseResult.GetValue(importJQuizContainer)!,
+                    parseResult.GetValue(importJQuizOutput)!);
             });
 
             return new Command("texts", "Export or import bin files to Po") {

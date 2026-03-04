@@ -139,7 +139,7 @@ namespace JUSToolkit.Texts.Converters
             Table table = Table.Instance;
 
             foreach (Node file in poFiles.Root.Children) {
-                Po po = file.TransformWith<Binary2Po>().GetFormatAs<Po>();
+                Po po = file.TransformWith<Binary2Po>().GetFormatAs<Po>()!;
                 bool hasPhoto = false; // esto una vez entra a true se queda ahí, no vuelve a false
                 foreach (PoEntry entry in po.Entries) {
                     if (entry.Context.Contains("foto")) {

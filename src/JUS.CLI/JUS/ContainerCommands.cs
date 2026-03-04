@@ -47,7 +47,7 @@ namespace JUSToolkit.CLI.JUS
             using Node files = NodeFactory.FromFile(container)
                 .TransformWith<LzssDecompression>() ?? throw new FormatException("Invalid container file");
 
-            Version alarVersion = Identifier.GetAlarVersion(files.Stream);
+            Version alarVersion = Identifier.GetAlarVersion(files.Stream!);
 
             // ToDo: In the future we need to encapsulate this
             if (alarVersion.Major == 3) {
@@ -61,7 +61,7 @@ namespace JUSToolkit.CLI.JUS
                     // Path.Combine ignores the relative path if there is an absolute path
                     // so we remove the first slash of the node.Path
                     string outputFile = Path.Combine(output, node.Path[1..]);
-                    node.Stream.WriteTo(outputFile);
+                    node.Stream!.WriteTo(outputFile);
                 }
             }
 
@@ -89,7 +89,7 @@ namespace JUSToolkit.CLI.JUS
                     // Path.Combine ignores the relative path if there is an absolute path
                     // so we remove the first slash of the node.Path
                     string outputFile = Path.Combine(output, node.Path[1..]);
-                    node.Stream.WriteTo(outputFile);
+                    node.Stream!.WriteTo(outputFile);
                 }
             }
 
@@ -117,7 +117,7 @@ namespace JUSToolkit.CLI.JUS
                     // Path.Combine ignores the relative path if there is an absolute path
                     // so we remove the first slash of the node.Path
                     string outputFile = Path.Combine(output, node.Path[1..]);
-                    node.Stream.WriteTo(outputFile);
+                    node.Stream!.WriteTo(outputFile);
                 }
             }
 
@@ -147,7 +147,7 @@ namespace JUSToolkit.CLI.JUS
                 _ = originalAlar.TransformWith<LzssDecompression>();
             }
 
-            Version alarVersion = Identifier.GetAlarVersion(originalAlar.Stream);
+            Version alarVersion = Identifier.GetAlarVersion(originalAlar.Stream!);
 
             using var filesToInsert = new NodeContainerFormat();
             using Node inputDir = NodeFactory.FromDirectory(input);
@@ -156,12 +156,12 @@ namespace JUSToolkit.CLI.JUS
             BinaryFormat binary;
             if (alarVersion.Major == 3) {
                 Alar3 alar = originalAlar.TransformWith<Binary2Alar3>()
-                    .GetFormatAs<Alar3>();
+                    .GetFormatAs<Alar3>()!;
                 alar.InsertModification(filesToInsert);
                 binary = alar.ConvertWith(new Alar3ToBinary());
             } else if (alarVersion.Major == 2) {
                 Alar2 alar = originalAlar.TransformWith<Binary2Alar2>()
-                    .GetFormatAs<Alar2>();
+                    .GetFormatAs<Alar2>()!;
                 alar.InsertModification(filesToInsert);
                 binary = alar.ConvertWith(new Alar2ToBinary());
             } else {

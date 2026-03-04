@@ -93,7 +93,7 @@ namespace JUSToolkit.CLI.JUS.Rom
         /// <param name="file">The input file to import.</param>
         public void Import(Node gameNode, Node file)
         {
-            if (ContainerLocations.TryGetValue(file.Name, out string[] imageInfo)) {
+            if (ContainerLocations.TryGetValue(file.Name, out string[]? imageInfo)) {
                 file.Name = StringFunctions.GetOriginalName(file.Name);
                 ProcessContainer(gameNode, file, imageInfo);
             } else {
@@ -137,7 +137,7 @@ namespace JUSToolkit.CLI.JUS.Rom
 
             Alar3 newAlar = originalAlar
                 .TransformWith(image2Alar3)
-                .GetFormatAs<Alar3>();
+                .GetFormatAs<Alar3>()!;
 
             BinaryFormat newBinary = newAlar.ConvertWith(new Alar3ToBinary());
 
@@ -249,7 +249,7 @@ namespace JUSToolkit.CLI.JUS.Rom
             string[] fileNames = GetSpecialFileNames(png.Name, ".png");
 
             // Retrieve the corresponding Nodes with the original name
-            Node mNode = png.Parent.Children["demo-" + fileNames[1]] ??
+            Node mNode = png.Parent!.Children["demo-" + fileNames[1]] ??
                     throw new FormatException("Special m file not found: " + fileNames[1]);
             Node nNode = png.Parent.Children["demo-" + fileNames[2]] ??
                     throw new FormatException("Special nfile not found: " + fileNames[2]);

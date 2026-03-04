@@ -59,8 +59,8 @@ namespace JUSToolkit.CLI.JUS.Rom
         /// <param name="file">The input file to import.</param>
         public void Import(Node gameNode, Node file)
         {
-            if (TextLocations.TryGetValue(file.Name, out string value)) {
-                Node toReplace = Navigator.SearchNode(gameNode, $"/root/data{value}");
+            if (TextLocations.TryGetValue(file.Name, out string? value)) {
+                Node toReplace = Navigator.SearchNode(gameNode, $"/root/data{value}")!;
                 toReplace.ChangeFormat(file.Format!);
                 Console.WriteLine($"File replaced: /root/data{value}");
             }

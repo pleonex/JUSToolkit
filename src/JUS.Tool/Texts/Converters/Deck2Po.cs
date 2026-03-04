@@ -41,7 +41,7 @@ namespace JUSToolkit.Texts.Converters
             Po po = JusText.GenerateJusPo();
 
             foreach (Node file in container.Root.Children) {
-                Deck deck = file.GetFormatAs<Deck>();
+                Deck deck = file.GetFormatAs<Deck>()!;
                 po.Add(new PoEntry(deck.Name) {
                     Context = file.Name,
                     ExtractedComments = System.Convert.ToBase64String(deck.Header),

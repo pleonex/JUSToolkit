@@ -25,7 +25,6 @@ using JUSToolkit.Containers.Converters;
 using JUSToolkit.Graphics;
 using JUSToolkit.Graphics.Converters;
 using JUSToolkit.Utils;
-using Texim.Images;
 using Texim.Images.Standard;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
@@ -61,10 +60,10 @@ namespace JUSToolkit.CLI.JUS
                 : originalAlar.TransformWith<Alar2Png>();
 
             NodeContainerFormat result = originalAlar
-                .GetFormatAs<NodeContainerFormat>();
+                .GetFormatAs<NodeContainerFormat>()!;
 
             foreach (Node image in result.Root.Children) {
-                image.Stream.WriteTo(Path.Combine(output, image.Name + ".png"));
+                image.Stream!.WriteTo(Path.Combine(output, image.Name + ".png"));
             }
 
             Console.WriteLine("Done!");
@@ -97,7 +96,7 @@ namespace JUSToolkit.CLI.JUS
                                     .TransformWith<LzssDecompression>()
                                     .TransformWith<BinaryToDtx3>();
 
-                                Dig originalImage = dtx3.Children["image"].GetFormatAs<Dig>();
+                                Dig originalImage = dtx3.Children["image"]!.GetFormatAs<Dig>()!;
 
                                 if (originalImage.Swizzling == DigSwizzling.Linear) {
                                     BinaryFormat image = new IndexedImage2BinaryPng(originalImage).Convert(originalImage);
@@ -109,7 +108,7 @@ namespace JUSToolkit.CLI.JUS
                                     .TransformWith<Dtx2Bitmaps>();
 
                                 foreach (Node nodeSprite in dtx3.Children) {
-                                    nodeSprite.Stream.WriteTo(Path.Combine(baseOutputPath, $"{originalAlarName}-{child.Name}-{nodeSprite.Name}.png"));
+                                    nodeSprite.Stream!.WriteTo(Path.Combine(baseOutputPath, $"{originalAlarName}-{child.Name}-{nodeSprite.Name}.png"));
                                 }
                             }
                         } catch (Exception ex) {
@@ -119,7 +118,7 @@ namespace JUSToolkit.CLI.JUS
                         Console.WriteLine($"AAR found, processing recursively: {originalAlarName}/{child.Name}");
                         using Node nestedAlar = child.TransformWith<LzssDecompression>();
 
-                        Version nestedAlarVersion = Identifier.GetAlarVersion(nestedAlar.Stream);
+                        Version nestedAlarVersion = Identifier.GetAlarVersion(nestedAlar.Stream!);
 
                         if (nestedAlarVersion.Major == 3) {
                             nestedAlar.TransformWith<Binary2Alar3>();
@@ -135,7 +134,7 @@ namespace JUSToolkit.CLI.JUS
             Node originalAlar = NodeFactory.FromFile(container)
                             .TransformWith<LzssDecompression>() ?? throw new FormatException("Invalid container file");
 
-            Version alarVersion = Identifier.GetAlarVersion(originalAlar.Stream);
+            Version alarVersion = Identifier.GetAlarVersion(originalAlar.Stream!);
 
             // ToDo: In the future we need to encapsulate this
             if (alarVersion.Major == 3) {
@@ -166,7 +165,7 @@ namespace JUSToolkit.CLI.JUS
 
             Alar3 newAlar = originalAlar
                 .TransformWith(png2Alar3)
-                .GetFormatAs<Alar3>();
+                .GetFormatAs<Alar3>()!;
 
             using BinaryFormat binary = newAlar.ConvertWith(new Alar3ToBinary());
 
@@ -193,7 +192,7 @@ namespace JUSToolkit.CLI.JUS
                     if (CompressionUtils.IsCompressed(file)) {
                         file.TransformWith(new LzssDecompression());
                         string path = Path.Combine(input.Replace("/data", string.Empty), file.Path[1..]);
-                        file.Stream.WriteTo(path);
+                        file.Stream!.WriteTo(path);
                     }
                 }
             }

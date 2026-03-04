@@ -84,7 +84,7 @@ namespace JUSToolkit.CLI.JUS
 
             foreach (Node file in inputFiles.Children) {
                 // Fixed names
-                if (ImportStrategies.TryGetValue(file.Name, out IFileImportStrategy strategy)) {
+                if (ImportStrategies.TryGetValue(file.Name, out IFileImportStrategy? strategy)) {
                     strategy.Import(gameNode, file);
                 } else {
                     // Pattern names
@@ -104,7 +104,7 @@ namespace JUSToolkit.CLI.JUS
             }
 
             _ = gameNode.TransformWith<NitroRom2Binary>();
-            gameNode.Stream.WriteTo(Path.Combine(output, "new_game.nds"));
+            gameNode.Stream!.WriteTo(Path.Combine(output, "new_game.nds"));
 
             Console.WriteLine("Done!");
         }
@@ -123,17 +123,17 @@ namespace JUSToolkit.CLI.JUS
             Node fontNode = NodeFactory.FromFile(font, FileOpenMode.Read);
 
             // Regular Font
-            Node toReplace = Navigator.SearchNode(gameNode, "/root/data/font/jskfont.aft");
+            Node toReplace = Navigator.SearchNode(gameNode, "/root/data/font/jskfont.aft")!;
             toReplace.ChangeFormat(fontNode.Format!);
             Console.WriteLine("File replaced: /root/data/font/jskfont.aft");
 
             // JQuiz Font
-            Node toReplace_q = Navigator.SearchNode(gameNode, "/root/data/font/jskfont_q.aft");
+            Node toReplace_q = Navigator.SearchNode(gameNode, "/root/data/font/jskfont_q.aft")!;
             toReplace_q.ChangeFormat(fontNode.Format!);
             Console.WriteLine("File replaced: /root/data/font/jskfont_q.aft");
 
             gameNode.TransformWith<NitroRom2Binary>();
-            gameNode.Stream.WriteTo(Path.Combine(output, "new_game_font.nds"));
+            gameNode.Stream!.WriteTo(Path.Combine(output, "new_game_font.nds"));
 
             Console.WriteLine("Done!");
         }

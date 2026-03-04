@@ -93,10 +93,10 @@ namespace JUSToolkit.BatchConverters
             Node atmN = Navigator.IterateNodes(originalAlar.Root).First(n => n.Name == AtmNames[2]) ?? throw new FormatException("Atm doesn't exist: " + AtmNames[2]);
 
             // Clone the nodes
-            var dig_clone = (BinaryFormat)new BinaryFormat(dig.Stream).DeepClone();
-            var atmFull_clone = (BinaryFormat)new BinaryFormat(atmFull.Stream).DeepClone();
-            var atmM_clone = (BinaryFormat)new BinaryFormat(atmM.Stream).DeepClone();
-            var atmN_clone = (BinaryFormat)new BinaryFormat(atmN.Stream).DeepClone();
+            var dig_clone = (BinaryFormat)new BinaryFormat(dig.Stream!).DeepClone();
+            var atmFull_clone = (BinaryFormat)new BinaryFormat(atmFull.Stream!).DeepClone();
+            var atmM_clone = (BinaryFormat)new BinaryFormat(atmM.Stream!).DeepClone();
+            var atmN_clone = (BinaryFormat)new BinaryFormat(atmN.Stream!).DeepClone();
 
             Node[] atms = [new Node(atmFull.Name, atmFull_clone), new Node(atmM.Name, atmM_clone), new Node(atmN.Name, atmN_clone)];
 
@@ -133,21 +133,21 @@ namespace JUSToolkit.BatchConverters
                 }
 
                 // Transform the PNG into RgbImage (Pixels + Map) using the palette of the original DIG
-                pngs[i].Stream.Position = 0;
+                pngs[i].Stream!.Position = 0;
                 _ = pngs[i].TransformWith<StandardBinaryImage2RgbImage>()
                     .TransformWith(new RgbImageMapCompression(compressionParams));
 
                 // Pixels
-                newImage = pngs[i].Children[0].GetFormatAs<IndexedImage>();
+                newImage = pngs[i].Children[0].GetFormatAs<IndexedImage>()!;
 
                 // Map
-                ScreenMap map = pngs[i].Children[1].GetFormatAs<ScreenMap>();
+                ScreenMap map = pngs[i].Children[1].GetFormatAs<ScreenMap>()!;
 
                 // 3 - Clone original
-                mergedImage = new Dig(mergedImage, newImage);
+                mergedImage = new Dig(mergedImage, newImage!);
 
                 if (TransparentTile && i == 0) {
-                    mergedImage = mergedImage.InsertTransparentTile(map);
+                    mergedImage = mergedImage.InsertTransparentTile(map!);
                 }
 
                 compressionParams = new RgbImageMapCompressionParams {
@@ -166,7 +166,7 @@ namespace JUSToolkit.BatchConverters
                         .TransformWith<Binary2Almt>()
                         .GetFormatAs<Almt>() ?? throw new FormatException("Invalid atm file");
 
-                var newAtm = new Almt(originalAtm, map);
+                var newAtm = new Almt(originalAtm, map!);
 
                 // Export ATM
                 BinaryFormat binaryAtm = new Almt2Binary().Convert(newAtm);
@@ -179,7 +179,7 @@ namespace JUSToolkit.BatchConverters
             }
 
             // New Dig: original dig changing height, width and pixels
-            var newDig = new Dig(mergedImage, newImage);
+            var newDig = new Dig(mergedImage, newImage!);
 
             BinaryFormat binaryDig = new Dig2Binary().Convert(newDig);
 

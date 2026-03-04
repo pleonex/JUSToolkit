@@ -53,13 +53,13 @@ namespace JUSToolkit.CLI.JUS.Rom
         /// <param name="file">The input file to import.</param>
         public void Import(Node gameNode, Node file)
         {
-            if (ContainerLocations.TryGetValue(file.Name, out string path)) {
+            if (ContainerLocations.TryGetValue(file.Name, out string? path)) {
                 ProcessContainer(gameNode, file, path);
             } else {
                 // Si no se encuentra, intenta encontrar la ruta interna usando patrones
                 foreach ((Regex pattern, string containerPath) in PatternList) {
                     if (pattern.IsMatch(file.Name)) {
-                        string parent = GetParentName(file.Name);
+                        string? parent = GetParentName(file.Name);
                         file.Name = StringFunctions.GetOriginalName(file.Name);
                         ProcessContainer(gameNode, file, containerPath, parent);
                         return;
@@ -70,14 +70,14 @@ namespace JUSToolkit.CLI.JUS.Rom
             }
         }
 
-        private static void ProcessContainer(Node gameNode, Node file, string containerPath, string parent = null)
+        private static void ProcessContainer(Node gameNode, Node file, string containerPath, string? parent = null)
         {
-            Node containerNode = Navigator.SearchNode(gameNode, $"/root/data{containerPath}")
+            Node containerNode = Navigator.SearchNode(gameNode, $"/root/data{containerPath}")!
                                 .TransformWith<LzssDecompression>();
 
             Alar3 alar = containerNode.TransformWith<Binary2Alar3>()
-            .GetFormatAs<Alar3>();
-            alar.InsertModification(file, parent);
+            .GetFormatAs<Alar3>()!;
+            alar.InsertModification(file, parent!);
             BinaryFormat newBinary = alar.ConvertWith(new Alar3ToBinary());
 
             _ = containerNode.ChangeFormat(newBinary);
@@ -90,7 +90,7 @@ namespace JUSToolkit.CLI.JUS.Rom
         /// </summary>
         /// <param name="name">The string containing potentially "bin-deck-", "bin-info-", "deck-play"... prefixes.</param>
         /// <returns>The directory name. If the input string is null or empty, the original string is returned.</returns>
-        private static string GetParentName(string name)
+        private static string? GetParentName(string name)
         {
             if (string.IsNullOrEmpty(name) || !name.Contains('-')) {
                 return null;

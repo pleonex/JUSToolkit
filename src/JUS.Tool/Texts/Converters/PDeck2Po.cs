@@ -41,7 +41,7 @@ namespace JUSToolkit.Texts.Converters
             Po po = JusText.GenerateJusPo();
 
             foreach (Node file in container.Root.Children) {
-                PDeck pDeck = file.GetFormatAs<PDeck>();
+                PDeck pDeck = file.GetFormatAs<PDeck>()!;
                 string headerBase64 = System.Convert.ToBase64String(pDeck.Header);
 
                 po.Add(new PoEntry(pDeck.Name) {

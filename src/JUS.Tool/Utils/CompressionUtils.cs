@@ -32,7 +32,7 @@ namespace JUSToolkit.Utils
         /// </summary>
         /// <param name="node">The Node we want to check.</param>
         /// <returns>The result.</returns>
-        public static bool IsCompressed(Node node) => IsCompressed(node.Stream);
+        public static bool IsCompressed(Node node) => IsCompressed(node.Stream!);
 
         /// <summary>
         /// Returns true if the DataStream is compressed.

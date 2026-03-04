@@ -32,8 +32,6 @@ namespace JUSToolkit.CLI.JUS
     /// </summary>
     public static class TextExportCommands
     {
-        private const string TextConvertersNamespace = "JUSToolkit.Texts.Converters.";
-
         /// <summary>
         /// Export a .bin file to a .Po file.
         /// </summary>
@@ -87,7 +85,7 @@ namespace JUSToolkit.CLI.JUS
             Node poFormat = container.TransformWith(poConverter);
 
             // Po -> Binary
-            using BinaryFormat poBinaryFormat = new Po2Binary().Convert(poFormat.GetFormatAs<Po>());
+            using BinaryFormat poBinaryFormat = new Po2Binary().Convert(poFormat.GetFormatAs<Po>()!);
 
             string outputFile = Path.Combine(output, $"deck-{lastDirectory}.po");
             poBinaryFormat.Stream.WriteTo(outputFile);
@@ -112,7 +110,7 @@ namespace JUSToolkit.CLI.JUS
             binNode.TransformWith<JQuiz2Po>();
 
             foreach (Node quiz in binNode.Children) {
-                quiz.Stream.WriteTo(Path.Combine(output, quiz.Name));
+                quiz.Stream!.WriteTo(Path.Combine(output, quiz.Name));
             }
 
             Console.WriteLine("Done!");

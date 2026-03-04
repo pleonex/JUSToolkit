@@ -71,7 +71,7 @@ namespace JUSToolkit.Containers.Converters
             // Write File Info Section
             foreach (Node alarFile in Navigator.IterateNodes(alar.Root)) {
                 if (!alarFile.IsContainer) {
-                    Alar3File alarChild = alarFile.GetFormatAs<Alar3File>();
+                    Alar3File alarChild = alarFile.GetFormatAs<Alar3File>()!;
 
                     writer.WritePadding(0, 04);
 
@@ -93,7 +93,7 @@ namespace JUSToolkit.Containers.Converters
             // Write File Data Section
             foreach (Node node in Navigator.IterateNodes(alar.Root)) {
                 if (!node.IsContainer) {
-                    Alar3File alarFile = node.GetFormatAs<Alar3File>();
+                    Alar3File alarFile = node.GetFormatAs<Alar3File>()!;
 
                     // Storing Padding for every file but the first one
                     if (alarFile.FileID != 0) {
@@ -105,7 +105,7 @@ namespace JUSToolkit.Containers.Converters
                         paddings[alarFile.FileID] = paddingSize;
                     }
 
-                    alarFile.Stream.WriteTo(writer.Stream);
+                    alarFile.Stream!.WriteTo(writer.Stream);
                 }
             }
 
@@ -113,7 +113,7 @@ namespace JUSToolkit.Containers.Converters
             int newOffset = 0;
             foreach (Node node in Navigator.IterateNodes(alar.Root)) {
                 if (!node.IsContainer) {
-                    Alar3File alarFile = node.GetFormatAs<Alar3File>();
+                    Alar3File alarFile = node.GetFormatAs<Alar3File>()!;
 
                     // Starter Offset
                     if (alarFile.FileID == 0) {

@@ -105,8 +105,8 @@ namespace JUSToolkit.BatchConverters
             Node atm = Navigator.IterateNodes(originalAlar.Root).First(n => n.Name == AtmName) ?? throw new FormatException("Atm doesn't exist: " + AtmName);
 
             // Clone the nodes
-            var dig_clone = (BinaryFormat)new BinaryFormat(dig.Stream).DeepClone();
-            var atm_clone = (BinaryFormat)new BinaryFormat(atm.Stream).DeepClone();
+            var dig_clone = (BinaryFormat)new BinaryFormat(dig.Stream!).DeepClone();
+            var atm_clone = (BinaryFormat)new BinaryFormat(atm.Stream!).DeepClone();
 
             // Transform the PNG into the new Dig and Almt (we need the original dig + atm)
             Transform(Image, new Node(dig.Name, dig_clone), new Node(atm.Name, atm_clone));
@@ -143,12 +143,12 @@ namespace JUSToolkit.BatchConverters
                 Palettes = originalDig,
             };
 
-            png.Stream.Position = 0;
+            png.Stream!.Position = 0;
             Node compressed = png
                 .TransformWith<StandardBinaryImage2RgbImage>()
                 .TransformWith(new RgbImageMapCompression(compressionParams));
-            IndexedImage newImage = compressed.Children[0].GetFormatAs<IndexedImage>();
-            ScreenMap map = compressed.Children[1].GetFormatAs<ScreenMap>();
+            IndexedImage newImage = compressed.Children[0].GetFormatAs<IndexedImage>()!;
+            ScreenMap map = compressed.Children[1].GetFormatAs<ScreenMap>()!;
 
             // New Dig: original dig changing height, width and pixels
             var newDig = new Dig(originalDig, newImage);
