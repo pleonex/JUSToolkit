@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 using System.Text.RegularExpressions;
-using JUSToolkit.Texts.Converters;
+using JUS.Tool.Texts.Converters;
 
 namespace JUS.Tool.Utils
 {

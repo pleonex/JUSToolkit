@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace JUSToolkit.Texts.Formats
+namespace JUS.Tool.Texts.Formats
 {
     /// <summary>
     /// Single entry in a <see cref="Piece"/> file.

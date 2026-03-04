@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Yarhl.FileFormat;
 
-namespace JUSToolkit.Texts.Formats
+namespace JUS.Tool.Texts.Formats
 {
     /// <summary>
     /// Format for simple bin files.

@@ -19,7 +19,7 @@
 // SOFTWARE.
 using System.CommandLine;
 
-namespace JUSToolkit.CLI
+namespace JUS.CLI
 {
     /// <summary>
     /// Main program class.

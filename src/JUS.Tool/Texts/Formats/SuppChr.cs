@@ -2,7 +2,7 @@
 using System.Text;
 using Yarhl.FileFormat;
 
-namespace JUSToolkit.Texts.Formats
+namespace JUS.Tool.Texts.Formats
 {
     /// <summary>
     /// Format for chr_s_t.bin file.

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace JUSToolkit.Texts
+namespace JUS.Tool.Texts
 {
     /// <summary>
     /// Class with utilities to work with Jus text files with absolute pointers.

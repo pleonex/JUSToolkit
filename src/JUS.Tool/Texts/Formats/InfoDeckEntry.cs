@@ -1,4 +1,4 @@
-namespace JUSToolkit.Texts.Formats
+namespace JUS.Tool.Texts.Formats
 {
     /// <summary>
     /// Single entry in a <see cref="InfoDeckDeck"/> file.

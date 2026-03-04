@@ -17,18 +17,17 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-#nullable enable
 using System.Reflection;
 using Yarhl.Media.Text;
 
-namespace JUSToolkit
+namespace JUS.Tool.Utils
 {
     /// <summary>
     /// Table class for special characters of the font.
     /// </summary>
     public sealed class Table
     {
-        private static readonly object InstanceLock = new object();
+        private static readonly object InstanceLock = new();
         private static Table instance = null!;
         private Replacer replacer = null!;
 

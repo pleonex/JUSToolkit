@@ -26,7 +26,7 @@ using Texim.Images.Standard;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.CLI.JUS
+namespace JUS.CLI.JUS
 {
     /// <summary>
     /// Commands related to DSIG/DIG graphics files.

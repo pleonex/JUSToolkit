@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Priverop
+﻿// Copyright (c) 2022 Priverop
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,7 +19,7 @@
 // SOFTWARE.
 using System.CommandLine;
 
-namespace JUSToolkit.CLI.JUS
+namespace JUS.CLI.JUS
 {
     /// <summary>
     /// Command-line interface for Jump Ultimate Stars! game.

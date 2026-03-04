@@ -1,4 +1,4 @@
-using JUSToolkit.Texts.Converters;
+using JUS.Tool.Texts.Converters;
 using JUS.Tool.Utils;
 using NUnit.Framework;
 
