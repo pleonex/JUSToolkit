@@ -1,4 +1,3 @@
-
 namespace JUSToolkit.Texts.Formats
 {
     /// <summary>

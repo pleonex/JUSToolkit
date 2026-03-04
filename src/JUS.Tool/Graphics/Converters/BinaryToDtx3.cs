@@ -122,6 +122,37 @@ namespace JUS.Tool.Graphics.Converters
             return frame;
         }
 
+        private static (int Width, int Height) GetSize(int shape)
+        {
+            int[] sizes = new int[4] { 8, 16, 32, 64 };
+
+            return shape switch {
+                0x00 => (sizes[0], sizes[0]),   // 1x1
+                0x01 => (sizes[1], sizes[1]),   // 2x2
+                0x02 => (sizes[2], sizes[2]),   // 4x4
+                0x03 => (sizes[3], sizes[3]),   // 8x8
+                0x04 => (sizes[1], sizes[0]),   // 2x1
+                0x05 => (sizes[2], sizes[0]),   // 4x1
+                0x06 => (sizes[2], sizes[1]),   // 4x2
+                0x07 => (sizes[3], sizes[2]),   // 8x4
+                0x08 => (sizes[0], sizes[1]),   // 1x2
+                0x09 => (sizes[0], sizes[2]),   // 1x4
+                0x0A => (sizes[1], sizes[2]),   // 2x4
+                0x0B => (sizes[2], sizes[3]),   // 4x8
+                _ => throw new FormatException($"Unknown size: 0x{shape:X2}"),
+            };
+        }
+
+        private static (bool HFlip, bool VFlip) GetFlip(int shape)
+        {
+            return shape switch {
+                0x00 => (false, false),
+                0x01 => (true, false),
+                0x02 => (false, true),
+                0x03 => (true, true),
+                _ => throw new FormatException($"Unknown flip: 0x{shape:X2}"),
+            };
+        }
         private Sprite ReadSprite(DataReader reader)
         {
             int spriteOffset = reader.ReadUInt16() + PointerOffset;
@@ -159,36 +190,5 @@ namespace JUS.Tool.Graphics.Converters
             return sprite;
         }
 
-        private (int width, int height) GetSize(int shape)
-        {
-            int[] sizes = new int[4] { 8, 16, 32, 64 };
-
-            return shape switch {
-                0x00 => (sizes[0], sizes[0]),   // 1x1
-                0x01 => (sizes[1], sizes[1]),   // 2x2
-                0x02 => (sizes[2], sizes[2]),   // 4x4
-                0x03 => (sizes[3], sizes[3]),   // 8x8
-                0x04 => (sizes[1], sizes[0]),   // 2x1
-                0x05 => (sizes[2], sizes[0]),   // 4x1
-                0x06 => (sizes[2], sizes[1]),   // 4x2
-                0x07 => (sizes[3], sizes[2]),   // 8x4
-                0x08 => (sizes[0], sizes[1]),   // 1x2
-                0x09 => (sizes[0], sizes[2]),   // 1x4
-                0x0A => (sizes[1], sizes[2]),   // 2x4
-                0x0B => (sizes[2], sizes[3]),   // 4x8
-                _ => throw new FormatException($"Unknown size: 0x{shape:X2}")
-            };
-        }
-
-        private (bool hFlip, bool vFlip) GetFlip(int shape)
-        {
-            return shape switch {
-                0x00 => (false, false),
-                0x01 => (true, false),
-                0x02 => (false, true),
-                0x03 => (true, true),
-                _ => throw new FormatException($"Unknown flip: 0x{shape:X2}")
-            };
-        }
     }
 }

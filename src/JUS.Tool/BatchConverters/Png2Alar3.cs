@@ -75,12 +75,12 @@ namespace JUSToolkit.BatchConverters
         /// <summary>
         /// Gets or sets the original name of the Dig of the image.
         /// </summary>
-        public string DigName { get; set; } = string.Empty;
+        public string DigName { get; set; }
 
         /// <summary>
         /// Gets or sets the original name of the Atm of the image.
         /// </summary>
-        public string AtmName { get; set; } = string.Empty;
+        public string AtmName { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether gets or sets a value indicating the transparent pixel mode.

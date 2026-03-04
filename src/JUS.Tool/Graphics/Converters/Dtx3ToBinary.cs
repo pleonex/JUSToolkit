@@ -87,7 +87,7 @@ namespace JUS.Tool.Graphics.Converters
                 (8, 32) => 0x09,
                 (16, 32) => 0x0A,
                 (32, 64) => 0x0B,
-                _ => throw new ArgumentOutOfRangeException(nameof(width), $"Invalid size: {width}x{height}")
+                _ => throw new ArgumentOutOfRangeException(nameof(width), $"Invalid size: {width}x{height}"),
             };
         }
 

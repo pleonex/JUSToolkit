@@ -47,7 +47,7 @@ namespace JUSToolkit.Containers
         /// <summary>
         /// Gets or sets the IDs of the files.
         /// </summary>
-        public byte[] IDs { get; set; } = [];
+        public byte[] IDs { get; set; }
 
         /// <summary>
         /// Inserts a new Node into the current Alar2 Container.

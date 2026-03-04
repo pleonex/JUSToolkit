@@ -17,7 +17,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
 using JUSToolkit.Texts.Formats;
 using Yarhl.FileFormat;
 using Yarhl.Media.Text;
@@ -90,9 +89,9 @@ namespace JUSToolkit.Texts.Converters
         /// </summary>
         /// <param name="input">Line to clean.</param>
         /// <returns>Transformed string.</returns>
-        private string AdjustLength(string input)
+        private static string AdjustLength(string input)
         {
-            char paddingChar = '|';
+            const char paddingChar = '|';
 
             return input.Replace(" ", paddingChar.ToString()).PadRight(KomatxtEntry.LineLength, paddingChar);
         }

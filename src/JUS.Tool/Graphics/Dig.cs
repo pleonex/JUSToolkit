@@ -31,12 +31,12 @@ namespace JUSToolkit.Graphics
     public enum DigSwizzling
     {
         /// <summary>
-        /// Tiled swizzling
+        /// Tiled swizzling.
         /// </summary>
         Tiled = 1,
 
         /// <summary>
-        /// Linear swizzling
+        /// Linear swizzling.
         /// </summary>
         Linear = 2,
     }

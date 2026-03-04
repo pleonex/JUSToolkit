@@ -58,7 +58,7 @@ namespace JUSToolkit
         /// Gets the Stream of the Table from the embedded resource.
         /// </summary>
         /// <returns>The Stream of the Table.</returns>
-        public Stream GetTableStream() =>
+        public static Stream GetTableStream() =>
             Assembly.GetExecutingAssembly()
                 .GetManifestResourceStream("JUS.Tool.Resources.table.tbl")
                 ?? throw new FileNotFoundException("Missing embedded resource: table.tbl");

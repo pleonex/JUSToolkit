@@ -110,7 +110,7 @@ namespace JUS.Tool.Graphics.Converters
                 (8, 32) => 0x09,
                 (16, 32) => 0x0A,
                 (32, 64) => 0x0B,
-                _ => throw new ArgumentOutOfRangeException(nameof(width), $"Invalid size: {width}x{height}")
+                _ => throw new ArgumentOutOfRangeException(nameof(width), $"Invalid size: {width}x{height}"),
             };
         }
 
@@ -123,6 +123,7 @@ namespace JUS.Tool.Graphics.Converters
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the flip combination is invalid.</exception>
         private static byte GetFlip(bool hFlip, bool vFlip)
         {
+            // TODO: Why is this not used???
             return (hFlip, vFlip) switch {
                 (false, false) => 0x00,
                 (true, false) => 0x10,

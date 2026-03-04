@@ -135,16 +135,7 @@ namespace JUSToolkit.BatchConverters
             return transformedFiles;
         }
 
-        /// <summary>
-        /// Gets the name of the special map. Example: "bb_n_00.atm".
-        /// </summary>
-        private string GetSpecialMapName(string mangaName, string type, string fileNumber)
-        {
-            return mangaName + "_" + type + "_0" +
-                MultipleMaps.GetValueOrDefault(fileNumber);
-        }
-
-        private Node? GetPNG(Node pixels, Node atm, string cleanName)
+        private static Node? GetPNG(Node pixels, Node atm, string cleanName)
         {
             Node? image = null;
             var dig2Bitmap = new BinaryDig2Bitmap(atm);
@@ -157,7 +148,7 @@ namespace JUSToolkit.BatchConverters
             return image;
         }
 
-        private Node? GetAtm(string name, Node files)
+        private static Node? GetAtm(string name, Node files)
         {
             Node? atm = Navigator.IterateNodes(files).First(n => n.Name == name + ".atm");
 
@@ -166,6 +157,15 @@ namespace JUSToolkit.BatchConverters
             }
 
             return atm;
+        }
+
+        /// <summary>
+        /// Gets the name of the special map. Example: "bb_n_00.atm".
+        /// </summary>
+        private string GetSpecialMapName(string mangaName, string type, string fileNumber)
+        {
+            return mangaName + "_" + type + "_0" +
+                MultipleMaps.GetValueOrDefault(fileNumber);
         }
     }
 }

@@ -17,7 +17,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
 namespace JUSToolkit.CLI.JUS
 {
     /// <summary>
@@ -33,13 +32,11 @@ namespace JUSToolkit.CLI.JUS
         /// <exception cref="ArgumentException">Thrown if the path is empty or null.</exception>
         public static void ValidateFile(string filePath)
         {
-            if (string.IsNullOrWhiteSpace(filePath))
-            {
+            if (string.IsNullOrWhiteSpace(filePath)) {
                 throw new ArgumentException("The file path cannot be empty or null.");
             }
 
-            if (!File.Exists(filePath))
-            {
+            if (!File.Exists(filePath)) {
                 throw new FileNotFoundException($"The file does not exist: {filePath}", filePath);
             }
         }
@@ -52,13 +49,11 @@ namespace JUSToolkit.CLI.JUS
         /// <exception cref="ArgumentException">Thrown if the path is empty or null.</exception>
         public static void ValidateDirectory(string directoryPath)
         {
-            if (string.IsNullOrWhiteSpace(directoryPath))
-            {
+            if (string.IsNullOrWhiteSpace(directoryPath)) {
                 throw new ArgumentException("The directory path cannot be empty or null.");
             }
 
-            if (!Directory.Exists(directoryPath))
-            {
+            if (!Directory.Exists(directoryPath)) {
                 throw new DirectoryNotFoundException($"The directory does not exist: {directoryPath}");
             }
         }

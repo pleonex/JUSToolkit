@@ -53,7 +53,7 @@ namespace JUSToolkit.Graphics.Converters
                 throw new FormatException($"Invalid stamp '{stamp}'");
             }
 
-            byte version = reader.ReadByte();
+            _ = reader.ReadByte(); // version
             byte type = reader.ReadByte();
             if (type != Type) {
                 throw new FormatException($"Invalid type: 0x{type:X2}");

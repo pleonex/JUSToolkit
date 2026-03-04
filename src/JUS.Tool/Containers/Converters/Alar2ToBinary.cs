@@ -124,17 +124,5 @@ namespace JUSToolkit.Containers.Converters
                 }
             }
         }
-
-        /// <summary>
-        /// Removes the alar filename (the root name) from the path of the node.
-        /// <remarks>If we have '/alar.alar/komas/dg_00.dtx' we will get 'komas/dg_00.dtx'.</remarks>
-        /// </summary>
-        /// <param name="fullPath">The full path of the node.</param>
-        /// <param name="alarName">The name of the root node.</param>
-        /// <returns>The string.</returns>
-        private string GetAlar2Path(string fullPath, string alarName)
-        {
-            return fullPath.Substring(1).Replace(alarName, string.Empty).Substring(1);
-        }
     }
 }

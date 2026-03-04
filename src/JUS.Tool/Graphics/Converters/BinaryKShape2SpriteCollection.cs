@@ -84,7 +84,6 @@ namespace JUSToolkit.Graphics.Converters
             var reader = new DataReader(source.Stream);
             var kshape = new KShapeSprites();
 
-
             for (int i = 0; i < NumGroups; i++) {
                 source.Stream.Position = i * 4; // First section
                 int firstElement = reader.ReadInt32();
