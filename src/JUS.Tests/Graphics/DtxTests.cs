@@ -32,7 +32,7 @@ using Texim.Sprites;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Tests.Graphics
+namespace JUS.Tests.Graphics
 {
     [TestFixture]
     public class DtxTests

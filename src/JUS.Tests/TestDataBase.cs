@@ -19,7 +19,7 @@
 // SOFTWARE.
 using NUnit.Framework;
 
-namespace JUSToolkit.Tests
+namespace JUS.Tests
 {
     /// <summary>
     /// Managing test resources.

@@ -21,16 +21,16 @@ using JUSToolkit.Tests.Assertions;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Tests
+namespace JUS.Tests
 {
     public static class YarhlTestExtensions
     {
-        public static StreamAssertions Should(this DataStream binary) => new (binary);
+        public static StreamAssertions Should(this DataStream binary) => new(binary);
 
-        public static StreamAssertions Should(this Stream binary) => new (binary);
+        public static StreamAssertions Should(this Stream binary) => new(binary);
 
-        public static BinaryFormatAssertions Should(this BinaryFormat binary) => new (binary);
+        public static BinaryFormatAssertions Should(this BinaryFormat binary) => new(binary);
 
-        public static NodeAssertions Should(this Node node) => new (node);
+        public static NodeAssertions Should(this Node node) => new(node);
     }
 }

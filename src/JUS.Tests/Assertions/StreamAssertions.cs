@@ -23,7 +23,7 @@ using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using Yarhl.IO;
 
-namespace JUSToolkit.Tests.Assertions
+namespace JUS.Tests.Assertions
 {
     public class StreamAssertions :
         ReferenceTypeAssertions<Stream, StreamAssertions>

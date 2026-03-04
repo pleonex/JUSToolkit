@@ -26,7 +26,7 @@ using NUnit.Framework;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Tests.Batch
+namespace JUS.Tests.Batch
 {
     [TestFixture]
     public class PngAlarTests

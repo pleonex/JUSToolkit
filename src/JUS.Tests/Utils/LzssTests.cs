@@ -23,7 +23,7 @@ using NUnit.Framework;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Tests.Graphics
+namespace JUS.Tests.Utils
 {
     [TestFixture]
     public class LzssTests

@@ -25,7 +25,7 @@ using Texim.Sprites;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace JUS.Tests
+namespace JUS.Tests.Utils
 {
     public class UtilsTests
     {

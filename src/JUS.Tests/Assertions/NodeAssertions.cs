@@ -22,7 +22,7 @@ using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using Yarhl.FileSystem;
 
-namespace JUSToolkit.Tests.Assertions
+namespace JUS.Tests.Assertions
 {
     public class NodeAssertions
         : ReferenceTypeAssertions<Node, NodeAssertions>
