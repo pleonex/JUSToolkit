@@ -30,7 +30,7 @@ namespace JUSToolkit.Texts.Converters
         IConverter<BinaryFormat, Tutorial>,
         IConverter<Tutorial, BinaryFormat>
     {
-        private DataReader reader;
+        private DataReader reader = null!;
         private int pointerAccumulator = 0;
 
         /// <summary>

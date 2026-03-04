@@ -11,7 +11,7 @@ namespace JUS.Tests.Texts
 {
     public class JGalaxyComplexFormatTest
     {
-        private string resPath;
+        private string resPath = string.Empty;
 
         [SetUp]
         public void Setup()
@@ -28,9 +28,9 @@ namespace JUS.Tests.Texts
             foreach (string filePath in Directory.GetFiles(resPath, "*.bin", SearchOption.AllDirectories)) {
                 using (Node node = NodeFactory.FromFile(filePath)) {
                     // BinaryFormat -> JGalaxyComplex
-                    BinaryFormat expectedBin = node.GetFormatAs<BinaryFormat>();
+                    BinaryFormat expectedBin = node.GetFormatAs<BinaryFormat>()!;
                     var binary2JGalaxyComplex = new Binary2JGalaxyComplex();
-                    JGalaxyComplex expectedJGalaxyComplex = null;
+                    JGalaxyComplex expectedJGalaxyComplex = null!;
                     try {
                         expectedJGalaxyComplex = binary2JGalaxyComplex.Convert(expectedBin);
                     } catch (Exception ex) {
@@ -39,7 +39,7 @@ namespace JUS.Tests.Texts
 
                     // JGalaxyComplex -> Po
                     var galaxy2Po = new JGalaxyComplex2Po();
-                    Po expectedPo = null;
+                    Po expectedPo = null!;
                     try {
                         expectedPo = galaxy2Po.Convert(expectedJGalaxyComplex);
                     } catch (Exception ex) {
@@ -47,7 +47,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // Po -> JGalaxyComplex
-                    JGalaxyComplex actualJGalaxyComplex = null;
+                    JGalaxyComplex actualJGalaxyComplex = null!;
                     try {
                         actualJGalaxyComplex = galaxy2Po.Convert(expectedPo);
                     } catch (Exception ex) {
@@ -55,7 +55,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // JGalaxyComplex -> BinaryFormat
-                    BinaryFormat actualBin = null;
+                    BinaryFormat actualBin = null!;
                     try {
                         actualBin = binary2JGalaxyComplex.Convert(actualJGalaxyComplex);
                     } catch (Exception ex) {
@@ -63,7 +63,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // Comparing Binaries
-                    Assert.That(expectedBin.Stream.Compare(actualBin.Stream), Is.True, $"JGalaxyComplex are not identical: {node.Path}");
+                    Assert.That(expectedBin.Stream.Compare(actualBin.Stream!), Is.True, $"JGalaxyComplex are not identical: {node.Path}");
                 }
             }
         }

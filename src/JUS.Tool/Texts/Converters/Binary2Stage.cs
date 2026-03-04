@@ -30,7 +30,7 @@ namespace JUSToolkit.Texts.Converters
         IConverter<BinaryFormat, Stage>,
         IConverter<Stage, BinaryFormat>
     {
-        private DataReader reader;
+        private DataReader reader = null!;
 
         /// <summary>
         /// Converts BinaryFormat to Stage format.

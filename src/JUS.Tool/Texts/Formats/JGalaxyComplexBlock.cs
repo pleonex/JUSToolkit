@@ -33,7 +33,6 @@ namespace JUSToolkit.Texts.Formats
         /// <param name="startingPointer">Pointer of the start of the block.</param>
         public JGalaxyComplexBlock(short numberOfEntries, int startingPointer)
         {
-            Entries = new List<JGalaxyEntry>();
             NumberOfEntries = numberOfEntries;
             StartPointer = startingPointer;
         }
@@ -44,7 +43,6 @@ namespace JUSToolkit.Texts.Formats
         /// <param name="startingPointer">Pointer of the start of the block.</param>
         public JGalaxyComplexBlock(int startingPointer)
         {
-            Entries = new List<JGalaxyEntry>();
             StartPointer = startingPointer;
         }
 
@@ -61,6 +59,6 @@ namespace JUSToolkit.Texts.Formats
         /// <summary>
         /// Gets or sets the list of text entries.
         /// </summary>
-        public List<JGalaxyEntry> Entries { get; set; }
+        public List<JGalaxyEntry> Entries { get; set; } = [];
     }
 }

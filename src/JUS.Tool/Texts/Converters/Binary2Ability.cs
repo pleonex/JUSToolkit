@@ -28,7 +28,7 @@ namespace JUSToolkit.Texts.Converters
     /// </summary>
     public class Binary2Ability : IConverter<BinaryFormat, Ability>, IConverter<Ability, BinaryFormat>
     {
-        private DataReader reader;
+        private DataReader reader = null!;
 
         /// <summary>
         /// Converts BinaryFormat to Ability format.

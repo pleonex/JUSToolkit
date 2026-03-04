@@ -11,7 +11,7 @@ namespace JUS.Tests.Texts
 {
     public class BtlChrFormatTest
     {
-        private string resPath;
+        private string resPath = string.Empty;
 
         [SetUp]
         public void Setup()
@@ -28,9 +28,9 @@ namespace JUS.Tests.Texts
             foreach (string filePath in Directory.GetFiles(resPath, "*.bin", SearchOption.AllDirectories)) {
                 using (Node node = NodeFactory.FromFile(filePath)) {
                     // BinaryFormat -> BtlChr
-                    BinaryFormat expectedBin = node.GetFormatAs<BinaryFormat>();
+                    BinaryFormat expectedBin = node.GetFormatAs<BinaryFormat>()!;
                     var binary2BtlChr = new Binary2BtlChr();
-                    BtlChr expectedBtlChr = null;
+                    BtlChr expectedBtlChr = null!;
                     try {
                         expectedBtlChr = binary2BtlChr.Convert(expectedBin);
                     } catch (Exception ex) {
@@ -39,7 +39,7 @@ namespace JUS.Tests.Texts
 
                     // BtlChr -> Po
                     var btlChr2Po = new BtlChr2Po();
-                    Po expectedPo = null;
+                    Po expectedPo = null!;
                     try {
                         expectedPo = btlChr2Po.Convert(expectedBtlChr);
                     } catch (Exception ex) {
@@ -47,7 +47,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // Po -> BtlChr
-                    BtlChr actualBtlChr = null;
+                    BtlChr actualBtlChr = null!;
                     try {
                         actualBtlChr = btlChr2Po.Convert(expectedPo);
                     } catch (Exception ex) {
@@ -55,7 +55,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // BtlChr -> BinaryFormat
-                    BinaryFormat actualBin = null;
+                    BinaryFormat actualBin = null!;
                     try {
                         actualBin = binary2BtlChr.Convert(actualBtlChr);
                     } catch (Exception ex) {
@@ -63,7 +63,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // Comparing Binaries
-                    Assert.That(expectedBin.Stream.Compare(actualBin.Stream), Is.True, $"BtlChr is not identical: {node.Path}");
+                    Assert.That(expectedBin.Stream.Compare(actualBin.Stream!), Is.True, $"BtlChr is not identical: {node.Path}");
                 }
             }
         }

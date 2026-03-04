@@ -30,7 +30,7 @@ namespace JUSToolkit.Texts.Converters
         IConverter<BinaryFormat, JGalaxySimple>,
         IConverter<JGalaxySimple, BinaryFormat>
     {
-        private DataReader reader;
+        private DataReader reader = null!;
 
         /// <summary>
         /// Converts BinaryFormat to JGalaxySimple format.

@@ -30,7 +30,7 @@ namespace JUSToolkit.Texts.Converters
         IConverter<BinaryFormat, SuppChr>,
         IConverter<SuppChr, BinaryFormat>
     {
-        private DataReader reader;
+        private DataReader reader = null!;
 
         /// <summary>
         /// Converts BinaryFormat to SuppChr format.

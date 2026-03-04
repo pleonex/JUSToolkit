@@ -28,7 +28,7 @@ namespace JUSToolkit.Texts.Converters
     /// </summary>
     public class Binary2Bgm : IConverter<BinaryFormat, Bgm>, IConverter<Bgm, BinaryFormat>
     {
-        private DataReader reader;
+        private DataReader reader = null!;
 
         /// <summary>
         /// Converts BinaryFormat to Bgm format.

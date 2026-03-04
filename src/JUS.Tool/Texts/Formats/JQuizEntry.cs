@@ -11,15 +11,6 @@ namespace JUSToolkit.Texts.Formats
         public static readonly int EntrySize = 0x28; // 40bytes
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JQuizEntry"/> class.
-        /// </summary>
-        public JQuizEntry()
-        {
-            Questions = new string[4];
-            Answers = new string[4];
-        }
-
-        /// <summary>
         /// Gets or sets the Manga ID.
         /// </summary>
         public byte MangaID { get; set; }
@@ -37,16 +28,16 @@ namespace JUSToolkit.Texts.Formats
         /// <summary>
         /// Gets or sets the photo.
         /// </summary>
-        public string Photo { get; set; }
+        public string Photo { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the questions array.
         /// </summary>
-        public string[] Questions { get; set; }
+        public string[] Questions { get; set; } = new string[4];
 
         /// <summary>
         /// Gets or sets the answers array.
         /// </summary>
-        public string[] Answers { get; set; }
+        public string[] Answers { get; set; } = new string[4];
     }
 }

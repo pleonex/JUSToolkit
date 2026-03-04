@@ -31,7 +31,7 @@ namespace JUSToolkit.Texts.Converters
         IConverter<BinaryFormat, JGalaxyComplex>,
         IConverter<JGalaxyComplex, BinaryFormat>
     {
-        private DataReader reader;
+        private DataReader reader = null!;
 
         /// <summary>
         /// Converts BinaryFormat to JGalaxyComplex format.

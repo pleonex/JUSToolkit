@@ -10,16 +10,8 @@ namespace JUSToolkit.Texts.Formats
     public class SuppChr : IFormat
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SuppChr"/> class.
-        /// </summary>
-        public SuppChr()
-        {
-            Entries = new List<SuppChrEntry>();
-        }
-
-        /// <summary>
         /// Gets or sets the list of <see cref="SuppChrEntry" />.
         /// </summary>
-        public List<SuppChrEntry> Entries { get; set; }
+        public List<SuppChrEntry> Entries { get; set; } = [];
     }
 }

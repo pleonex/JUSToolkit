@@ -11,7 +11,7 @@ namespace JUS.Tests.Texts
 {
     public class InfoDeckInfoFormatTest
     {
-        private string resPath;
+        private string resPath = string.Empty;
 
         [SetUp]
         public void Setup()
@@ -28,9 +28,9 @@ namespace JUS.Tests.Texts
             foreach (string filePath in Directory.GetFiles(resPath, "*.bin", SearchOption.AllDirectories)) {
                 using (Node node = NodeFactory.FromFile(filePath)) {
                     // BinaryFormat -> InfoDeckInfo
-                    BinaryFormat expectedBin = node.GetFormatAs<BinaryFormat>();
+                    BinaryFormat expectedBin = node.GetFormatAs<BinaryFormat>()!;
                     var binary2InfoDeckInfo = new Binary2InfoDeckInfo();
-                    InfoDeckInfo expectedInfoDeckInfo = null;
+                    InfoDeckInfo expectedInfoDeckInfo = null!;
                     try {
                         expectedInfoDeckInfo = binary2InfoDeckInfo.Convert(expectedBin);
                     } catch (Exception ex) {
@@ -39,7 +39,7 @@ namespace JUS.Tests.Texts
 
                     // InfoDeckInfo -> Po
                     var infoDeckInfo2Po = new InfoDeckInfo2Po();
-                    Po expectedPo = null;
+                    Po expectedPo = null!;
                     try {
                         expectedPo = infoDeckInfo2Po.Convert(expectedInfoDeckInfo);
                     } catch (Exception ex) {
@@ -47,7 +47,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // Po -> InfoDeckInfo
-                    InfoDeckInfo actualInfoDeckInfo = null;
+                    InfoDeckInfo actualInfoDeckInfo = null!;
                     try {
                         actualInfoDeckInfo = infoDeckInfo2Po.Convert(expectedPo);
                     } catch (Exception ex) {
@@ -55,7 +55,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // InfoDeckInfo -> BinaryFormat
-                    BinaryFormat actualBin = null;
+                    BinaryFormat actualBin = null!;
                     try {
                         actualBin = binary2InfoDeckInfo.Convert(actualInfoDeckInfo);
                     } catch (Exception ex) {
@@ -63,7 +63,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // Comparing Binaries
-                    Assert.That(expectedBin.Stream.Compare(actualBin.Stream), Is.True, $"InfoDeckInfo are not identical: {node.Path}");
+                    Assert.That(expectedBin.Stream.Compare(actualBin.Stream!), Is.True, $"InfoDeckInfo are not identical: {node.Path}");
                 }
             }
         }

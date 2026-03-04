@@ -8,14 +8,6 @@ namespace JUSToolkit.Texts.Formats
     public abstract class InfoDeckBase : IFormat
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InfoDeckBase"/> class.
-        /// </summary>
-        protected InfoDeckBase()
-        {
-            Entries = new List<InfoDeckEntry>();
-        }
-
-        /// <summary>
         /// Gets or sets the number of entries in <see cref="Entries"/>.
         /// </summary>
         public int Count { get; set; }
@@ -23,7 +15,7 @@ namespace JUSToolkit.Texts.Formats
         /// <summary>
         /// Gets or sets the list of entries (strings).
         /// </summary>
-        public List<InfoDeckEntry> Entries { get; set; }
+        public List<InfoDeckEntry> Entries { get; set; } = [];
 
         /// <summary>
         /// Gets the number of lines per page.

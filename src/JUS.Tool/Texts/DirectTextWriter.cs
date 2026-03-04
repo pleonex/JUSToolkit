@@ -12,14 +12,13 @@ namespace JUSToolkit.Texts
         /// </summary>
         public DirectTextWriter()
         {
-            Strings = new List<string>();
             PointerAccumulator = 0;
         }
 
         /// <summary>
         /// Gets or sets the list of sentences / entries.
         /// </summary>
-        public List<string> Strings { get; set; }
+        public List<string> Strings { get; set; } = [];
 
         /// <summary>
         /// Gets or sets the acumulator pointer.

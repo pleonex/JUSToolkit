@@ -28,7 +28,7 @@ namespace JUSToolkit.Tests
     {
         public static string RootFromOutputPath {
             get {
-                string envVar = Environment.GetEnvironmentVariable("YARHL_TEST_DIR");
+                string? envVar = Environment.GetEnvironmentVariable("YARHL_TEST_DIR");
                 if (!string.IsNullOrEmpty(envVar)) {
                     return envVar;
                 }

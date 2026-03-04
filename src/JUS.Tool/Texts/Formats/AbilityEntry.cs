@@ -13,16 +13,16 @@
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the first description line.
         /// </summary>
-        public string Description1 { get; set; }
+        public string Description1 { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the second description line.
         /// </summary>
-        public string Description2 { get; set; }
+        public string Description2 { get; set; } = string.Empty;
     }
 }

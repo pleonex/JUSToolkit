@@ -28,17 +28,17 @@ namespace JUSToolkit.Tests
     /// </summary>
     public class NodeContainerInfo
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
-        public string FormatType { get; set; }
+        public string FormatType { get; set; } = string.Empty;
 
-        public BinaryInfo Stream { get; set; }
+        public BinaryInfo Stream { get; set; } = new();
 
-        public Dictionary<string, object> Tags { get; set; }
+        public Dictionary<string, object> Tags { get; set; } = [];
 
         public bool CheckChildren { get; set; }
 
-        public Collection<NodeContainerInfo> Children { get; set; }
+        public Collection<NodeContainerInfo> Children { get; set; } = [];
 
         /// <summary>
         /// Gets the info from the Yaml file into the NodeContainerInfo object.

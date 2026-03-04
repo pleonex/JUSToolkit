@@ -30,7 +30,7 @@ namespace JUSToolkit.Texts.Converters
         IConverter<BinaryFormat, BtlChr>,
         IConverter<BtlChr, BinaryFormat>
     {
-        private DataReader reader;
+        private DataReader reader = null!;
 
         /// <summary>
         /// Converts BinaryFormat to BtlChr format.

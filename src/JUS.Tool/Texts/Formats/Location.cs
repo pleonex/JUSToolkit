@@ -10,14 +10,6 @@ namespace JUSToolkit.Texts.Formats
     public class Location : IFormat
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Location"/> class.
-        /// </summary>
-        public Location()
-        {
-            Entries = new List<LocationEntry>();
-        }
-
-        /// <summary>
         /// Gets or sets the number of entries in <see cref="Entries"/>.
         /// </summary>
         public int Count { get; set; }
@@ -25,6 +17,6 @@ namespace JUSToolkit.Texts.Formats
         /// <summary>
         /// Gets or sets the list of <see cref="LocationEntry" />.
         /// </summary>
-        public List<LocationEntry> Entries { get; set; }
+        public List<LocationEntry> Entries { get; set; } = [];
     }
 }

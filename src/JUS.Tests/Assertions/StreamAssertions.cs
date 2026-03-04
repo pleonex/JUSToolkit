@@ -58,7 +58,7 @@ namespace JUSToolkit.Tests.Assertions
             Subject.Position = 0;
             using var sha256 = SHA256.Create();
             sha256.ComputeHash(Subject);
-            string actualHash = BitConverter.ToString(sha256.Hash)
+            string actualHash = BitConverter.ToString(sha256.Hash!)
                 .Replace("-", string.Empty)
                 .ToLowerInvariant();
 

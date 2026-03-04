@@ -21,7 +21,7 @@ namespace JUS.Tool.Graphics.Converters
         private const int Type = 0x03;
         private const int PointerOffset = 0x0A;
         private readonly Binary2Dig digConverter = new();
-        private List<Sprite> spriteCollection;
+        private List<Sprite> spriteCollection = [];
 
         /// <summary>
         /// Converts a <see cref="BinaryFormat"/> (file) to a dtx3 <see cref="NodeContainerFormat"/>.

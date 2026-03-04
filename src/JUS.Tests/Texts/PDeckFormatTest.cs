@@ -10,7 +10,7 @@ namespace JUS.Tests.Texts
 {
     public class PDeckFormatTest
     {
-        private string resPath;
+        private string resPath = string.Empty;
 
         [SetUp]
         public void Setup()
@@ -27,9 +27,9 @@ namespace JUS.Tests.Texts
             foreach (string filePath in Directory.GetFiles(resPath, "*.bin", SearchOption.AllDirectories)) {
                 using (Node node = NodeFactory.FromFile(filePath)) {
                     // BinaryFormat -> PDeck
-                    BinaryFormat expectedBin = node.GetFormatAs<BinaryFormat>();
+                    BinaryFormat expectedBin = node.GetFormatAs<BinaryFormat>()!;
                     var binary2PDeck = new Binary2PDeck();
-                    PDeck expectedPDeck = null;
+                    PDeck expectedPDeck = null!;
                     try {
                         expectedPDeck = binary2PDeck.Convert(expectedBin);
                     } catch (Exception ex) {
@@ -42,7 +42,7 @@ namespace JUS.Tests.Texts
 
                     // NCF (PDeck) -> Po
                     var pDeck2Po = new PDeck2Po();
-                    Po expectedPo = null;
+                    Po expectedPo = null!;
                     try {
                         expectedPo = pDeck2Po.Convert(originalContainer);
                     } catch (Exception ex) {
@@ -50,7 +50,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // Po -> NCF (PDeck)
-                    NodeContainerFormat container = null;
+                    NodeContainerFormat container = null!;
                     try {
                         container = pDeck2Po.Convert(expectedPo);
                     } catch (Exception ex) {
@@ -58,10 +58,10 @@ namespace JUS.Tests.Texts
                     }
 
                     // NCF -> PDeck
-                    PDeck actualDeck = container.Root.Children[0].GetFormatAs<PDeck>();
+                    PDeck actualDeck = container.Root.Children[0].GetFormatAs<PDeck>()!;
 
                     // PDeck -> BinaryFormat
-                    BinaryFormat actualBin = null;
+                    BinaryFormat actualBin = null!;
                     try {
                         actualBin = binary2PDeck.Convert(actualDeck);
                     } catch (Exception ex) {
@@ -69,7 +69,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // Comparing Binaries
-                    Assert.That(expectedBin.Stream.Compare(actualBin.Stream), Is.True, $"PDeck are not identical: {node.Path}");
+                    Assert.That(expectedBin.Stream.Compare(actualBin.Stream!), Is.True, $"PDeck are not identical: {node.Path}");
                 }
             }
         }

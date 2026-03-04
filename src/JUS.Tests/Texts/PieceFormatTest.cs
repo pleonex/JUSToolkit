@@ -11,7 +11,7 @@ namespace JUS.Tests.Texts
 {
     public class PieceFormatTest
     {
-        private string resPath;
+        private string resPath = string.Empty;
 
         [SetUp]
         public void Setup()
@@ -28,9 +28,9 @@ namespace JUS.Tests.Texts
             Node node = NodeFactory.FromFile(resPath);
 
             // BinaryFormat -> Piece
-            BinaryFormat expectedBin = node.GetFormatAs<BinaryFormat>();
+            BinaryFormat expectedBin = node.GetFormatAs<BinaryFormat>()!;
             var binary2Piece = new Binary2Piece();
-            Piece expectedPiece = null;
+            Piece expectedPiece = null!;
             try {
                 expectedPiece = binary2Piece.Convert(expectedBin);
             } catch (Exception ex) {
@@ -39,7 +39,7 @@ namespace JUS.Tests.Texts
 
             // Piece -> Po
             var piece2Po = new Piece2Po();
-            Po expectedPo = null;
+            Po expectedPo = null!;
             try {
                 expectedPo = piece2Po.Convert(expectedPiece);
             } catch (Exception ex) {
@@ -47,7 +47,7 @@ namespace JUS.Tests.Texts
             }
 
             // Po -> Piece
-            Piece actualPiece = null;
+            Piece actualPiece = null!;
             try {
                 actualPiece = piece2Po.Convert(expectedPo);
             } catch (Exception ex) {
@@ -55,7 +55,7 @@ namespace JUS.Tests.Texts
             }
 
             // Piece -> BinaryFormat
-            BinaryFormat actualBin = null;
+            BinaryFormat actualBin = null!;
             try {
                 actualBin = binary2Piece.Convert(actualPiece);
             } catch (Exception ex) {
@@ -63,7 +63,7 @@ namespace JUS.Tests.Texts
             }
 
             // Comparing Binaries
-            Assert.That(expectedBin.Stream.Compare(actualBin.Stream), Is.True, $"Piece is not identical: {node.Path}");
+            Assert.That(expectedBin.Stream.Compare(actualBin.Stream!), Is.True, $"Piece is not identical: {node.Path}");
         }
     }
 }

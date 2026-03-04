@@ -13,22 +13,22 @@
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the first description line.
         /// </summary>
-        public string Desc1 { get; set; }
+        public string Desc1 { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the second description line.
         /// </summary>
-        public string Desc2 { get; set; }
+        public string Desc2 { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the third description line.
         /// </summary>
-        public string Desc3 { get; set; }
+        public string Desc3 { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the demo Id.

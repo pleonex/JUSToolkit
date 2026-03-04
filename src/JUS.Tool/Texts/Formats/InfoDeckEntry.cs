@@ -12,16 +12,8 @@ namespace JUSToolkit.Texts.Formats
         public static readonly int EntrySize = 0x04;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InfoDeckEntry"/> class.
-        /// </summary>
-        public InfoDeckEntry()
-        {
-            Text = new List<string>();
-        }
-
-        /// <summary>
         /// Gets or sets the Text page.
         /// </summary>
-        public List<string> Text { get; set; }
+        public List<string> Text { get; set; } = [];
     }
 }

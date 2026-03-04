@@ -31,7 +31,7 @@ namespace JUSToolkit.Tests
 
         public long Length { get; set; }
 
-        public string Sha256 { get; set; }
+        public string Sha256 { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets the info from the Yaml file into the BinaryInfo object.

@@ -37,7 +37,7 @@ namespace JUSToolkit.Graphics
         /// <summary>
         /// Gets or sets the name of the koma.
         /// </summary>
-        public string KomaName { get; set; }
+        public string KomaName { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the Unknown6.

@@ -28,8 +28,8 @@ namespace JUSToolkit.Containers.Converters
     /// </summary>
     public class Binary2Alar2 : IConverter<IBinary, Alar2>
     {
-        private DataReader reader;
-        private Alar2 alar;
+        private DataReader reader = null!;
+        private Alar2 alar = null!;
 
         /// <summary>
         /// Converts a BinaryFormat to an Alar2 container.

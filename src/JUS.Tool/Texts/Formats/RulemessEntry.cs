@@ -13,17 +13,17 @@
         /// <summary>
         /// Gets or sets the Description1.
         /// </summary>
-        public string Description1 { get; set; }
+        public string Description1 { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the Description2.
         /// </summary>
-        public string Description2 { get; set; }
+        public string Description2 { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the Description3.
         /// </summary>
-        public string Description3 { get; set; }
+        public string Description3 { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the ??.

@@ -36,7 +36,7 @@ namespace JUSToolkit.BatchConverters
     public class Png2Alar3 :
         IConverter<Alar3, Alar3>
     {
-        private NodeContainerFormat transformedFiles; // Dig + Atm to insert in the Alar3
+        private NodeContainerFormat transformedFiles = null!; // Dig + Atm to insert in the Alar3
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Png2Alar3"/> class.
@@ -75,12 +75,12 @@ namespace JUSToolkit.BatchConverters
         /// <summary>
         /// Gets or sets the original name of the Dig of the image.
         /// </summary>
-        public string DigName { get; set; }
+        public string DigName { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the original name of the Atm of the image.
         /// </summary>
-        public string AtmName { get; set; }
+        public string AtmName { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets a value indicating whether gets or sets a value indicating the transparent pixel mode.

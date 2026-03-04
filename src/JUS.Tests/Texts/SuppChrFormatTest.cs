@@ -11,7 +11,7 @@ namespace JUS.Tests.Texts
 {
     public class SuppChrFormatTest
     {
-        private string resPath;
+        private string resPath = string.Empty;
 
         [SetUp]
         public void Setup()

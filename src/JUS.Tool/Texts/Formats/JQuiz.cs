@@ -27,14 +27,6 @@ namespace JUSToolkit.Texts.Formats
     public class JQuiz : IFormat
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="JQuiz"/> class.
-        /// </summary>
-        public JQuiz()
-        {
-            Entries = new List<JQuizEntry>();
-        }
-
-        /// <summary>
         /// Gets or sets the number of entries.
         /// </summary>
         public int NumQuestions { get; set; }
@@ -42,6 +34,6 @@ namespace JUSToolkit.Texts.Formats
         /// <summary>
         /// Gets or sets the list of <see cref="JQuizEntry" />.
         /// </summary>
-        public List<JQuizEntry> Entries { get; set; }
+        public List<JQuizEntry> Entries { get; set; } = [];
     }
 }

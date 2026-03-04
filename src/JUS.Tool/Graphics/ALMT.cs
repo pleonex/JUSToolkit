@@ -137,7 +137,7 @@ namespace JUSToolkit.Graphics
         public MapInfo[] Maps {
             get;
             set;
-        }
+        } = [];
 
         /// <inheritdoc/>
         public int Width { get; set; }

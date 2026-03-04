@@ -10,16 +10,8 @@ namespace JUSToolkit.Texts.Formats
     public class Komatxt : IFormat
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Komatxt"/> class.
-        /// </summary>
-        public Komatxt()
-        {
-            Entries = new List<KomatxtEntry>();
-        }
-
-        /// <summary>
         /// Gets or sets the list of <see cref="KomatxtEntry" />.
         /// </summary>
-        public List<KomatxtEntry> Entries { get; set; }
+        public List<KomatxtEntry> Entries { get; set; } = [];
     }
 }

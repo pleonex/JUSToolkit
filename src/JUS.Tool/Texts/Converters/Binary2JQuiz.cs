@@ -28,7 +28,7 @@ namespace JUSToolkit.Texts.Converters
     /// </summary>
     public class Binary2JQuiz : IConverter<BinaryFormat, JQuiz>, IConverter<JQuiz, BinaryFormat>
     {
-        private DataReader reader;
+        private DataReader reader = null!;
 
         /// <summary>
         /// Converts BinaryFormat to JQuiz format.

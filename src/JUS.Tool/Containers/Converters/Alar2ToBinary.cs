@@ -28,7 +28,7 @@ namespace JUSToolkit.Containers.Converters
     /// </summary>
     public class Alar2ToBinary : IConverter<Alar2, BinaryFormat>
     {
-        private DataWriter writer;
+        private DataWriter writer = null!;
 
         /// <summary>
         /// Converts Alar2 to BinaryFormat.
@@ -66,7 +66,7 @@ namespace JUSToolkit.Containers.Converters
         {
             foreach (Node alarFile in Navigator.IterateNodes(alar.Root)) {
                 if (!alarFile.IsContainer) {
-                    Alar2File alarChild = alarFile.GetFormatAs<Alar2File>();
+                    Alar2File alarChild = alarFile.GetFormatAs<Alar2File>()!;
 
                     writer.Write(alarChild.FileID);
                     writer.Write(alarChild.Offset);
@@ -87,10 +87,10 @@ namespace JUSToolkit.Containers.Converters
                     int times = 32 - alarFile.Name.Length - 1; // 1 null byte
                     writer.WriteTimes(0, times);
 
-                    Alar2File alarChild = alarFile.GetFormatAs<Alar2File>();
+                    Alar2File alarChild = alarFile.GetFormatAs<Alar2File>()!;
 
                     writer.Write(alarChild.Unknown2);
-                    alarChild.Stream.WriteTo(writer.Stream);
+                    alarChild.Stream!.WriteTo(writer.Stream);
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace JUSToolkit.Containers.Converters
             int newOffset = 0;
             foreach (Node node in Navigator.IterateNodes(alar.Root)) {
                 if (!node.IsContainer) {
-                    Alar2File alarFile = node.GetFormatAs<Alar2File>();
+                    Alar2File alarFile = node.GetFormatAs<Alar2File>()!;
 
                     // Starter Offset
                     if (alarFile.FileNum == 1) {

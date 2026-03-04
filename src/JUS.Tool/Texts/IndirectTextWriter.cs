@@ -13,20 +13,18 @@ namespace JUSToolkit.Texts
         /// <param name="startingOffset">Where the pointer section ends.</param>
         public IndirectTextWriter(int startingOffset)
         {
-            TextOffsets = new Dictionary<string, int>();
-            Strings = new List<string>();
             CurrentOffset = startingOffset;
         }
 
         /// <summary>
         /// Gets or sets the texts and its pointers.
         /// </summary>
-        public Dictionary<string, int> TextOffsets { get; set; }
+        public Dictionary<string, int> TextOffsets { get; set; } = [];
 
         /// <summary>
         /// Gets or sets the list of sentences / entries.
         /// </summary>
-        public List<string> Strings { get; set; }
+        public List<string> Strings { get; set; } = [];
 
         /// <summary>
         /// Gets or sets the current pointer.

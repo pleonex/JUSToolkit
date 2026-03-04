@@ -11,7 +11,7 @@ namespace JUS.Tests.Texts
 {
     public class SimpleBinFormatTest
     {
-        private string resPath;
+        private string resPath = string.Empty;
 
         [SetUp]
         public void Setup()
@@ -28,9 +28,9 @@ namespace JUS.Tests.Texts
             foreach (string filePath in Directory.GetFiles(resPath, "*.bin", SearchOption.AllDirectories)) {
                 using (Node node = NodeFactory.FromFile(filePath)) {
                     // BinaryFormat -> SimpleBin
-                    BinaryFormat expectedBin = node.GetFormatAs<BinaryFormat>();
+                    BinaryFormat expectedBin = node.GetFormatAs<BinaryFormat>()!;
                     var binary2SimpleBin = new Binary2SimpleBin();
-                    SimpleBin expectedSimpleBin = null;
+                    SimpleBin expectedSimpleBin = null!;
                     try {
                         expectedSimpleBin = binary2SimpleBin.Convert(expectedBin);
                     } catch (Exception ex) {
@@ -39,7 +39,7 @@ namespace JUS.Tests.Texts
 
                     // SimpleBin -> Po
                     var simpleBin2Po = new SimpleBin2Po();
-                    Po expectedPo = null;
+                    Po expectedPo = null!;
                     try {
                         expectedPo = simpleBin2Po.Convert(expectedSimpleBin);
                     } catch (Exception ex) {
@@ -47,7 +47,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // Po -> SimpleBin
-                    SimpleBin actualSimpleBin = null;
+                    SimpleBin actualSimpleBin = null!;
                     try {
                         actualSimpleBin = simpleBin2Po.Convert(expectedPo);
                     } catch (Exception ex) {
@@ -55,7 +55,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // SimpleBin -> BinaryFormat
-                    BinaryFormat actualBin = null;
+                    BinaryFormat actualBin = null!;
                     try {
                         actualBin = binary2SimpleBin.Convert(actualSimpleBin);
                     } catch (Exception ex) {
@@ -63,7 +63,7 @@ namespace JUS.Tests.Texts
                     }
 
                     // Comparing Binaries
-                    Assert.That(expectedBin.Stream.Compare(actualBin.Stream), Is.True, $"SimpleBin are not identical: {node.Path}");
+                    Assert.That(expectedBin.Stream.Compare(actualBin.Stream!), Is.True, $"SimpleBin are not identical: {node.Path}");
                 }
             }
         }

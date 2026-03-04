@@ -52,7 +52,7 @@ namespace JUSToolkit.BatchConverters
         /// <summary>
         /// Gets or sets the param to export the same image with multiple maps.
         /// </summary>
-        public Dictionary<string, int> MultipleMaps { get; set; }
+        public Dictionary<string, int> MultipleMaps { get; set; } = [];
 
         /// <summary>
         /// Converts an ALAR container into a NodeContainerFormat with PNGs inside.
@@ -88,7 +88,7 @@ namespace JUSToolkit.BatchConverters
                     // child.Name.Substring(2) removes the manga name
                     if (MultipleMaps?.ContainsKey(fileNumber) == true) {
                         // _n_00.atm
-                        using Node atm_n = GetAtm(
+                        using Node? atm_n = GetAtm(
                             GetSpecialMapName(mangaName, "n", fileNumber),
                             alarNode.Root.Children[0]);
 
@@ -103,7 +103,7 @@ namespace JUSToolkit.BatchConverters
                         }
 
                         // _m_00.atm
-                        using Node atm_m = GetAtm(
+                        using Node? atm_m = GetAtm(
                             GetSpecialMapName(mangaName, "m", fileNumber),
                             alarNode.Root.Children[0]);
 
@@ -119,13 +119,13 @@ namespace JUSToolkit.BatchConverters
                     }
 
                     // Get Map with the same name
-                    using Node atm = GetAtm(cleanName, alarNode.Root.Children[0]);
+                    using Node? atm = GetAtm(cleanName, alarNode.Root.Children[0]);
                     if (atm is null) {
                         Console.WriteLine("Missing map file for: " + child.Name);
                         continue;
                     }
 
-                    Node image = GetPNG(childClone, atm, cleanName);
+                    Node? image = GetPNG(childClone, atm, cleanName);
                     if (image is not null) {
                         transformedFiles.Root.Add(image);
                     }
@@ -144,9 +144,9 @@ namespace JUSToolkit.BatchConverters
                 MultipleMaps.GetValueOrDefault(fileNumber);
         }
 
-        private Node GetPNG(Node pixels, Node atm, string cleanName)
+        private Node? GetPNG(Node pixels, Node atm, string cleanName)
         {
-            Node image = null;
+            Node? image = null;
             var dig2Bitmap = new BinaryDig2Bitmap(atm);
             try {
                 image = pixels.TransformWith(dig2Bitmap);
@@ -157,9 +157,9 @@ namespace JUSToolkit.BatchConverters
             return image;
         }
 
-        private Node GetAtm(string name, Node files)
+        private Node? GetAtm(string name, Node files)
         {
-            Node atm = Navigator.IterateNodes(files).First(n => n.Name == name + ".atm");
+            Node? atm = Navigator.IterateNodes(files).First(n => n.Name == name + ".atm");
 
             if (atm is null) {
                 Console.WriteLine("Atm doesn't exist: " + name + ".atm");

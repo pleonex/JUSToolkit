@@ -47,7 +47,7 @@ namespace JUSToolkit.Containers
         /// <summary>
         /// Gets or sets the IDs of the files.
         /// </summary>
-        public byte[] IDs { get; set; }
+        public byte[] IDs { get; set; } = [];
 
         /// <summary>
         /// Inserts a new Node into the current Alar2 Container.
@@ -68,7 +68,7 @@ namespace JUSToolkit.Containers
         /// </summary>
         /// <param name="nNew">Node to insert.</param>
         /// <param name="parent">Parent directory of the file to replace.</param>
-        public void InsertModification(Node nNew, string parent = null)
+        public void InsertModification(Node nNew, string? parent = null)
         {
             uint nextFileOffset = 0;
             bool replaced = false;

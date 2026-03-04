@@ -28,8 +28,8 @@ namespace JUSToolkit.Containers.Converters
     /// </summary>
     public class Binary2Alar3 : IConverter<IBinary, Alar3>
     {
-        private DataReader reader;
-        private Alar3 alar;
+        private DataReader reader = null!;
+        private Alar3 alar = null!;
 
         /// <summary>
         /// Converts BinaryFormat to Alar3.
@@ -101,10 +101,10 @@ namespace JUSToolkit.Containers.Converters
 
             string path = reader.ReadString();
             string name = Path.GetFileName(path);
-            string dir = Path.GetDirectoryName(path);
+            string? dir = Path.GetDirectoryName(path);
             var child = new Node(name, alarFile);
 
-            NodeFactory.CreateContainersForChild(alar.Root, dir, child);
+            NodeFactory.CreateContainersForChild(alar.Root, dir!, child);
         }
     }
 }

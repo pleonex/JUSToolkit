@@ -58,7 +58,7 @@ namespace JUSToolkit.Tests.Graphics
             using Node pixelsPaletteNode = NodeFactory.FromFile(digPath, FileOpenMode.Read)
                 .TransformWith(new BinaryDig2Bitmap(mapsNode));
 
-            pixelsPaletteNode.Stream.Should().MatchInfo(info);
+            pixelsPaletteNode.Stream!.Should().MatchInfo(info);
         }
 
         [TestCaseSource(nameof(GetFiles))]
