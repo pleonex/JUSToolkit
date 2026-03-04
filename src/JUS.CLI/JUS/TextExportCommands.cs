@@ -19,7 +19,7 @@
 // SOFTWARE.
 using JUSToolkit.Texts.Converters;
 using JUSToolkit.Texts.Formats;
-using JUSToolkit.Utils;
+using JUS.Tool.Utils;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;

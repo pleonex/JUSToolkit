@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 using FluentAssertions;
-using JUSToolkit.Containers;
-using JUSToolkit.Containers.Converters;
+using JUS.Tool.Containers;
+using JUS.Tool.Containers.Converters;
 using NUnit.Framework;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;

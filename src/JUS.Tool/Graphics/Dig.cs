@@ -7,7 +7,7 @@ using Texim.Palettes;
 using Texim.Pixels;
 using Yarhl.FileFormat;
 
-namespace JUSToolkit.Graphics
+namespace JUS.Tool.Graphics
 {
     /// <summary>
     /// Bpp of a <see cref="Dig"/> image.

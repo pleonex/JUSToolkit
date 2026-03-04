@@ -21,7 +21,7 @@ using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Containers.Converters
+namespace JUS.Tool.Containers.Converters
 {
     /// <summary>
     /// Converter between BinaryFormat and Alar2.

@@ -19,9 +19,9 @@
 // SOFTWARE.
 using System.Reflection;
 using FluentAssertions;
-using JUSToolkit.Containers;
-using JUSToolkit.Containers.Converters;
-using JUSToolkit.Graphics.Converters;
+using JUS.Tool.Containers;
+using JUS.Tool.Containers.Converters;
+using JUS.Tool.Graphics.Converters;
 using NUnit.Framework;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;

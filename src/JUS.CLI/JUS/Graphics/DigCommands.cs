@@ -17,8 +17,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using JUSToolkit.Graphics;
-using JUSToolkit.Graphics.Converters;
+using JUS.Tool.Graphics;
+using JUS.Tool.Graphics.Converters;
+using JUS.Tool.Utils;
 using Texim.Games.Nitro.Backgrounds.ScreenMaps;
 using Texim.Images;
 using Texim.Images.Standard;

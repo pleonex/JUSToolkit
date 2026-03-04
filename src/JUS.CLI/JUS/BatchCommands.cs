@@ -18,13 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 using System.Text.RegularExpressions;
+using JUS.Tool.BatchConverters;
+using JUS.Tool.Containers;
+using JUS.Tool.Containers.Converters;
+using JUS.Tool.Graphics;
 using JUS.Tool.Graphics.Converters;
-using JUSToolkit.BatchConverters;
-using JUSToolkit.Containers;
-using JUSToolkit.Containers.Converters;
-using JUSToolkit.Graphics;
-using JUSToolkit.Graphics.Converters;
-using JUSToolkit.Utils;
+using JUS.Tool.Utils;
 using Texim.Images.Standard;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;

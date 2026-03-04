@@ -1,7 +1,7 @@
 ﻿using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Containers
+namespace JUS.Tool.Containers
 {
     /// <summary>
     /// Single file of an Alar2 Container.

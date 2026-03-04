@@ -1,5 +1,5 @@
 ﻿using System;
-using JUSToolkit.Graphics.Converters;
+using JUS.Tool.Graphics.Converters;
 using Texim.Sprites;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;

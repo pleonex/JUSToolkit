@@ -18,12 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 using FluentAssertions;
-using JUSToolkit.Graphics;
-using JUSToolkit.Graphics.Converters;
+using JUS.Tool.Graphics;
+using JUS.Tool.Graphics.Converters;
 using NUnit.Framework;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
-using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 

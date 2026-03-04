@@ -1,6 +1,6 @@
 ﻿using System;
-using JUSToolkit.Graphics;
-using JUSToolkit.Graphics.Converters;
+using JUS.Tool.Graphics;
+using JUS.Tool.Graphics.Converters;
 using Texim.Pixels;
 using Texim.Sprites;
 using YamlDotNet.Serialization;

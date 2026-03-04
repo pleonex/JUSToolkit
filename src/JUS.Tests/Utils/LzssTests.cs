@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 using FluentAssertions;
-using JUSToolkit.Graphics.Converters;
+using JUS.Tool.Utils;
 using NUnit.Framework;
 using Yarhl.FileSystem;
 using Yarhl.IO;

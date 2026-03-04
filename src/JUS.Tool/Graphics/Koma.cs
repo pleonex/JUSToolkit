@@ -20,7 +20,7 @@
 using System.Collections.ObjectModel;
 using Yarhl.FileFormat;
 
-namespace JUSToolkit.Graphics
+namespace JUS.Tool.Graphics
 {
     /// <summary>
     /// Sprite Format - A Koma is a Collection of KomaElements.

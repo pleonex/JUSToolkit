@@ -1,5 +1,5 @@
 using JUSToolkit.Texts.Converters;
-using JUSToolkit.Utils;
+using JUS.Tool.Utils;
 using NUnit.Framework;
 
 namespace JUS.Tests.Texts

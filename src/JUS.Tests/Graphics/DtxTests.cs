@@ -18,10 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 using FluentAssertions;
+using JUS.Tool.Containers.Converters;
+using JUS.Tool.Graphics;
 using JUS.Tool.Graphics.Converters;
-using JUSToolkit.Containers.Converters;
-using JUSToolkit.Graphics;
-using JUSToolkit.Graphics.Converters;
+using JUS.Tool.Utils;
 using NUnit.Framework;
 using Texim.Images;
 using Texim.Images.Quantization;

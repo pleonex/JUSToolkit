@@ -22,7 +22,7 @@ using Texim.Colors;
 using Texim.Images;
 using Texim.Sprites;
 
-namespace JUSToolkit.Graphics
+namespace JUS.Tool.Graphics
 {
     /// <summary>
     /// Image segmentation algorithm for Nintendo DS.

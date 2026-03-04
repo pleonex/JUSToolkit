@@ -1,6 +1,6 @@
 ﻿using Texim.Games.Nitro.Backgrounds.ScreenMaps;
 
-namespace JUSToolkit.Graphics
+namespace JUS.Tool.Graphics
 {
     /// <summary>
     /// NDS Background Modes.

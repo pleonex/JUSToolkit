@@ -2,7 +2,7 @@
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Containers
+namespace JUS.Tool.Containers
 {
     /// <summary>
     /// Alar2 Container Format.

@@ -17,10 +17,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using JUSToolkit.Containers;
-using JUSToolkit.Graphics;
-using JUSToolkit.Graphics.Converters;
-using JUSToolkit.Utils;
+using JUS.Tool.Containers;
+using JUS.Tool.Graphics;
+using JUS.Tool.Graphics.Converters;
+using JUS.Tool.Utils;
 using Texim.Games.Nitro.Backgrounds.ScreenMaps;
 using Texim.Images;
 using Texim.Images.Standard;
@@ -28,7 +28,7 @@ using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.BatchConverters
+namespace JUS.Tool.BatchConverters
 {
     /// <summary>
     /// Inserts a PNG into an Alar3.

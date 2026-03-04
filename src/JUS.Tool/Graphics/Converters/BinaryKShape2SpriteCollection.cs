@@ -20,7 +20,7 @@ using Texim.Sprites;
 using Yarhl.FileFormat;
 using Yarhl.IO;
 
-namespace JUSToolkit.Graphics.Converters
+namespace JUS.Tool.Graphics.Converters
 {
     /// <summary>
     /// Converts between a <see cref="KShapeSprites"/> and a Binary File.
