@@ -32,7 +32,7 @@ namespace JUS.Tests
 
         public string FormatType { get; set; } = string.Empty;
 
-        public BinaryInfo Stream { get; set; } = new();
+        public BinaryInfo? Stream { get; set; }
 
         public Dictionary<string, object> Tags { get; set; } = [];
 

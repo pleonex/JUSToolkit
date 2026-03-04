@@ -217,7 +217,7 @@ namespace JUS.Tool.Graphics
         /// </summary>
         /// <param name="map">Map to modify.</param>
         /// <returns>The <see cref="Dig"/> with the transparent tile.</returns>
-        public Dig InsertTransparentTile(ScreenMap map)
+        public Dig InsertTransparentTile(IScreenMap map)
         {
             var dig = new Dig(this) {
                 Pixels = new IndexedPixel[this.Pixels.Length + 64],

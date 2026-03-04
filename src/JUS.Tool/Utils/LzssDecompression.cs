@@ -39,7 +39,7 @@ namespace JUS.Tool.Utils
             ArgumentNullException.ThrowIfNull(source);
 
             DataStream decompressedStream = CompressionUtils.IsCompressed(source.Stream) ? Convert(source.Stream) : new DataStream(source.Stream);
-
+            decompressedStream.Position = 0;
             return new BinaryFormat(decompressedStream);
         }
 

@@ -47,7 +47,7 @@ namespace JUS.Tool.Graphics.Converters
             var writer = new DataWriter(newBin.Stream);
             var reader = new DataReader(OriginalDTX.Stream);
 
-            if (SegmentsMetadata == null) {
+            if (SegmentsMetadata.Count == 0) {
                 // Obtenemos el DSIG offset
                 reader.Stream.Position = 0x08;
                 uint dsigOffset = reader.ReadUInt16();

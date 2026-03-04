@@ -144,11 +144,16 @@ namespace JUS.Tool.BatchConverters
             };
 
             png.Stream!.Position = 0;
-            Node compressed = png
+            MapCompressedIndexedImage compressed = png
                 .TransformWith<StandardBinaryImage2RgbImage>()
-                .TransformWith(new RgbImageMapCompression(compressionParams));
-            IndexedImage newImage = compressed.Children[0].GetFormatAs<IndexedImage>()!;
-            ScreenMap map = compressed.Children[1].GetFormatAs<ScreenMap>()!;
+                .TransformWith(new RgbImageMapCompression(compressionParams))
+                .GetFormatAs<MapCompressedIndexedImage>()!;
+            var newImage = new IndexedImage {
+                Width = 8,
+                Height = compressed.Tiles.Length / 8,
+                Pixels = compressed.Tiles,
+            };
+            IScreenMap map = compressed.Map;
 
             // New Dig: original dig changing height, width and pixels
             var newDig = new Dig(originalDig, newImage);
