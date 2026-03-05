@@ -148,6 +148,7 @@ namespace JUS.Tool.BatchConverters
                 .TransformWith<StandardBinaryImage2RgbImage>()
                 .TransformWith(new RgbImageMapCompression(compressionParams))
                 .GetFormatAs<MapCompressedIndexedImage>()!;
+
             var newImage = new IndexedImage {
                 Width = 8,
                 Height = compressed.Tiles.Length / 8,

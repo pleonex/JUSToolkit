@@ -89,11 +89,17 @@ namespace JUS.CLI.JUS
                 Palettes = originalDig,
             };
 
-            Node compressed = NodeFactory.FromFile(input, FileOpenMode.Read)
+            MapCompressedIndexedImage compressed = NodeFactory.FromFile(input, FileOpenMode.Read)
                 .TransformWith<StandardBinaryImage2RgbImage>()
-                .TransformWith(new RgbImageMapCompression(compressionParams));
-            IndexedImage newImage = compressed.Children[0].GetFormatAs<IndexedImage>()!;
-            ScreenMap map = compressed.Children[1].GetFormatAs<ScreenMap>()!;
+                .TransformWith(new RgbImageMapCompression(compressionParams))
+                .GetFormatAs<MapCompressedIndexedImage>()!;
+
+            var newImage = new IndexedImage {
+                Width = 8,
+                Height = compressed.Tiles.Length / 8,
+                Pixels = compressed.Tiles,
+            };
+            IScreenMap map = compressed.Map;
 
             var newDig = new Dig(originalDig, newImage);
 
@@ -142,15 +148,17 @@ namespace JUS.CLI.JUS
             // 2 - Iterate the input PNGs
             for (int i = 0; i < input.Length; i++) {
                 // Transform the PNG into RgbImage (Pixels + Map) using the palette of the original DIG
-                Node png = NodeFactory.FromFile(input[i], FileOpenMode.Read)
+                MapCompressedIndexedImage compressed = NodeFactory.FromFile(input[i], FileOpenMode.Read)
                     .TransformWith<StandardBinaryImage2RgbImage>()
-                    .TransformWith(new RgbImageMapCompression(compressionParams));
+                    .TransformWith(new RgbImageMapCompression(compressionParams))
+                    .GetFormatAs<MapCompressedIndexedImage>()!;
 
-                // Pixels
-                newImage = png.Children[0].GetFormatAs<IndexedImage>()!;
-
-                // Map
-                ScreenMap map = png.Children[1].GetFormatAs<ScreenMap>()!;
+                newImage = new IndexedImage {
+                    Width = 8,
+                    Height = compressed.Tiles.Length / 8,
+                    Pixels = compressed.Tiles,
+                };
+                IScreenMap map = compressed.Map;
 
                 // 3 - Clone original
                 mergedImage = new Dig(mergedImage, newImage);
