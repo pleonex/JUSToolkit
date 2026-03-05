@@ -23,6 +23,8 @@ using JUS.Tool.Containers;
 using JUS.Tool.Containers.Converters;
 using JUS.Tool.Graphics.Converters;
 using NUnit.Framework;
+using Texim.Images;
+using Texim.Images.Standard;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
@@ -45,19 +47,22 @@ namespace JUS.Tests.Batch
 
         // Pleonex's NDS Image Compression algorithm is better than Nintendo's, so the output .aar is smaller than the original.
         // So we test that the original png and the output one is the same:
-        // PNG + Alar -> Alar -> PNG
+        // PNG + Alar -> Alar -> PNG -> compare decoded pixels
         [TestCaseSource(nameof(GetFiles))]
-        public void TwoWaysIdenticalPngStream(string alarPath, string pngPath)
+        public void TwoWaysIdenticalPngPixels(string alarPath, string pngPath)
         {
-            Assert.Ignore(); // Me sale que el png resultante es 4bytes más pequeño, quizá por el insertTransparent?
+            Assert.Ignore("Error Message: Expected _ = resultPixels.Pixels[65536] to be #00000000, but found #000000FF. Needs investigation.");
             TestDataBase.IgnoreIfFileDoesNotExist(alarPath);
             TestDataBase.IgnoreIfFileDoesNotExist(pngPath);
 
             using Node originalAlar = NodeFactory.FromFile(alarPath, FileOpenMode.Read)
-            .TransformWith<Binary2Alar3>();
+                .TransformWith<Binary2Alar3>();
             using Node inputPNG = NodeFactory.FromFile(pngPath, FileOpenMode.Read);
 
-            var originalStream = new DataStream(inputPNG.Stream!, 0, inputPNG.Stream.Length);
+            // Decode original PNG to pixels (deep clone so inputPNG stream stays alive for Png2Alar3)
+            using var originalPngCopy = new Node("original", (BinaryFormat)new BinaryFormat(inputPNG.Stream!).DeepClone());
+            originalPngCopy.TransformWith<StandardBinaryImage2RgbImage>();
+            IRgbImage originalPixels = originalPngCopy.GetFormatAs<IRgbImage>()!;
 
             string originalName = Path.GetFileNameWithoutExtension(pngPath);
 
@@ -65,18 +70,24 @@ namespace JUS.Tests.Batch
 
             Alar3 newAlar = originalAlar
                 .TransformWith(png2Alar3)
-                .GetFormatAs<Alar3>();
+                .GetFormatAs<Alar3>()!;
 
-            // Extracting the png from the newAlar to compare it with the original
+            // Extracting the png from the newAlar
             Node newDig = Navigator.IterateNodes(newAlar.Root).First(n => n.Name == originalName + ".dig") ?? throw new FormatException("Dig doesn't exist: " + originalName + ".dig");
             Node newAtm = Navigator.IterateNodes(newAlar.Root).First(n => n.Name == originalName + ".atm") ?? throw new FormatException("Atm doesn't exist: " + originalName + ".atm");
 
             var binaryDig2Bitmap = new BinaryDig2Bitmap(newAtm);
 
-            using Node pixelsPaletteNode = newDig.TransformWith(binaryDig2Bitmap);
+            using Node resultPngNode = newDig.TransformWith(binaryDig2Bitmap);
 
-            _ = pixelsPaletteNode.Stream.Length.Should().Be(originalStream.Length);
-            _ = pixelsPaletteNode.Stream.Compare(originalStream).Should().BeTrue();
+            // Decode result PNG to pixels
+            resultPngNode.TransformWith<StandardBinaryImage2RgbImage>();
+            IRgbImage resultPixels = resultPngNode.GetFormatAs<IRgbImage>()!;
+
+            // Compare decoded pixel data
+            _ = resultPixels.Width.Should().Be(originalPixels.Width);
+            _ = resultPixels.Height.Should().Be(originalPixels.Height);
+            _ = resultPixels.Pixels.Should().BeEquivalentTo(originalPixels.Pixels);
         }
     }
 }
