@@ -109,7 +109,7 @@ namespace JUS.Tests.Containers
             using Node fileOriginal = NodeFactory.FromDirectory(dirPath);
 
             Alar3 alar = alarOriginal.GetFormatAs<IBinary>()!.ConvertWith(new Binary2Alar3());
-            alar.InsertModification(fileOriginal);
+            alar.InsertModification(fileOriginal.GetFormatAs<NodeContainerFormat>()!);
             BinaryFormat generatedStream = alar.ConvertWith(new Alar3ToBinary());
 
             generatedStream.Stream.Length.Should().Be(alarOriginal.Stream!.Length);
@@ -218,7 +218,7 @@ namespace JUS.Tests.Containers
 
             // Tenemos que comprobar si se ha introducido correctamente
             // Obtenemos el fichero del alar3 y comprobamos el size
-            Node newFile = Navigator.SearchNode(alar.Root, internalPath);
+            Node newFile = Navigator.SearchNode(alar.Root, internalPath) ?? throw new FormatException("Node not found: " + internalPath);
             Assert.That(newFile.Stream!.Length, Is.EqualTo(fileOriginal.Stream!.Length));
         }
 
@@ -228,7 +228,8 @@ namespace JUS.Tests.Containers
         {
             // Arrange
             Type type = typeof(Alar3ToBinary);
-            MethodInfo method = type.GetMethod("GetAlar3Path", BindingFlags.NonPublic | BindingFlags.Static);
+            MethodInfo method = type.GetMethod("GetAlar3Path", BindingFlags.NonPublic | BindingFlags.Static)
+                ?? throw new InvalidOperationException("Method GetAlar3Path not found");
 
             const string jgalaxyFilePath = "/root/data/jgalaxy/jgalaxy.aar/jgalaxy/ast_battle.aar";
             const string infodeckFilePath = "/root/data/bin/InfoDeck.aar/bin/deck/bb.bin";
@@ -236,10 +237,10 @@ namespace JUS.Tests.Containers
             const string komaFilePath = "/koma.aar/koma/bb_00.dtx";
 
             // Act
-            string jgalaxyResult = (string)method.Invoke(null, new object[] { jgalaxyFilePath });
-            string infodeckyResult = (string)method.Invoke(null, new object[] { infodeckFilePath });
-            string vscallResult = (string)method.Invoke(null, new object[] { vscallFilePath });
-            string komaResult = (string)method.Invoke(null, new object[] { komaFilePath });
+            string jgalaxyResult = (string)method.Invoke(null, new object[] { jgalaxyFilePath })!;
+            string infodeckyResult = (string)method.Invoke(null, new object[] { infodeckFilePath })!;
+            string vscallResult = (string)method.Invoke(null, new object[] { vscallFilePath })!;
+            string komaResult = (string)method.Invoke(null, new object[] { komaFilePath })!;
 
             // Assert
             Assert.That(jgalaxyResult, Is.EqualTo("jgalaxy/ast_battle.aar"));

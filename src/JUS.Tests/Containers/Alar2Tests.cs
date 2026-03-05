@@ -93,7 +93,7 @@ namespace JUS.Tests.Containers
             using Node fileOriginal = NodeFactory.FromDirectory(dirPath);
 
             Alar2 alar = new Binary2Alar2().Convert(alarOriginal.GetFormatAs<IBinary>()!);
-            alar.InsertModification(fileOriginal);
+            alar.InsertModification(fileOriginal.GetFormatAs<NodeContainerFormat>()!);
             BinaryFormat generatedStream = alar.ConvertWith(new Alar2ToBinary());
 
             generatedStream.Stream.Length.Should().Be(alarOriginal.Stream!.Length);
