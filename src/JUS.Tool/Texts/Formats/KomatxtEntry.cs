@@ -17,7 +17,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-namespace JUSToolkit.Texts.Formats
+namespace JUS.Texts.Formats
 {
     /// <summary>
     /// Single entry in a Komatxt file.
@@ -35,7 +35,7 @@ namespace JUSToolkit.Texts.Formats
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the ??.

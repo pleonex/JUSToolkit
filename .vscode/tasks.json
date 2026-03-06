@@ -64,7 +64,11 @@
       "label": "build",
       "command": "dotnet",
       "type": "process",
-      "args": ["build", "${workspaceFolder}/src/JUS.CLI/"],
+      "args": [
+        "build",
+        "${workspaceFolder}/src/JUS.CLI/",
+        "-p:RunAnalizers=false"
+      ],
       "problemMatcher": "$msCompile"
     }
   ]

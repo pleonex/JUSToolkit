@@ -17,13 +17,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using NUnit.Framework;
 
-namespace JUSToolkit.Tests
+namespace JUS.Tests
 {
     /// <summary>
     /// Managing test resources.
@@ -32,7 +28,7 @@ namespace JUSToolkit.Tests
     {
         public static string RootFromOutputPath {
             get {
-                string envVar = Environment.GetEnvironmentVariable("YARHL_TEST_DIR");
+                string? envVar = Environment.GetEnvironmentVariable("YARHL_TEST_DIR");
                 if (!string.IsNullOrEmpty(envVar)) {
                     return envVar;
                 }

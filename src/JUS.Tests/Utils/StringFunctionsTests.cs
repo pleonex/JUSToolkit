@@ -17,11 +17,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using JUS.Tool;
-using JUSToolkit.Utils;
+using JUS.Tool.Utils;
 using NUnit.Framework;
 
-namespace JUS.CLI
+namespace JUS.Tests.Utils
 {
     public class StringFunctionsTests
     {
@@ -29,26 +28,26 @@ namespace JUS.CLI
         public void TestOriginalName()
         {
             const string nameCorrectPattern = "menu-option-victory00.png";
-            Assert.AreEqual("victory00.png", StringFunctions.GetOriginalName(nameCorrectPattern));
+            Assert.That(StringFunctions.GetOriginalName(nameCorrectPattern), Is.EqualTo("victory00.png"));
 
             const string nameIncorrectPattern = "menu-optionvictory00.png";
-            Assert.AreNotEqual("victory00.png", StringFunctions.GetOriginalName(nameIncorrectPattern));
+            Assert.That(StringFunctions.GetOriginalName(nameIncorrectPattern), Is.Not.EqualTo("victory00.png"));
 
             const string nameIncorrectPattern2 = "menuoptionvictory00.png";
-            Assert.AreNotEqual("victory00.png", StringFunctions.GetOriginalName(nameIncorrectPattern2));
+            Assert.That(StringFunctions.GetOriginalName(nameIncorrectPattern2), Is.Not.EqualTo("victory00.png"));
         }
 
         [Test]
         public void TestDemoName()
         {
             const string nameCorrectPattern = "demo-dn_02.png";
-            Assert.AreEqual("dn_02.png", StringFunctions.GetDemoName(nameCorrectPattern));
+            Assert.That(StringFunctions.GetDemoName(nameCorrectPattern), Is.EqualTo("dn_02.png"));
 
             const string nameIncorrectPattern = "dn_02.png";
-            Assert.AreEqual("dn_02.png", StringFunctions.GetOriginalName(nameIncorrectPattern));
+            Assert.That(StringFunctions.GetOriginalName(nameIncorrectPattern), Is.EqualTo("dn_02.png"));
 
             const string nameIncorrectPattern2 = "demo_dn_02.png";
-            Assert.AreNotEqual("dn_02.png", StringFunctions.GetOriginalName(nameIncorrectPattern2));
+            Assert.That(StringFunctions.GetOriginalName(nameIncorrectPattern2), Is.Not.EqualTo("dn_02.png"));
         }
     }
 }

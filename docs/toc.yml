@@ -1,10 +1,7 @@
 - name: Home
   href: index.md
 
-- name: Guides
-  href: guides/
-
-- name: API
+- name: Format Specifications
   href: dev/
 
 - name: GitHub

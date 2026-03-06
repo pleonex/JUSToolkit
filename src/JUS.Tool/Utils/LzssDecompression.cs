@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Priverop
+// Copyright (c) 2022 Pablo Rivero
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -17,53 +17,45 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System;
-using System.Text;
+using SceneGate.Ekona.Compression;
 using Yarhl.FileFormat;
 using Yarhl.IO;
 
-namespace JUSToolkit.Graphics.Converters
+namespace JUS.Tool.Utils
 {
     /// <summary>
-    /// Compression algorithm for LZSS using CUE's implementation.
+    /// Decompression algorithm for LZSS using CUE's implementation.
     /// </summary>
-    public class LzssCompression :
+    public class LzssDecompression :
         IConverter<IBinary, BinaryFormat>
     {
         /// <summary>
-        /// Compress a decompressed stream with LZSS and adds the DSCP header.
+        /// Decompress a LZSS compressed IBinary stream.
         /// </summary>
-        /// <param name="source">The stream to compress.</param>
-        /// <returns>The compressed stream.</returns>
+        /// <param name="source">The compressed IBinary stream with LZSS.</param>
+        /// <returns>The decompressed stream.</returns>
         public BinaryFormat Convert(IBinary source)
         {
             ArgumentNullException.ThrowIfNull(source);
 
-            DataStream decompressedStream = Convert(source.Stream);
-
+            DataStream decompressedStream = CompressionUtils.IsCompressed(source.Stream) ? Convert(source.Stream) : new DataStream(source.Stream);
+            decompressedStream.Position = 0;
             return new BinaryFormat(decompressedStream);
         }
 
         /// <summary>
-        /// Compress a DataStream with LZSS.
+        /// Decompress a LZSS compressed DataStream.
         /// </summary>
-        /// <param name="source">The DataStream to compress.</param>
-        /// <returns>The compressed DataStream.</returns>
+        /// <param name="source">The compressed DataStream with LZSS.</param>
+        /// <returns>The decompressed DataStream.</returns>
         public DataStream Convert(DataStream source)
         {
-            ArgumentNullException.ThrowIfNull(source);
+            if (source == null) {
+                throw new ArgumentNullException(nameof(source));
+            }
 
-            DataStream compressed = LzssUtils.Lzss(source, "-evn");
-
-            // Write the DSCP magic ID header
-            var memoryStream = new DataStream();
-
-            memoryStream.Seek(0);
-            memoryStream.Write(Encoding.ASCII.GetBytes("DSCP"), 0, 4);
-
-            compressed.WriteTo(memoryStream);
-
-            return memoryStream;
+            // Discard the first 4 bytes of the header (the DSCP magic ID)
+            return (DataStream)new LzssDecoder().Convert(new DataStream(source, 4, source.Length - 4));
         }
     }
 }

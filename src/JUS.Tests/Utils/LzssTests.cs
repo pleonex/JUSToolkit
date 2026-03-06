@@ -17,17 +17,13 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using FluentAssertions;
-using JUSToolkit.Graphics.Converters;
+using JUS.Tool.Utils;
 using NUnit.Framework;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Tests.Graphics
+namespace JUS.Tests.Utils
 {
     [TestFixture]
     public class LzssTests
@@ -67,7 +63,7 @@ namespace JUSToolkit.Tests.Graphics
             using var compressedFile = NodeFactory.FromFile(compressedPath, FileOpenMode.Read);
 
             compressedFile.TransformWith<LzssDecompression>()
-                .Stream.Should().MatchInfo(info);
+                .Stream!.Should().MatchInfo(info);
         }
 
         [TestCaseSource(nameof(GetCompressionFiles))]
@@ -81,7 +77,7 @@ namespace JUSToolkit.Tests.Graphics
             using var decompressedFile = NodeFactory.FromFile(decompressedPath, FileOpenMode.Read);
 
             decompressedFile.TransformWith<LzssCompression>()
-                .Stream.Should().MatchInfo(info);
+                .Stream!.Should().MatchInfo(info);
         }
 
         [TestCaseSource(nameof(GetDecompressionFiles))]
@@ -91,14 +87,14 @@ namespace JUSToolkit.Tests.Graphics
             TestDataBase.IgnoreIfFileDoesNotExist(infoPath);
 
             using var compressedFile = NodeFactory.FromFile(compressedPath, FileOpenMode.Read);
-            var originalStream = new DataStream(compressedFile.Stream!, 0, compressedFile.Stream.Length);
+            var originalStream = new DataStream(compressedFile.Stream!, 0, compressedFile.Stream!.Length);
 
             var decompressed = compressedFile.TransformWith<LzssDecompression>();
 
             var recompressed = decompressed.TransformWith<LzssCompression>();
 
-            recompressed.Stream.Length.Should().Be(originalStream.Length);
-            recompressed.Stream.Compare(originalStream).Should().BeTrue();
+            recompressed.Stream!.Length.Should().Be(originalStream.Length);
+            recompressed.Stream!.Compare(originalStream).Should().BeTrue();
         }
     }
 }

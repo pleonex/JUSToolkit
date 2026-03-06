@@ -17,22 +17,19 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System;
-using System.IO;
-using System.Linq;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Containers.Converters
+namespace JUS.Tool.Containers.Converters
 {
     /// <summary>
     /// Converts between an <see cref="Alar3"/> and a BinaryFormat file.
     /// </summary>
     public class Binary2Alar3 : IConverter<IBinary, Alar3>
     {
-        private DataReader reader;
-        private Alar3 alar;
+        private DataReader reader = null!;
+        private Alar3 alar = null!;
 
         /// <summary>
         /// Converts BinaryFormat to Alar3.
@@ -104,10 +101,10 @@ namespace JUSToolkit.Containers.Converters
 
             string path = reader.ReadString();
             string name = Path.GetFileName(path);
-            string dir = Path.GetDirectoryName(path);
+            string? dir = Path.GetDirectoryName(path);
             var child = new Node(name, alarFile);
 
-            NodeFactory.CreateContainersForChild(alar.Root, dir, child);
+            NodeFactory.CreateContainersForChild(alar.Root, dir!, child);
         }
     }
 }

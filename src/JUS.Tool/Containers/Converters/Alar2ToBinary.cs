@@ -17,19 +17,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Containers.Converters
+namespace JUS.Tool.Containers.Converters
 {
     /// <summary>
     /// Converts between a NodeContainerFormat and a BinaryFormat file.
     /// </summary>
     public class Alar2ToBinary : IConverter<Alar2, BinaryFormat>
     {
-        private DataWriter writer;
+        private DataWriter writer = null!;
 
         /// <summary>
         /// Converts Alar2 to BinaryFormat.
@@ -57,8 +56,8 @@ namespace JUSToolkit.Containers.Converters
         private void WriteHeader(Alar2 alar)
         {
             writer.Write(Alar2.STAMP, false);
-            writer.Write((byte) 2);
-            writer.Write((byte) alar.MinorVersion);
+            writer.Write((byte)2);
+            writer.Write((byte)alar.MinorVersion);
             writer.Write(alar.NumFiles);
             writer.Write(alar.IDs);
         }
@@ -67,7 +66,7 @@ namespace JUSToolkit.Containers.Converters
         {
             foreach (Node alarFile in Navigator.IterateNodes(alar.Root)) {
                 if (!alarFile.IsContainer) {
-                    Alar2File alarChild = alarFile.GetFormatAs<Alar2File>();
+                    Alar2File alarChild = alarFile.GetFormatAs<Alar2File>()!;
 
                     writer.Write(alarChild.FileID);
                     writer.Write(alarChild.Offset);
@@ -88,10 +87,10 @@ namespace JUSToolkit.Containers.Converters
                     int times = 32 - alarFile.Name.Length - 1; // 1 null byte
                     writer.WriteTimes(0, times);
 
-                    Alar2File alarChild = alarFile.GetFormatAs<Alar2File>();
+                    Alar2File alarChild = alarFile.GetFormatAs<Alar2File>()!;
 
                     writer.Write(alarChild.Unknown2);
-                    alarChild.Stream.WriteTo(writer.Stream);
+                    alarChild.Stream!.WriteTo(writer.Stream);
                 }
             }
         }
@@ -103,7 +102,7 @@ namespace JUSToolkit.Containers.Converters
             int newOffset = 0;
             foreach (Node node in Navigator.IterateNodes(alar.Root)) {
                 if (!node.IsContainer) {
-                    Alar2File alarFile = node.GetFormatAs<Alar2File>();
+                    Alar2File alarFile = node.GetFormatAs<Alar2File>()!;
 
                     // Starter Offset
                     if (alarFile.FileNum == 1) {
@@ -124,18 +123,6 @@ namespace JUSToolkit.Containers.Converters
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Removes the alar filename (the root name) from the path of the node.
-        /// <remarks>If we have '/alar.alar/komas/dg_00.dtx' we will get 'komas/dg_00.dtx'.</remarks>
-        /// </summary>
-        /// <param name="fullPath">The full path of the node.</param>
-        /// <param name="alarName">The name of the root node.</param>
-        /// <returns>The string.</returns>
-        private string GetAlar2Path(string fullPath, string alarName)
-        {
-            return fullPath.Substring(1).Replace(alarName, string.Empty).Substring(1);
         }
     }
 }

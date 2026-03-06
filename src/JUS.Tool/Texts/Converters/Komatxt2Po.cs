@@ -17,12 +17,12 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using JUSToolkit.Texts.Formats;
-using JUSToolkit.Utils;
+using JUS.Tool.Texts.Formats;
+using JUS.Tool.Utils;
 using Yarhl.FileFormat;
 using Yarhl.Media.Text;
 
-namespace JUSToolkit.Texts.Converters
+namespace JUS.Tool.Texts.Converters
 {
     /// <summary>
     /// Converts between Komatxt format and Po.
@@ -88,7 +88,7 @@ namespace JUSToolkit.Texts.Converters
         /// </summary>
         /// <param name="input">Line to clean.</param>
         /// <returns>Transformed string.</returns>
-        private string AdjustLength(string input)
+        private static string AdjustLength(string input)
         {
             const char paddingChar = '|';
 

@@ -17,20 +17,19 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.Containers.Converters
+namespace JUS.Tool.Containers.Converters
 {
     /// <summary>
     /// Converter between BinaryFormat and Alar2.
     /// </summary>
     public class Binary2Alar2 : IConverter<IBinary, Alar2>
     {
-        private DataReader reader;
-        private Alar2 alar;
+        private DataReader reader = null!;
+        private Alar2 alar = null!;
 
         /// <summary>
         /// Converts a BinaryFormat to an Alar2 container.

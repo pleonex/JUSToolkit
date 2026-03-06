@@ -33,7 +33,7 @@ namespace JUS.Tool
         public static string GetVersion()
         {
             Assembly library = typeof(LibVersion).Assembly;
-            return library.GetName().Version.ToString();
+            return library.GetName().Version!.ToString();
         }
     }
 }

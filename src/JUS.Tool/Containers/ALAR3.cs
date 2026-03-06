@@ -1,8 +1,8 @@
-﻿using System;
-using JUSToolkit.Utils;
+using System;
+using JUS.Utils;
 using Yarhl.FileSystem;
 
-namespace JUSToolkit.Containers
+namespace JUS.Tool.Containers
 {
     /// <summary>
     /// Alar3 Container Format.
@@ -81,14 +81,14 @@ namespace JUSToolkit.Containers
         /// We need to iterate the whole ALAR to adjust the pointers (offsets).
         /// <param name="nNew">Node to insert.</param>
         /// <param name="parent">Parent directory of the file to replace.</param>
-        public void InsertModification(Node nNew, string parent = null)
+        public void InsertModification(Node nNew, string? parent = null)
         {
             uint nextFileOffset = 0;
             bool replaced = false;
 
             foreach (Node nOld in Navigator.IterateNodes(Root)) {
                 if (!nOld.IsContainer) {
-                    Alar3File alarFileOld = nOld.GetFormatAs<Alar3File>();
+                    Alar3File alarFileOld = nOld.GetFormatAs<Alar3File>()!;
 
                     // Ignoring first file (0 offset)
                     if (nextFileOffset > 0) {
@@ -97,14 +97,14 @@ namespace JUSToolkit.Containers
 
                     if (parent == null && nOld.Name == nNew.Name) {
                         Console.WriteLine("Replacing: " + nNew.Name);
-                        alarFileOld.ReplaceStream(nNew.Stream);
+                        alarFileOld.ReplaceStream(nNew.Stream!);
                         replaced = true;
                     }
 
                     // Search for the specific file in case there are more than one in different directories
                     // That's why specify the parent (directory name)
-                    else if (parent != null && parent == nOld.Parent.Name && nOld.Name == nNew.Name) {
-                        alarFileOld.ReplaceStream(nNew.Stream);
+                    else if (parent != null && parent == nOld.Parent!.Name && nOld.Name == nNew.Name) {
+                        alarFileOld.ReplaceStream(nNew.Stream!);
                         replaced = true;
                     }
 

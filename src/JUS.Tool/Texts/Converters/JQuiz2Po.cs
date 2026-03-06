@@ -17,15 +17,14 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System.Collections.Generic;
-using JUSToolkit.Texts.Formats;
-using JUSToolkit.Utils;
+using JUS.Tool.Texts.Formats;
+using JUS.Tool.Utils;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 using Yarhl.Media.Text;
 
-namespace JUSToolkit.Texts.Converters
+namespace JUS.Tool.Texts.Converters
 {
     /// <summary>
     /// Converts between JQuiz format and NodeContainerFormat.
@@ -141,7 +140,7 @@ namespace JUSToolkit.Texts.Converters
             Table table = Table.Instance;
 
             foreach (Node file in poFiles.Root.Children) {
-                Po po = file.TransformWith<Binary2Po>().GetFormatAs<Po>();
+                Po po = file.TransformWith<Binary2Po>().GetFormatAs<Po>()!;
                 bool hasPhoto = false; // esto una vez entra a true se queda ahí, no vuelve a false
                 foreach (PoEntry entry in po.Entries) {
                     if (entry.Context.Contains("foto")) {

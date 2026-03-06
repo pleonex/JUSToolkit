@@ -17,12 +17,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System;
-using System.Collections.Generic;
-using JUSToolkit.Utils;
 using Yarhl.FileSystem;
 
-namespace JUSToolkit.Containers
+namespace JUS.Tool.Containers
 {
     /// <summary>
     /// Alar2 Container Format.
@@ -88,14 +85,14 @@ namespace JUSToolkit.Containers
         /// </summary>
         /// <param name="nNew">Node to insert.</param>
         /// <param name="parent">Parent directory of the file to replace.</param>
-        public void InsertModification(Node nNew, string parent = null)
+        public void InsertModification(Node nNew, string? parent = null)
         {
             uint nextFileOffset = 0;
             bool replaced = false;
 
             foreach (Node nOld in Navigator.IterateNodes(Root)) {
                 if (!nOld.IsContainer) {
-                    Alar2File alarFileOld = nOld.GetFormatAs<Alar2File>();
+                    Alar2File alarFileOld = nOld.GetFormatAs<Alar2File>()!;
 
                     // Ignoring first file (0 offset)
                     if (nextFileOffset > 0) {
@@ -104,14 +101,14 @@ namespace JUSToolkit.Containers
 
                     if (parent == null && nOld.Name == nNew.Name) {
                         Console.WriteLine("Replacing: " + nNew.Name);
-                        alarFileOld.ReplaceStream(nNew.Stream);
+                        alarFileOld.ReplaceStream(nNew.Stream!);
                         replaced = true;
                     }
 
                     // Search for the specific file in case there are more than one in different directories
                     // That's why specify the parent (directory name)
-                    else if (parent != null && parent == nOld.Parent.Name && nOld.Name == nNew.Name) {
-                        alarFileOld.ReplaceStream(nNew.Stream);
+                    else if (parent != null && parent == nOld.Parent!.Name && nOld.Name == nNew.Name) {
+                        alarFileOld.ReplaceStream(nNew.Stream!);
                         replaced = true;
                     }
 

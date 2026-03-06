@@ -17,20 +17,16 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
-using JUSToolkit.BatchConverters;
-using JUSToolkit.Containers;
-using JUSToolkit.Containers.Converters;
-using JUSToolkit.Utils;
+using JUS.Tool.BatchConverters;
+using JUS.Tool.Containers;
+using JUS.Tool.Containers.Converters;
+using JUS.Tool.Utils;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.CLI.JUS.Rom
+namespace JUS.CLI.JUS.Rom
 {
     /// <summary>
     /// Strategy Pattern: Interface for rom importing logic.
@@ -97,7 +93,7 @@ namespace JUSToolkit.CLI.JUS.Rom
         /// <param name="file">The input file to import.</param>
         public void Import(Node gameNode, Node file)
         {
-            if (ContainerLocations.TryGetValue(file.Name, out string[] imageInfo)) {
+            if (ContainerLocations.TryGetValue(file.Name, out string[]? imageInfo)) {
                 file.Name = StringFunctions.GetOriginalName(file.Name);
                 ProcessContainer(gameNode, file, imageInfo);
             } else {
@@ -141,7 +137,7 @@ namespace JUSToolkit.CLI.JUS.Rom
 
             Alar3 newAlar = originalAlar
                 .TransformWith(image2Alar3)
-                .GetFormatAs<Alar3>();
+                .GetFormatAs<Alar3>()!;
 
             BinaryFormat newBinary = newAlar.ConvertWith(new Alar3ToBinary());
 
@@ -250,7 +246,7 @@ namespace JUSToolkit.CLI.JUS.Rom
         {
             string[] fileNames = GetSpecialFileNames(png.Name, ".png");
 
-            Node mNode = png.Parent.Children["demo-" + fileNames[1]] ??
+            Node mNode = png.Parent!.Children["demo-" + fileNames[1]] ??
                     throw new FormatException("Special m file not found: " + fileNames[1]);
             Node nNode = png.Parent.Children["demo-" + fileNames[2]] ??
                     throw new FormatException("Special nfile not found: " + fileNames[2]);

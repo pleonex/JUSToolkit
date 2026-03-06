@@ -17,17 +17,15 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-using System;
-using System.IO;
-using JUSToolkit.Containers;
-using JUSToolkit.Containers.Converters;
-using JUSToolkit.Graphics.Converters;
-using JUSToolkit.Utils;
+using JUS.Tool.Containers;
+using JUS.Tool.Containers.Converters;
+using JUS.Tool.Graphics.Converters;
+using JUS.Tool.Utils;
 using Yarhl.FileFormat;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUSToolkit.CLI.JUS
+namespace JUS.CLI.JUS
 {
     /// <summary>
     /// Commands related to container files.
@@ -46,10 +44,10 @@ namespace JUSToolkit.CLI.JUS
 
             PathValidator.ValidateFile(container);
 
-            Node files = NodeFactory.FromFile(container)
+            using Node files = NodeFactory.FromFile(container)
                 .TransformWith<LzssDecompression>() ?? throw new FormatException("Invalid container file");
 
-            Version alarVersion = Identifier.GetAlarVersion(files.Stream);
+            Version alarVersion = Identifier.GetAlarVersion(files.Stream!);
 
             // ToDo: In the future we need to encapsulate this
             if (alarVersion.Major == 3) {
@@ -63,7 +61,7 @@ namespace JUSToolkit.CLI.JUS
                     // Path.Combine ignores the relative path if there is an absolute path
                     // so we remove the first slash of the node.Path
                     string outputFile = Path.Combine(output, node.Path[1..]);
-                    node.Stream.WriteTo(outputFile);
+                    node.Stream!.WriteTo(outputFile);
                 }
             }
 
@@ -82,7 +80,7 @@ namespace JUSToolkit.CLI.JUS
 
             PathValidator.ValidateFile(container);
 
-            Node files = NodeFactory.FromFile(container)
+            using Node files = NodeFactory.FromFile(container)
                 .TransformWith<LzssDecompression>()
                 .TransformWith<Binary2Alar3>() ?? throw new FormatException("Invalid container file");
 
@@ -91,7 +89,7 @@ namespace JUSToolkit.CLI.JUS
                     // Path.Combine ignores the relative path if there is an absolute path
                     // so we remove the first slash of the node.Path
                     string outputFile = Path.Combine(output, node.Path[1..]);
-                    node.Stream.WriteTo(outputFile);
+                    node.Stream!.WriteTo(outputFile);
                 }
             }
 
@@ -110,7 +108,7 @@ namespace JUSToolkit.CLI.JUS
 
             PathValidator.ValidateFile(container);
 
-            Node files = NodeFactory.FromFile(container)
+            using Node files = NodeFactory.FromFile(container)
                 .TransformWith<LzssDecompression>()
                 .TransformWith<Binary2Alar2>() ?? throw new FormatException("Invalid container file");
 
@@ -119,7 +117,7 @@ namespace JUSToolkit.CLI.JUS
                     // Path.Combine ignores the relative path if there is an absolute path
                     // so we remove the first slash of the node.Path
                     string outputFile = Path.Combine(output, node.Path[1..]);
-                    node.Stream.WriteTo(outputFile);
+                    node.Stream!.WriteTo(outputFile);
                 }
             }
 
@@ -141,7 +139,7 @@ namespace JUSToolkit.CLI.JUS
             PathValidator.ValidateFile(container);
             PathValidator.ValidateDirectory(input);
 
-            Node originalAlar = NodeFactory.FromFile(container) ?? throw new FormatException("Invalid container file");
+            using Node originalAlar = NodeFactory.FromFile(container) ?? throw new FormatException("Invalid container file");
 
             bool originalIsCompressed = CompressionUtils.IsCompressed(originalAlar);
 
@@ -149,29 +147,35 @@ namespace JUSToolkit.CLI.JUS
                 _ = originalAlar.TransformWith<LzssDecompression>();
             }
 
-            Version alarVersion = Identifier.GetAlarVersion(originalAlar.Stream);
+            Version alarVersion = Identifier.GetAlarVersion(originalAlar.Stream!);
 
-            var binary = new BinaryFormat();
-            var filesToInsert = new NodeContainerFormat();
-            filesToInsert.Root.Add(NodeFactory.FromDirectory(input).Children);
+            using var filesToInsert = new NodeContainerFormat();
+            using Node inputDir = NodeFactory.FromDirectory(input);
+            filesToInsert.Root.Add(inputDir.Children);
 
+            BinaryFormat binary;
             if (alarVersion.Major == 3) {
                 Alar3 alar = originalAlar.TransformWith<Binary2Alar3>()
-                .GetFormatAs<Alar3>();
+                    .GetFormatAs<Alar3>()!;
                 alar.InsertModification(filesToInsert);
                 binary = alar.ConvertWith(new Alar3ToBinary());
             } else if (alarVersion.Major == 2) {
                 Alar2 alar = originalAlar.TransformWith<Binary2Alar2>()
-                .GetFormatAs<Alar2>();
+                    .GetFormatAs<Alar2>()!;
                 alar.InsertModification(filesToInsert);
                 binary = alar.ConvertWith(new Alar2ToBinary());
+            } else {
+                throw new FormatException($"Unsupported ALAR version: {alarVersion}");
             }
 
-            binary = originalIsCompressed ?
-                new LzssCompression().Convert(binary) :
-                binary;
-
-            binary.Stream.WriteTo(Path.Combine(output, Path.GetFileName(container)));
+            using (binary) {
+                if (originalIsCompressed) {
+                    using BinaryFormat compressed = new LzssCompression().Convert(binary);
+                    compressed.Stream.WriteTo(Path.Combine(output, Path.GetFileName(container)));
+                } else {
+                    binary.Stream.WriteTo(Path.Combine(output, Path.GetFileName(container)));
+                }
+            }
 
             Console.WriteLine("Done!");
         }
@@ -191,12 +195,13 @@ namespace JUSToolkit.CLI.JUS
             PathValidator.ValidateFile(container);
             PathValidator.ValidateDirectory(input);
 
-            Alar3 alar = NodeFactory.FromFile(container)
+            using Node containerNode = NodeFactory.FromFile(container);
+            Alar3 alar = containerNode
                 .TransformWith<Binary2Alar3>()
                 .GetFormatAs<Alar3>() ?? throw new FormatException("Invalid container file");
 
-            var filesToInsert = new NodeContainerFormat();
-            Node factory = NodeFactory.FromDirectory(input);
+            using var filesToInsert = new NodeContainerFormat();
+            using Node factory = NodeFactory.FromDirectory(input);
             filesToInsert.Root.Add(factory);
 
             alar.InsertModification(filesToInsert);
@@ -222,12 +227,13 @@ namespace JUSToolkit.CLI.JUS
             PathValidator.ValidateFile(container);
             PathValidator.ValidateDirectory(input);
 
-            Alar2 alar = NodeFactory.FromFile(container)
+            using Node containerNode = NodeFactory.FromFile(container);
+            Alar2 alar = containerNode
                 .TransformWith<Binary2Alar2>()
                 .GetFormatAs<Alar2>() ?? throw new FormatException("Invalid container file");
 
-            var filesToInsert = new NodeContainerFormat();
-            Node factory = NodeFactory.FromDirectory(input);
+            using var filesToInsert = new NodeContainerFormat();
+            using Node factory = NodeFactory.FromDirectory(input);
             filesToInsert.Root.Add(factory);
 
             alar.InsertModification(filesToInsert);

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace JUSToolkit.Texts.Formats
+namespace JUS.Tool.Texts.Formats
 {
     /// <summary>
     /// Single entry in a <see cref="Piece"/> file.
@@ -49,27 +49,27 @@ namespace JUSToolkit.Texts.Formats
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the authors.
         /// </summary>
-        public List<string> Authors { get; set; }
+        public List<string> Authors { get; set; } = [];
 
         /// <summary>
         /// Gets or sets the info.
         /// </summary>
-        public List<string> Info { get; set; }
+        public List<string> Info { get; set; } = [];
 
         /// <summary>
         /// Gets or sets first page.
         /// </summary>
-        public List<string> Page1 { get; set; }
+        public List<string> Page1 { get; set; } = [];
 
         /// <summary>
         /// Gets or sets second page.
         /// </summary>
-        public List<string> Page2 { get; set; }
+        public List<string> Page2 { get; set; } = [];
 
         /// <summary>
         /// Gets or sets the ??.
