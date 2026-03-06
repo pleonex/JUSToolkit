@@ -105,7 +105,7 @@ namespace JUS.Tool.Texts.Converters
             var entry = new PieceEntry();
 
             entry.Title = JusText.ReadIndirectString(reader);
-            for (int i = 0; i < PieceEntry.NumAuthors; i++) {
+            for (int i = 0; i < PieceEntry.NumInfo; i++) {
                 entry.Authors.Add(JusText.ReadIndirectString(reader));
             }
 

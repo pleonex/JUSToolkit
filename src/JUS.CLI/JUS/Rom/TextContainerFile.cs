@@ -54,6 +54,7 @@ namespace JUS.CLI.JUS.Rom
         public void Import(Node gameNode, Node file)
         {
             if (ContainerLocations.TryGetValue(file.Name, out string? path)) {
+                file.Name = GetFileName(file.Name);
                 ProcessContainer(gameNode, file, path);
             } else {
                 // Si no se encuentra, intenta encontrar la ruta interna usando patrones
@@ -82,7 +83,22 @@ namespace JUS.CLI.JUS.Rom
 
             _ = containerNode.ChangeFormat(newBinary);
 
-            Console.WriteLine($"File replaced: /root/data{containerPath}/{parent}/{file.Name}");
+            string fullPath = parent != null
+                ? $"/root/data{containerPath}/{parent}/{file.Name}"
+                : $"/root/data{containerPath}/{file.Name}";
+            Console.WriteLine($"File replaced: {fullPath}");
+        }
+
+        /// <summary>
+        /// Gets the file name without the container prefix. "jgalaxy-mission.bin" will return "mission.bin".
+        /// </summary>
+        private static string GetFileName(string name)
+        {
+            if (string.IsNullOrEmpty(name) || !name.Contains('-')) {
+                return name;
+            }
+
+            return name[(name.IndexOf('-') + 1)..];
         }
 
         /// <summary>

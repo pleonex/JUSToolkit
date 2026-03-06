@@ -66,10 +66,8 @@ namespace JUS.Tool.Texts.Converters
                 entry = new KomatxtEntry();
                 string sentence = Table.Instance.Encode(po.Entries[i].Text);
 
-                if (sentence.Length > KomatxtEntry.LineLength) {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"❌ Limit of {KomatxtEntry.LineLength} chars reached: {sentence}.");
-                    Console.ResetColor();
+                if (sentence.Length > entry.MaxLineLength) {
+                    Logger.DisplayErrorMaxLength(entry.MaxLineLength, sentence);
                     break;
                 }
 
@@ -94,7 +92,7 @@ namespace JUS.Tool.Texts.Converters
         {
             const char paddingChar = '|';
 
-            return input.Replace(" ", paddingChar.ToString()).PadRight(KomatxtEntry.LineLength, paddingChar);
+            return input.Replace(" ", paddingChar.ToString()).PadRight(new KomatxtEntry().MaxLineLength, paddingChar);
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using System;
+using System;
+using JUS.Utils;
 using Yarhl.FileSystem;
-using Yarhl.IO;
 
 namespace JUS.Tool.Containers
 {
@@ -113,7 +113,7 @@ namespace JUS.Tool.Containers
             }
 
             if (!replaced) {
-                Console.WriteLine($"{nNew.Name} node not found in the container");
+                Logger.DisplayError($"❌ {nNew.Name} node not found in the container");
             }
         }
     }

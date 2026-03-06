@@ -76,6 +76,8 @@ namespace JUS.CLI.JUS
         /// <param name="output">The output directory.</param>
         public static void Import(string game, string input, string output)
         {
+            Console.WriteLine($"Importing {input}");
+
             Node gameNode = NodeFactory.FromFile(game, "root", FileOpenMode.Read)
                 .TransformWith<Binary2NitroRom>();
 
@@ -117,6 +119,8 @@ namespace JUS.CLI.JUS
         /// <param name="output">The output directory.</param>
         public static void ImportFont(string game, string font, string output)
         {
+            Console.WriteLine($"Importing {font}");
+
             Node gameNode = NodeFactory.FromFile(game, "root", FileOpenMode.Read)
                 .TransformWith<Binary2NitroRom>();
 

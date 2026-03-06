@@ -167,12 +167,12 @@ namespace JUS.Tool.Texts.Converters
 
                     if (entry.Context.Contains("enunciado")) {
                         if (sentence.Length > 39 && !hasPhoto) {
-                            Console.WriteLine($"Limit of 39 chars reached in {file.Name}: {entry.Context}");
+                            Logger.DisplayErrorMaxLength(39, $"{file.Name}: {entry.Context}");
                             sentence = sentence[0..39];
                         }
 
                         if (sentence.Length > 24 && hasPhoto) {
-                            Console.WriteLine($"Limit of 24 chars reached in {file.Name}: {entry.Context}");
+                            Logger.DisplayErrorMaxLength(24, $"{file.Name}: {entry.Context}");
                             sentence = sentence[0..24];
                         }
 
@@ -181,7 +181,7 @@ namespace JUS.Tool.Texts.Converters
 
                     if (entry.Context.Contains("respuesta")) {
                         if (sentence.Length > 39) {
-                            Console.WriteLine($"Limit of 39 chars reached in {file.Name}: {entry.Context}");
+                            Logger.DisplayErrorMaxLength(39, $"{file.Name}: {entry.Context}");
                             sentence = sentence[0..39];
                         }
 
