@@ -33,11 +33,28 @@ namespace JUS.CLI.JUS
         public static Command CreateCommand()
         {
             return new Command("jus", "Jump Ultimate Stars! game") {
+                CreateInvestigateCommands(),
                 CreateContainerCommand(),
                 CreateGraphicCommand(),
                 CreateTextCommand(),
                 CreateBatchCommand(),
                 CreateRomCommand(),
+            };
+        }
+
+        private static Command CreateInvestigateCommands()
+        {
+            var alarInfoGame = new Option<FileInfo>("--game") { Description = "the nitrorom file", };
+            alarInfoGame.AcceptExistingOnly();
+            var alarInfoCommand = new Command("alar", "Print info of ALAR commands")
+            {
+                alarInfoGame,
+            };
+            alarInfoCommand.SetAction(x => InvestigateCommands.PrintAlarFiles(x.GetRequiredValue(alarInfoGame), false));
+
+            return new Command("investigate", "Commands for investigating the game")
+            {
+                alarInfoCommand,
             };
         }
 
