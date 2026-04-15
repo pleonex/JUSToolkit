@@ -19,7 +19,6 @@
 // SOFTWARE.
 using JUS.Tool.Texts.Formats;
 using JUS.Tool.Utils;
-using JUS.Tool.Utils;
 using Yarhl.FileFormat;
 using Yarhl.Media.Text;
 

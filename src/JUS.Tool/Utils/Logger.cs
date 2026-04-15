@@ -19,7 +19,7 @@
 // SOFTWARE.
 using System;
 
-namespace JUSToolkit.Utils
+namespace JUS.Tool.Utils
 {
     /// <summary>
     /// Helper methods for logging.
