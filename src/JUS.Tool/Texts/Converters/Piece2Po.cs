@@ -58,6 +58,14 @@ namespace JUS.Tool.Texts.Converters
         /// <summary>
         /// Converts Po to Piece format.
         /// </summary>
+        /// <notes>
+        /// Each Manga has 5 entries:
+        ///       Title - 19 chars.
+        ///       Authors.
+        ///       Dates.
+        ///       Description Page 1.
+        ///       Description Page 2.
+        /// </notes>
         /// <param name="po">Po to convert.</param>
         /// <returns>Transformed TextFormat.</returns>
         public Piece Convert(Po po)
@@ -66,21 +74,12 @@ namespace JUS.Tool.Texts.Converters
             PieceEntry entry;
             string[] metadata;
 
-            // Each Manga has 5 entries:
-            // Title - 19 chars
-            // Authors
-            // Dates
-            // Description Page 1
-            // Description Page 2
-
             piece.Count = po.Entries.Count / 5;
 
             for (int i = 0; i < piece.Count; i++) {
                 entry = new PieceEntry();
                 int index = i * 5;
                 entry.Title = po.Entries[index].Text;
-
-                // TODO: Do we need to check for maximum lines?
 
                 foreach (string s in JusText.SplitStringToList(CheckLines(po.Entries[index + 1].Text.TrimEnd(), PieceEntry.LinesPerInfo, $"entry {index + 1}"), '\n', PieceEntry.LinesPerInfo)) {
                     string parsedText = Table.Instance.Encode(CheckLength(s, PieceEntry.MaxLineLengthInfo, $"entry {index + 1}"));
@@ -112,7 +111,7 @@ namespace JUS.Tool.Texts.Converters
             return piece;
         }
 
-        private string CheckLength(string input, int maxLength, string context)
+        private static string CheckLength(string input, int maxLength, string context)
         {
             if (input.Length > maxLength) {
                 Logger.DisplayErrorMaxLength(maxLength, $"{context} - \"{input}\"");
@@ -122,7 +121,7 @@ namespace JUS.Tool.Texts.Converters
             return input;
         }
 
-        private string CheckLines(string input, int maxLines, string context)
+        private static string CheckLines(string input, int maxLines, string context)
         {
             string[] lines = input.Split('\n');
             if (lines.Length > maxLines) {

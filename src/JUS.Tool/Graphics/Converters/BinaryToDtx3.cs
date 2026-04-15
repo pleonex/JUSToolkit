@@ -153,6 +153,7 @@ namespace JUS.Tool.Graphics.Converters
                 _ => throw new FormatException($"Unknown flip: 0x{shape:X2}"),
             };
         }
+
         private Sprite ReadSprite(DataReader reader)
         {
             int spriteOffset = reader.ReadUInt16() + PointerOffset;
@@ -189,6 +190,5 @@ namespace JUS.Tool.Graphics.Converters
 
             return sprite;
         }
-
     }
 }
