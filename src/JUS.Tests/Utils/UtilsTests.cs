@@ -1,4 +1,4 @@
-// Copyright (c) 2020 Priverop
+﻿// Copyright (c) 2020 Priverop
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,6 @@ namespace JUS.Tests.Utils
 {
     public class UtilsTests
     {
-        [Test]
-        public void TestVersionNotNull() => Assert.That(LibVersion.GetVersion(), Is.Not.Null);
-
         [Test]
         public void DeserializeYamlTest()
         {

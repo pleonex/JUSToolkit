@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": ".NET Core Test with debugger",
+      "label": ".NET Test with debugger",
       "type": "process",
       "isBackground": true,
       "command": "dotnet",
@@ -25,51 +25,21 @@
     {
       "type": "process",
       "command": "dotnet",
-      "args": ["cake"],
+      "args": ["run", "build.cs"],
       "group": "build",
       "problemMatcher": ["$msCompile"],
-      "label": "Cake: Run Default"
+      "label": "Build"
     },
     {
       "type": "process",
       "command": "dotnet",
-      "args": ["cake", "--target=Build"],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "problemMatcher": ["$msCompile"],
-      "label": "Cake: Run Build"
-    },
-    {
-      "type": "process",
-      "command": "dotnet",
-      "args": ["cake", "--target=BuildTest"],
+      "args": ["run", "build.cs", "--", "--target=Bundle"],
       "group": {
         "kind": "test",
         "isDefault": true
       },
       "problemMatcher": ["$msCompile"],
-      "label": "Cake: Run Test"
-    },
-    {
-      "type": "process",
-      "command": "dotnet",
-      "args": ["cake", "--target=Build", "--configuration=Release"],
-      "group": "build",
-      "problemMatcher": ["$msCompile"],
-      "label": "Cake: Run Build for release"
-    },
-    {
-      "label": "build",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "${workspaceFolder}/src/JUS.CLI/",
-        "-p:RunAnalizers=false"
-      ],
-      "problemMatcher": "$msCompile"
+      "label": "Bundle"
     }
   ]
 }

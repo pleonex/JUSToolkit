@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JUS.CLI", "JUS.CLI\JUS.CLI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JUS.Tests", "JUS.Tests\JUS.Tests.csproj", "{276997DA-06FC-4C8A-AA82-92C3373C69A3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build system", "Build system", "{BF9E80B5-BC37-4F7E-8A4A-DEF982318B94}"
+	ProjectSection(SolutionItems) = preProject
+		..\build.cs = ..\build.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
