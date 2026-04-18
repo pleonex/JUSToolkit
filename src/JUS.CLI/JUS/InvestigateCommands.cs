@@ -22,6 +22,18 @@ public static class InvestigateCommands
             PrintAlarInfo(node);
         }
 
+        var sorted = alarNames
+            .OrderBy(x => x.Item1.Length)
+            .Reverse();
+        bool g = sorted.All(x => x.Item3 == x.Item4);
+        foreach (var x in sorted)
+        {
+            string equal = x.Item3 == x.Item4 ? "v" : "x";
+            Console.WriteLine($"{equal} {x.Item1} (v{x.Item2}-{x.Item5:X2}): {x.Item3:X4} vs {x.Item4:X4}");
+        }
+
+        Console.WriteLine(g);
+
         return;
 
         static void PrintAlarInfo(Node alar)
@@ -67,7 +79,9 @@ public static class InvestigateCommands
                     reader.Stream.Position = offset - 0x22;
                     name = reader.ReadString(0x20).Replace("\0", "");
                     ushort checksum = reader.ReadUInt16();
-                    ushort actual = Checksum1(name);
+
+                    uint actual = Checksum1(name);
+                    //alarNames.Add((name, 2, checksum, actual, flags));
                     if (checksum != actual)
                     {
                         Console.WriteLine($"{i} {name} {checksum:X4} vs {actual:X4}");
@@ -76,6 +90,18 @@ public static class InvestigateCommands
 
                 uint unkFlags = (fileFlags >> 24) & 0x7F;
                 uint fileType = id >> 24;
+
+                // AMT and AOD 0x40, DIG 0x01
+                if (unkFlags != 0x00)
+                {
+                    Console.WriteLine($"{name}: {unkFlags:X2}");
+                }
+
+                // Only may different to 1 for AMT (41) and AOD (43) file types
+                if ((fileFlags & 0x00FFFFFF) != 1)
+                {
+                    //Console.WriteLine($"{name}: {fileFlags:X8} {fileType:X2}");
+                }
             }
         }
 
@@ -96,26 +122,36 @@ public static class InvestigateCommands
 
                 ushort checksum = reader.ReadUInt16();
                 string name = reader.ReadString();
+                ushort actual;
                 if ((flags & 0x40) != 0)
                 {
-                    ushort actual = Checksum2(name);
-                    if (actual != checksum)
-                    {
-                        Console.WriteLine($"{flags:X} {i}: {name} {checksum:X} != {actual:X}");
-                    }
+                    actual = Checksum2(name);
                 }
                 else
                 {
-                    // TODO figure out checksum
+                    actual = Checksum1(name);
+                }
+
+                if (actual != checksum)
+                {
+                    Console.WriteLine($"{flags:X} {i}: {name} {checksum:X} != {actual:X}");
                 }
 
                 if ((fileFlags & 0x00FFFFFF) != 1)
                 {
                     Console.WriteLine($"{i}: {name} -> {fileFlags:X8}");
                 }
+
+                // none, that's why
+                if (name.EndsWith(".amt"))
+                {
+                    Console.WriteLine($"{name} -> {fileFlags:X8}");
+                }
             }
         }
     }
+
+    private static List<(string, int, uint, uint, int)> alarNames = [];
 
     private static ushort Checksum1(string name)
     {
@@ -126,7 +162,8 @@ public static class InvestigateCommands
 
         uint checksum = 0;
         foreach (byte ch in data) {
-            checksum = (checksum << 1) ^ ch;
+            uint tmp = (checksum << 1) ^ ch;
+            checksum = (tmp & 0xFFFF) ^ (tmp >> 16);
         }
 
         return (ushort)checksum;
