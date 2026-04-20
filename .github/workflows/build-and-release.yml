@@ -11,7 +11,9 @@ on:
     tags: [ "v*" ]
 
 env:
-  DOTNET_VERSIONS: '8.0.420'
+  DOTNET_VERSIONS: |
+    8.0.420
+    10.0.202
   DOTNET_INSTALL_DIR: '/tmp/dotnet/'
 
 jobs:
@@ -29,13 +31,6 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSIONS }}
-
-      # Temporarily until we migrate the project. Required for file-based c# scripts
-      - name: "Setup .NET 10 SDK"
-        id: "dotnet-install"
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 10.0.202
 
       - name: "Build, test, and bundle"
         run: >
