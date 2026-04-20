@@ -25,19 +25,29 @@
     {
       "type": "process",
       "command": "dotnet",
-      "args": ["run", "build.cs"],
-      "group": "build",
+      "args": ["build", "src/JUS.CLI", "-p:RunAnalizers=false"],
+      "group": {
+        "kind": "build",
+        "isDefault": true,
+      },
       "problemMatcher": ["$msCompile"],
       "label": "Build"
     },
     {
       "type": "process",
       "command": "dotnet",
-      "args": ["run", "build.cs", "--", "--target=Bundle"],
+      "args": ["test", "src/JUSToolkit.sln"],
       "group": {
         "kind": "test",
-        "isDefault": true
+        "isDefault": true,
       },
+      "problemMatcher": ["$msCompile"],
+      "label": "Test"
+    },
+    {
+      "type": "process",
+      "command": "dotnet",
+      "args": ["run", "build.cs", "--", "--target=Bundle"],
       "problemMatcher": ["$msCompile"],
       "label": "Bundle"
     }
