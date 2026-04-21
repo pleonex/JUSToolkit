@@ -131,7 +131,7 @@ csharp_style_throw_expression = true:warning
 csharp_style_conditional_delegate_call = true:warning
 
 ### Code-block preferences
-csharp_prefer_braces = when_multiline:warning
+csharp_prefer_braces = when_multiline:suggestion
 dotnet_diagnostic.SA1503.severity = warning # Doesn't follow above value
 csharp_prefer_simple_using_statement = true:suggestion
 csharp_style_prefer_tuple_swap = true:suggestion
@@ -216,6 +216,7 @@ dotnet_diagnostic.IDE1006.severity = warning
 ### .NET SDK
 dotnet_diagnostic.CA1303.severity = none # We don't translate exception and log messages from English
 dotnet_diagnostic.SA1025.severity = none # Allow spaces in comments to structure info
+dotnet_diagnostic.IDE0019.severity = suggestion # Use pattern matching
 dotnet_diagnostic.IDE0045.severity = suggestion # Simplify ifs
 dotnet_diagnostic.IDE0046.severity = suggestion # Simplify ifs
 dotnet_diagnostic.IDE0057.severity = suggestion # Slice can be simplified
