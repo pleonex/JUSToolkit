@@ -57,7 +57,7 @@ public sealed class BuildLifetime : FrostingLifetime<BuildContext>
             new ProjectPublicationInfo(
                 "./src/JUS.CLI",
                 [ "win-x64", "linux-x64", "osx-x64" ],
-                "net8.0"));
+                "net10.0"));
 
         context.ReadArguments();
 
