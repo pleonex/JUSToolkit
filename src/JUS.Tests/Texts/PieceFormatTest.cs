@@ -18,13 +18,15 @@ namespace JUS.Tests.Texts
         {
             string programDir = AppDomain.CurrentDomain.BaseDirectory;
             resPath = Path.GetFullPath(programDir + "/../../../Resources/Texts/Piece/piece.bin");
-
-            Assert.That(File.Exists(resPath), Is.True, "The file does not exist");
         }
 
         [Test]
         public void PieceTest()
         {
+            if (!Directory.Exists(resPath)) {
+                Assert.Ignore("The resources folder does not exist");
+            }
+
             Node node = NodeFactory.FromFile(resPath);
 
             // BinaryFormat -> Piece

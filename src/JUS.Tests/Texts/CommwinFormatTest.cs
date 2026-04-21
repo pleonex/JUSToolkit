@@ -18,13 +18,15 @@ namespace JUS.Tests.Texts
         {
             string programDir = AppDomain.CurrentDomain.BaseDirectory;
             resPath = Path.GetFullPath(programDir + "/../../../Resources/Texts/Commwin/");
-
-            Assert.That(Directory.Exists(resPath), Is.True, "The resources folder does not exist");
         }
 
         [Test]
         public void CommwinTest()
         {
+            if (!Directory.Exists(resPath)) {
+                Assert.Ignore("The resources folder does not exist");
+            }
+
             foreach (string filePath in Directory.GetFiles(resPath, "*.bin", SearchOption.AllDirectories)) {
                 using (Node node = NodeFactory.FromFile(filePath)) {
                     // BinaryFormat -> Commwin

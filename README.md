@@ -43,7 +43,8 @@ containers and view .dig files.
 
 ## Build
 
-The project requires to build .NET Core 8.0.
+The build system requires
+[.NET 8.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 
 ## How To Use
 
@@ -95,9 +96,9 @@ PleoNex did some research on Streaming:
 
 ## Stack
 
-- C# Net Core 8
-- [YARHL by PleoNex](https://github.com/SceneGate/Yarhl)
-- [PleOps by PleoNex](https://github.com/pleonex/PleOps.Cake)
+- C# / .NET 8.0
+- [Yarhl by PleoNex](https://github.com/SceneGate/Yarhl)
+- [PleOps.Cake by PleoNex](https://github.com/pleonex/PleOps.Cake)
 
 ## Credits
 

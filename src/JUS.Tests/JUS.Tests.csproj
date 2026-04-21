@@ -2,14 +2,18 @@
 
   <PropertyGroup>
     <TargetFrameworks>net8.0</TargetFrameworks>
+
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="../JUS.Tool/JUS.Tool.csproj" />
 
+    <PackageReference Include="coverlet.collector" />
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="nunit" />
     <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="NUnit.Analyzers" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="YamlDotNet" />
   </ItemGroup>
