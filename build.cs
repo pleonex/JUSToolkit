@@ -1,4 +1,4 @@
-#!/usr/bin/env dotnet run
+﻿#!/usr/bin/env dotnet run
 #:property PublishAot=false
 #:package Cake.Frosting.PleOps.Recipe@1.0.4-preview.37
 
@@ -108,11 +108,7 @@ public class DownloadTestFilesTask : FrostingTask<BuildContext>
 
     public override void Run(BuildContext context)
     {
-        string resourcesPath = Path.GetFullPath(Path.Combine("resources", "tests"));
-        if (Directory.Exists(resourcesPath)) {
-            context.Log.Information("Test files already exists, skipping download.");
-            return;
-        }
+        string resourcesPath = Path.GetFullPath(Path.Combine("src", "JUS.Tests"));
 
         string resourceUri = string.Format(context.TestResourceUri!, context.TestResourceName);
         var downloadSettings = new DownloadFileSettings {
@@ -128,6 +124,6 @@ public class DownloadTestFilesTask : FrostingTask<BuildContext>
         var compressedResources = context.DownloadFile(resourceUri, downloadSettings);
 
         context.Log.Debug("Unzipping resource");
-        context.Unzip(compressedResources, resourcesPath);
+        context.Unzip(compressedResources, resourcesPath, true);
     }
 }

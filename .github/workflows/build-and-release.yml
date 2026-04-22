@@ -11,7 +11,8 @@ on:
     tags: [ "v*" ]
 
 env:
-  DOTNET_VERSIONS: 10.0.202
+  TEST_RESOURCES_NAME: 'resources-0.zip'
+  DOTNET_VERSIONS: 10.0.203
   DOTNET_INSTALL_DIR: '/tmp/dotnet/'
 
 jobs:
@@ -36,6 +37,15 @@ jobs:
           --target=Default
           --target=Bundle
           --dotnet-configuration=Release
+          --resource-uri=${{ env.TEST_RESOURCES_URI }}
+          --resource-name=${{ env.TEST_RESOURCES_NAME }}
+          --resource-usr=${{ env.TEST_RESOURCES_USR }}
+          --resource-pwd=${{ env.TEST_RESOURCES_PWD }}
+          --dotnet-configuration=Release
+        env:
+          TEST_RESOURCES_URI: ${{ secrets.TEST_RESOURCES_URI }}
+          TEST_RESOURCES_USR: ${{ secrets.TEST_RESOURCES_USR }}
+          TEST_RESOURCES_PWD: ${{ secrets.TEST_RESOURCES_PWD }}
 
       - name: "Publish artifacts to CI"
         uses: actions/upload-artifact@v7
