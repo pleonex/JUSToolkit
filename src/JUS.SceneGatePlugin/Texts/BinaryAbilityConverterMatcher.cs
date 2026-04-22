@@ -1,9 +1,0 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using JUS.Tool.Texts.Converters;
-using Yarhl.IO;
-
-namespace JUS.SceneGatePlugin.Texts;
-
-[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
-public class BinaryAbilityConverterMatcher():
-    PathBasedMatcher<IBinary, Binary2Ability>("data/bin/ability_t.bin");
