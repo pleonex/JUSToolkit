@@ -12,7 +12,7 @@ public static class SupportedSoftware
     {
         ProgramInfo? info = GetProgramInfo(assetNode);
         root = assetNode;
-        while (root is not null && info is not null) {
+        while (root is not null && info is null) {
             root = root.Parent;
             info = GetProgramInfo(root);
         }

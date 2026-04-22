@@ -1,6 +1,6 @@
 #!/usr/bin/env dotnet run
 #:property PublishAot=false
-#:package Cake.Frosting.PleOps.Recipe@1.0.4-preview.33
+#:package Cake.Frosting.PleOps.Recipe@1.0.4-preview.37
 
 using System.Diagnostics.CodeAnalysis;
 using Cake.Common.IO;

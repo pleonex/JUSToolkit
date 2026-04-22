@@ -9,6 +9,7 @@ public abstract class HeaderBasedBinaryMatcher<T> : IConverterMatcher
 {
     private readonly string expectedFormatId;
     private readonly byte? expectedVersion;
+    private readonly byte? expectedFlags;
 
     protected HeaderBasedBinaryMatcher(string formatId)
     {
@@ -21,6 +22,14 @@ public abstract class HeaderBasedBinaryMatcher<T> : IConverterMatcher
         ArgumentNullException.ThrowIfNull(formatId);
         expectedFormatId = formatId;
         expectedVersion = version;
+    }
+
+    protected HeaderBasedBinaryMatcher(string formatId, byte version, byte flags)
+    {
+        ArgumentNullException.ThrowIfNull(formatId);
+        expectedFormatId = formatId;
+        expectedVersion = version;
+        expectedFlags = flags;
     }
 
     public ConverterMatcherResult Match(Node input, ConverterMatcherContext context)
@@ -39,6 +48,13 @@ public abstract class HeaderBasedBinaryMatcher<T> : IConverterMatcher
             if (expectedVersion.HasValue && context.Header.Length >= 5) {
                 byte version = context.Header.Span[4];
                 if (version != expectedVersion.Value) {
+                    return ConverterMatcherResult.Incompatible();
+                }
+            }
+
+            if (expectedFlags.HasValue && context.Header.Length >= 6) {
+                byte flags = context.Header.Span[5];
+                if (flags != expectedFlags.Value) {
                     return ConverterMatcherResult.Incompatible();
                 }
             }

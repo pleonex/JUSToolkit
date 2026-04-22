@@ -5,5 +5,5 @@ using Yarhl.IO;
 namespace JUS.SceneGatePlugin.Texts;
 
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
-public class BinaryAbilityConverterMatcher():
-    PathBasedMatcher<IBinary, Binary2Ability>("data/bin/ability_t.bin");
+public class BinaryPnameConverterMatcher():
+    PathBasedMatcher<IBinary, Binary2Pname>("data/bin/pname.bin");

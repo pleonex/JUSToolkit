@@ -8,12 +8,12 @@ public abstract class PathBasedMatcher<TFormat, TConverter> : IConverterMatcher
     where TFormat : IFormat
     where TConverter : IConverter, new()
 {
-    private readonly string assetsPath;
+    private readonly string[] assetsPaths;
 
-    protected PathBasedMatcher(string assetsPath)
+    protected PathBasedMatcher(params string[] assetsPaths)
     {
-        ArgumentException.ThrowIfNullOrEmpty(assetsPath);
-        this.assetsPath = assetsPath;
+        ArgumentNullException.ThrowIfNull(assetsPaths);
+        this.assetsPaths = assetsPaths;
     }
 
     public ConverterMatcherResult Match(Node input, ConverterMatcherContext context)
@@ -23,7 +23,7 @@ public abstract class PathBasedMatcher<TFormat, TConverter> : IConverterMatcher
         }
 
         bool? compatibleSoftware = SupportedSoftware.IsFromCompatibleSoftware(input, out Node? root);
-        bool isInExpectedPath = $"{root?.Path}/{assetsPath}" == input.Path;
+        bool isInExpectedPath = assetsPaths.Any(x => $"{root?.Path}/{x}" == input.Path);
 
         MatchingConfidence level = MatchingConfidence.Incompatible;
         if (compatibleSoftware == true && isInExpectedPath) {
