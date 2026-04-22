@@ -27,7 +27,7 @@ namespace JUS.Tool.Texts.Converters
     /// Converts between InfoDeckDeck format and BinaryFormat.
     /// </summary>
     public class Binary2InfoDeckDeck :
-        IConverter<BinaryFormat, InfoDeckDeck>,
+        IConverter<IBinary, InfoDeckDeck>,
         IConverter<InfoDeckDeck, BinaryFormat>
     {
         private DataReader reader = null!;
@@ -38,7 +38,7 @@ namespace JUS.Tool.Texts.Converters
         /// <param name="source">BinaryFormat to convert.</param>
         /// <returns>Text format.</returns>
         /// <exception cref="ArgumentNullException">Source file does not exist.</exception>
-        public InfoDeckDeck Convert(BinaryFormat source)
+        public InfoDeckDeck Convert(IBinary source)
         {
             ArgumentNullException.ThrowIfNull(source);
 

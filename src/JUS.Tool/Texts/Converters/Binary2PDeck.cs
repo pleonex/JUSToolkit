@@ -27,7 +27,7 @@ namespace JUS.Tool.Texts.Converters
     /// Converts between PDeck format and BinaryFormat.
     /// </summary>
     public class Binary2PDeck :
-        IConverter<BinaryFormat, PDeck>,
+        IConverter<IBinary, PDeck>,
         IConverter<PDeck, BinaryFormat>
     {
         /// <summary>
@@ -36,7 +36,7 @@ namespace JUS.Tool.Texts.Converters
         /// <param name="source">BinaryFormat to convert.</param>
         /// <returns>Text format.</returns>
         /// <exception cref="ArgumentNullException">Source file does not exist.</exception>
-        public PDeck Convert(BinaryFormat source)
+        public PDeck Convert(IBinary source)
         {
             if (source == null) {
                 throw new ArgumentNullException(nameof(source));
