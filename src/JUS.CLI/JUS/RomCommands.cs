@@ -105,7 +105,9 @@ namespace JUS.CLI.JUS
                 }
             }
 
-            _ = gameNode.TransformWith<NitroRom2Binary>();
+            var nitroParameters = new NitroRom2BinaryParams { DecompressedProgram = true };
+            gameNode.TransformWith(new NitroRom2Binary(nitroParameters));
+
             gameNode.Stream!.WriteTo(Path.Combine(output, "new_game.nds"));
 
             Console.WriteLine("Done!");
@@ -136,7 +138,9 @@ namespace JUS.CLI.JUS
             toReplace_q.ChangeFormat(fontNode.Format!);
             Console.WriteLine("File replaced: /root/data/font/jskfont_q.aft");
 
-            gameNode.TransformWith<NitroRom2Binary>();
+            var nitroParameters = new NitroRom2BinaryParams { DecompressedProgram = true };
+            gameNode.TransformWith(new NitroRom2Binary(nitroParameters));
+
             gameNode.Stream!.WriteTo(Path.Combine(output, "new_game_font.nds"));
 
             Console.WriteLine("Done!");

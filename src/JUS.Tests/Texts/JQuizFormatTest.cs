@@ -26,7 +26,7 @@ using Yarhl.FileSystem;
 using Yarhl.IO;
 using Yarhl.Media.Text;
 
-namespace JUS.Tests.Containers
+namespace JUS.Tests.Texts
 {
     [TestFixture]
     public class JQuizFormatTest

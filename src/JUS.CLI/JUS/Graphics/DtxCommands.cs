@@ -30,7 +30,7 @@ using Texim.Sprites;
 using Yarhl.FileSystem;
 using Yarhl.IO;
 
-namespace JUS.CLI.JUS
+namespace JUS.CLI.JUS.Graphics
 {
     /// <summary>
     /// Commands related to Sprites (dtx) graphics files.
