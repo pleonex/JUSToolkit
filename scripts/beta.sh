@@ -36,7 +36,7 @@ DEMO_PATH=$BETA_PATH'/demos'
 # Emulator path
 EMULATOR_PATH=melonDS.AppImage # MacOS: /Applications/melonDS.app/Contents/MacOS/melonDS
 # Path of the English ROM
-ROM_PATH=$JUS_PATH/bin/Debug/net8.0/jump_en.nds
+ROM_PATH=$JUS_PATH/bin/Debug/net8.0/jump_jp.nds
 
 # Don't modify:
 TEXT_DIRECTORY=$GIT_REPO_PATH'/es'
