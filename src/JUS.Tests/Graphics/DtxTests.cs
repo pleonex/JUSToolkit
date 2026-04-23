@@ -23,6 +23,7 @@ using JUS.Tool.Graphics;
 using JUS.Tool.Graphics.Converters;
 using JUS.Tool.Utils;
 using NUnit.Framework;
+using Texim.Games.Nitro.Sprites;
 using Texim.Images;
 using Texim.Images.Quantization;
 using Texim.Images.Standard;
