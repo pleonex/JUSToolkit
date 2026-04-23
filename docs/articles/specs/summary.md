@@ -35,30 +35,50 @@ for each type of file. The [text specification](./texts.md) have more details.
 - `bin/title.bin` manga names
 - `deck/Deck.aar/*/*`: deck texts
 - `deckmake/tutorial.bin`: deck tutorials
-- `jgalaxy/jgalaxy.aar/*`: JGalaxy texts
-- `jquiz/jquiz.aar/`: quiz questions
+- `ending/ending.aar/ending/StaffRoll.bin`: TBD
+- `ending/ending.aar/ending/TitleOrder.bin`: TBD
+- `jgalaxy/jgalaxy.aar/jgalaxy/battle.bin`: JGalaxy battle texts
+- `jgalaxy/jgalaxy.aar/jgalaxy/jgalaxy.bin`: JGalaxy texts
+- `jgalaxy/jgalaxy.aar/jgalaxy/mission.bin`: JGalaxy mission texts
+- `jquiz/jquiz_pack.aar/jquiz/jquiz.bin`: quiz questions
 
 ## Fonts
 
-Pending documentation.
+The fonts are in the `font` folder with `ALFT` format.
+
+- `font/DSFont.aft`
+- `font/js8font.aft`
+- `font/jskfont_q.aft`
+- `font/jskfont.aft`
 
 ## Graphics
 
 The main formats for images are:
 
-- [`DSTX`](./dtx.md)
-- `DSIG`
+- [`DSTX`](./dtx.md): textures
+  - `ALMT`: tile map
+- `DSIG`: indexed image
+  - `ALTM`: tile map
+  - `ALOD`: unknown.
+- `NCCL`: palette
 
 Additionally, _komas_ have their own format documented in the
 [koma specification](./koma.md).
 
-## Sound
+## Sounds
 
 - `sound/JS2_sound.sdat`: standard Nitro `SDAT` container and sound formats.
 
+## Videos
+
+The video codec is `VXDS` from Mobiclip. This codec was a previous version to
+`MODS`. There are no known documentation or tools for this format.
+
+- `opening/opening.vx`
+
 ## Data structures
 
-These files have different data structures to support the game features.
+These files have different data structures to support different game features.
 
 - `bin/ability.bin`
 - `bin/chr_b.bin`
@@ -68,7 +88,23 @@ These files have different data structures to support the game features.
 - `bin/jpower.bin`
 - `bin/secret.bin`
 - `bin/state.bin`
-- `ChildRom/`: download-play transferable ROM and icon.
-- `dwc/utility.bin`: assets for the online communication.
+- `ChildRom/`: download-play transferable ROM and icon
+- `chr/ChrBin.aar/chr/ai/ai_param.bin`
+- `chr/ChrBin.aar/chr/ai/*` (`AIPM`)
+- `chr/ChrBin.aar/chr/ai/move/*` (`AIMV`)
+- `chr/ChrBin.aar/chr/col/*`
+- `chr/ChrBin.aar/chr/effect/*`
+- `chr/ChrBin.aar/chr/shot/*`
+- `demo/demo.aar/demo/*.mdf`
+- `dwc/utility.bin`: assets for the online communication
+- `item/item.aar/item/itemprob.ipf`
+- `jgalaxy/jgalaxy.aar/jgalaxy/*.bin` (except the one in text)
+- `opening/opening.aar/opening/star.bin`
 - `opening/PassMark.bin`
 - `opening/pattern.bin`
+- `stage/stage.aar/stage/*.bin`
+- `stage/stage.aar/stage/*.cam`
+- `stage/stage.aar/stage/*.mob`
+- `stage/stage.aar/stage/SuddenDeath.bin`
+- `title/title.aar/title/*.bin`
+- `topmenu/topmenu.aar/topmenu/*.bin`
