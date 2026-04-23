@@ -32,7 +32,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSIONS }}
 
       # Full test for master builds and PR of repo owners
-      - name: "Build, test, and bundle"
+      - name: "[Full] Build, test, and bundle"
         if: ${{ env.TEST_RESOURCES_URI != '' }}
         run: >
           dotnet run build.cs --
@@ -49,10 +49,11 @@ jobs:
           TEST_RESOURCES_PWD: ${{ secrets.TEST_RESOURCES_PWD }}
 
       # Tests without resources for PR of external contributors
-      - name: "Build, test, and bundle"
+      - name: "[Basic] Build, test, and bundle"
         if: ${{ env.TEST_RESOURCES_URI == '' }}
-        run: >
-          dotnet run build.cs -- --target=Default --target=Bundle --dotnet-configuration=Release
+        run: dotnet run build.cs -- --target=Default --target=Bundle --dotnet-configuration=Release
+        env:
+          TEST_RESOURCES_URI: ${{ secrets.TEST_RESOURCES_URI }}
 
       - name: "Publish artifacts to CI"
         uses: actions/upload-artifact@v7
