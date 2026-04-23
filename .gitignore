@@ -9,14 +9,6 @@ build/temp/
 /CHANGELOG.md
 /CHANGELOG.NEXT.md
 
-# Test results
-test_results/
-
-# Documentation output
-docs/_site
-docs/api
-docs/_site_pdf
-
 # IDEs
 .vs/
 *.csproj.user

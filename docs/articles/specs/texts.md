@@ -6,7 +6,7 @@ of file.
 
 ## Absolute pointers
 
-Absolute pointers means that the text is in the pointer offset plus the position
+Absolute pointers mean that the text is in the pointer offset plus the position
 of the pointer. If the position of the pointer is 0x04 and the value is 0x100,
 the text will be in 0x104.
 
@@ -25,9 +25,9 @@ To help with the process we've developed some classes to read and write easily:
 ## Battle folder
 
 Here we have the tutorials. **Relative Pointers**. They all have the same
-structure: _StartingOffset_, a lot of random unknown ints and the pointers.
+structure: _StartingOffset_, a lot of random unknown integers and the pointers.
 These pointers just store the size of the string starting from 0. For example if
-the first two strings are 2bytes and 4bytes long, the pointers will be 02 and
+the first two strings are 2 bytes and 4 bytes long, the pointers will be 02 and
 then 06.
 
 We store the unused pointers in the Po file as comments.
@@ -45,23 +45,23 @@ We store the unused pointers in the Po file as comments.
 
 The Format class has the main properties of the file and a list of Entries.
 
-| Image                                             | Name          | Format                   | Location                                            |
-| ------------------------------------------------- | ------------- | ------------------------ | --------------------------------------------------- |
-| ![ability_t.bin](../images/formats/ability_t.png) | ability_t.bin | Ability + AbilityEntry   | Koma list, helper (koma size 1) ability description |
-| ![bgm.bin](../images/formats/bgm.png)             | bgm.bin       | Bgm + BgmEntry           | Battle stage Background Music (Database menu)       |
-| ![chr_b_t.bin](../images/formats/chr_b_t.png)     | chr_b_t.bin   | BtlChr + BtlChrEntry     | Koma abilities info                                 |
-| ![chr_s_t.bin](../images/formats/chr_s_t.png)     | chr_s_t.bin   | SuppChr + SuppChrEntry   | Koma abilities info support komas                   |
-| ![clearlst.bin](../images/formats/clearlst.png)   | clearlst.bin  | SimpleBin                | Stage goals                                         |
-| ![commwin.bin](../images/formats/commwin.png)     | commwin.bin   | Commwin + CommwinEntry   | Common window messages                              |
-| ![demo.bin](../images/formats/demo.png)           | demo.bin      | Demo + DemoEntry         | World names (demo player menu, database)            |
-| ![infoname.bin](../images/formats/infoname.png)   | infoname.bin  | SimpleBin                | Main menu helper names                              |
-| ![komatxt.bin](../images/formats/komatxt.png)     | komatxt.bin   | Komatxt + KomatxtEntry   | Koma names                                          |
-| ![location.bin](../images/formats/location.png)   | location.bin  | Location + LocationEntry | Player location                                     |
-| ![piece.bin](../images/formats/piece.png)         | piece.bin     | Piece + PieceEntry       | Manga author and info (database menu)               |
-| ![pname.bin](../images/formats/pname.png)         | pname.bin     | Pname                    | Player name titles (player settings)                |
-| ![rulemess.bin](../images/formats/rulemess.png)   | rulemess.bin  | Rulemess + RulemessEntry | Stage rules                                         |
-| ![stage.bin](../images/formats/stage.png)         | stage.bin     | Stage + StageEntry       | Stage names                                         |
-| ![title.bin](../images/formats/title.png)         | title.bin     | SimpleBin                | Manga names                                         |
+| Image                                    | Name          | Format                   | Location                                            |
+| ---------------------------------------- | ------------- | ------------------------ | --------------------------------------------------- |
+| ![ability_t.bin](./images/ability_t.png) | ability_t.bin | Ability + AbilityEntry   | Koma list, helper (koma size 1) ability description |
+| ![bgm.bin](./images/bgm.png)             | bgm.bin       | Bgm + BgmEntry           | Battle stage Background Music (Database menu)       |
+| ![chr_b_t.bin](./images/chr_b_t.png)     | chr_b_t.bin   | BtlChr + BtlChrEntry     | Koma abilities info                                 |
+| ![chr_s_t.bin](./images/chr_s_t.png)     | chr_s_t.bin   | SuppChr + SuppChrEntry   | Koma abilities info support komas                   |
+| clearlst.bin                             | clearlst.bin  | SimpleBin                | Stage goals                                         |
+| ![commwin.bin](./images/commwin.png)     | commwin.bin   | Commwin + CommwinEntry   | Common window messages                              |
+| ![demo.bin](./images/demo.png)           | demo.bin      | Demo + DemoEntry         | World names (demo player menu, database)            |
+| ![infoname.bin](./images/infoname.png)   | infoname.bin  | SimpleBin                | Main menu helper names                              |
+| ![komatxt.bin](./images/komatxt.png)     | komatxt.bin   | Komatxt + KomatxtEntry   | Koma names                                          |
+| ![location.bin](./images/location.png)   | location.bin  | Location + LocationEntry | Player location                                     |
+| ![piece.bin](./images/piece.png)         | piece.bin     | Piece + PieceEntry       | Manga author and info (database menu)               |
+| ![pname.bin](./images/pname.png)         | pname.bin     | Pname                    | Player name titles (player settings)                |
+| ![rulemess.bin](./images/rulemess.png)   | rulemess.bin  | Rulemess + RulemessEntry | Stage rules                                         |
+| stage.bin                                | stage.bin     | Stage + StageEntry       | Stage names                                         |
+| ![title.bin](./images/title.png)         | title.bin     | SimpleBin                | Manga names                                         |
 
 ### Formats
 
@@ -154,8 +154,9 @@ some of them includes also p-files (a p and then the 3 digit numbers).
 
 ## InfoDeck folder
 
-Deck are the explanation of the komas in the Gallery menu (9 visible lines and 1 invisible = 10 lines per page). Each line is 40 character long.
- 
+Deck are the explanation of the komas in the Gallery menu (9 visible lines and 1
+invisible = 10 lines per page). Each line is 40 character long.
+
 Info are the helper dialogs. Just simple strings.
 
 Starting offset + absolute pointers + just strings.
@@ -280,7 +281,8 @@ This format is pretty simple.
 
 So the size of the file is 4 + (164 \* number_of_entries).
 
-Each entry has the text (description), then a lot of 00s and at the end an unknown number of bytes (unknown region).
+Each entry has the text (description), then a lot of 00s and at the end an
+unknown number of bytes (unknown region).
 
 ### JGalaxyComplex
 
@@ -336,22 +338,18 @@ Starting Offset: 0x0001D5B4 (120244) where the text starts.
 Offset of the empty string: 0x1D5B4 (120244).
 
 ### Pointers Entry 1
-| Offset | Type       | Pointer             | Text Length* | Pointer Calc (Offset + Pointer) |
-| ------ | ---------- | ------------------- | ------------ | ------------------------------- |
-| 0x4    | MangaID    |                     | 1            |                                 |
-| 0x8    | Photo      | 120236(0x01 D5 AC)  | 0            | 120244 (0x01 D5 B4)             |
-| 0xC    | Question 1 | 120233 (0x01 D5 A9) | 30           | 120245 (0x01 D5 B5)             |
-| 0x10   | Question 2 | 120260 (0x01 D5 C4) | 14           | 120276 (0x01 D5 D4)             |
-| 0x14   | Question 3 | 120224 (0x01 D5 A0) | 0            | 120244 (0x01 D5 B4)             |
-| 0x18   | Question 4 | 120220 (0x01 D5 9C) | 0            | 120244 (0x01 D5 B4)             |
 
-*No null byte.
+| Offset | Type       | Pointer             | Text Length\* | Pointer Calc (Offset + Pointer) |
+| ------ | ---------- | ------------------- | ------------- | ------------------------------- |
+| 0x4    | MangaID    |                     | 1             |                                 |
+| 0x8    | Photo      | 120236(0x01 D5 AC)  | 0             | 120244 (0x01 D5 B4)             |
+| 0xC    | Question 1 | 120233 (0x01 D5 A9) | 30            | 120245 (0x01 D5 B5)             |
+| 0x10   | Question 2 | 120260 (0x01 D5 C4) | 14            | 120276 (0x01 D5 D4)             |
+| 0x14   | Question 3 | 120224 (0x01 D5 A0) | 0             | 120244 (0x01 D5 B4)             |
+| 0x18   | Question 4 | 120220 (0x01 D5 9C) | 0             | 120244 (0x01 D5 B4)             |
 
-> [!CAUTION]
-> This file has two random `81 40 00`, maybe it means something in the game graphics but I don't know yet.
+\*No null byte.
 
-## Bin files without text
-
-- dwc/utility.bin
-- opening/PassMark.bin
-- pattern.bin
+> [!CAUTION]  
+> This file has two random `81 40 00`, maybe it means something in the game
+> graphics but I don't know yet.

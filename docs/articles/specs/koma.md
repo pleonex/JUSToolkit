@@ -1,6 +1,6 @@
 # Koma sprites
 
-To export all the info from the images, we need to follow some steps detailed [here](./Koma-research.md)
+To export all the info from the images, we need to follow some steps detailed [here](./koma-research.md)
 
 ## DSTX04
 
