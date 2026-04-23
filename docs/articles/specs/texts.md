@@ -1,5 +1,15 @@
 # Text files
 
+In this game the texts are stored in .bin files. Usually we have pointers and
+sentences, but each file is different, that's why we have a format for each type
+of file.
+
+## Absolute pointers
+
+Absolute pointers mean that the text is in the pointer offset plus the position
+of the pointer. If the position of the pointer is 0x04 and the value is 0x100,
+the text will be in 0x104.
+
 ## Utility classes
 
 To help with the process we've developed some classes to read and write easily:
@@ -21,6 +31,15 @@ the first two strings are 2 bytes and 4 bytes long, the pointers will be 02 and
 then 06.
 
 We store the unused pointers in the Po file as comments.
+
+| Name          | Format         |
+| ------------- | -------------- |
+| tutorial0.bin | BattleTutorial |
+| tutorial1.bin | BattleTutorial |
+| tutorial2.bin | BattleTutorial |
+| tutorial3.bin | BattleTutorial |
+| tutorial4.bin | BattleTutorial |
+| tutorial5.bin | BattleTutorial |
 
 ## Bin folder
 
