@@ -36,7 +36,7 @@ namespace JUS.Tool.Containers
         /// Supported Versions of the File.
         /// </summary>
         /// <remarks>I only found 1 and 3.</remarks>
-        public static readonly List<Version> SupportedVersions = new()
+        public static readonly IReadOnlyList<Version> SupportedVersions = new[]
         {
             new Version(2, 1),
             new Version(2, 3),
