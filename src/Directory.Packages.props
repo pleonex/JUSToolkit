@@ -1,24 +1,21 @@
 <Project>
-    <!-- Centralize dependency management -->
-    <ItemGroup>
-        <PackageVersion Include="Yarhl" Version="4.0.1-preview.43" />
-        <PackageVersion Include="Yarhl.Media.Text" Version="4.0.1-preview.43" />
-        <PackageVersion Include="Texim" Version="0.1.0-preview.320" />
-        <PackageVersion Include="Texim.Games" Version="0.1.0-preview.320" />
-        <PackageVersion Include="SceneGate.Ekona" Version="1.1.1-preview.87" />
-
-        <PackageVersion Include="coverlet.collector" Version="6.0.4" />
-        <PackageVersion Include="FluentAssertions" Version="7.2.1" />
-        <PackageVersion Include="nunit" Version="4.4.0" />
-        <PackageVersion Include="NUnit3TestAdapter" Version="6.1.0" />
-        <PackageVersion Include="NUnit.Analyzers" Version="4.11.2" />
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1"/>
-        <PackageVersion Include="YamlDotNet" Version="16.3.0" />
-
-        <PackageVersion Include="System.CommandLine" Version="2.0.3" />
-
-        <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.102" />
-
-        <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.20.0.135146" />
-    </ItemGroup>
+  <!-- Centralize dependency management -->
+  <ItemGroup>
+    <PackageVersion Include="SceneGate.UI.Formats" Version="0.1.1-preview.17" />
+    <PackageVersion Include="Yarhl" Version="4.1.0" />
+    <PackageVersion Include="Yarhl.Media.Text" Version="4.1.0" />
+    <PackageVersion Include="Texim" Version="0.1.0-preview.321" />
+    <PackageVersion Include="Texim.Games" Version="0.1.0-preview.321" />
+    <PackageVersion Include="SceneGate.Ekona" Version="1.1.1-preview.87" />
+    <PackageVersion Include="coverlet.collector" Version="10.0.0" />
+    <PackageVersion Include="FluentAssertions" Version="7.2.1" />
+    <PackageVersion Include="nunit" Version="4.5.1" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="6.2.0" />
+    <PackageVersion Include="NUnit.Analyzers" Version="4.12.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.4.0" />
+    <PackageVersion Include="YamlDotNet" Version="17.0.1" />
+    <PackageVersion Include="System.CommandLine" Version="2.0.6" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.202" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.23.0.137933" />
+  </ItemGroup>
 </Project>

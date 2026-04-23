@@ -27,7 +27,7 @@ namespace JUS.Tool.Texts.Converters
     /// Converts between Deck format and BinaryFormat.
     /// </summary>
     public class Binary2Deck :
-        IConverter<BinaryFormat, Deck>,
+        IConverter<IBinary, Deck>,
         IConverter<Deck, BinaryFormat>
     {
         /// <summary>
@@ -36,7 +36,7 @@ namespace JUS.Tool.Texts.Converters
         /// <param name="source">BinaryFormat to convert.</param>
         /// <returns>Text format.</returns>
         /// <exception cref="ArgumentNullException">Source file does not exist.</exception>
-        public Deck Convert(BinaryFormat source)
+        public Deck Convert(IBinary source)
         {
             if (source == null) {
                 throw new ArgumentNullException(nameof(source));

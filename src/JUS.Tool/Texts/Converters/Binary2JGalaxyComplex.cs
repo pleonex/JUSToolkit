@@ -28,7 +28,7 @@ namespace JUS.Tool.Texts.Converters
     /// Converts between JGalaxyComplex format and BinaryFormat.
     /// </summary>
     public class Binary2JGalaxyComplex :
-        IConverter<BinaryFormat, JGalaxyComplex>,
+        IConverter<IBinary, JGalaxyComplex>,
         IConverter<JGalaxyComplex, BinaryFormat>
     {
         private DataReader reader = null!;
@@ -39,7 +39,7 @@ namespace JUS.Tool.Texts.Converters
         /// <param name="source">BinaryFormat to convert.</param>
         /// <returns>Text format.</returns>
         /// <exception cref="ArgumentNullException">Source file does not exist.</exception>
-        public JGalaxyComplex Convert(BinaryFormat source)
+        public JGalaxyComplex Convert(IBinary source)
         {
             if (source == null) {
                 throw new ArgumentNullException(nameof(source));
