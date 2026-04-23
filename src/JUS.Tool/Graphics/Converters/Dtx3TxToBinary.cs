@@ -113,23 +113,5 @@ namespace JUS.Tool.Graphics.Converters
                 _ => throw new ArgumentOutOfRangeException(nameof(width), $"Invalid size: {width}x{height}"),
             };
         }
-
-        /// <summary>
-        /// Gets the flip byte based on horizontal and vertical flip.
-        /// </summary>
-        /// <param name="hFlip">Indicates if horizontal flip is applied.</param>
-        /// <param name="vFlip">Indicates if vertical flip is applied.</param>
-        /// <returns>The flip byte.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when the flip combination is invalid.</exception>
-        private static byte GetFlip(bool hFlip, bool vFlip)
-        {
-            // TODO: Why is this not used???
-            return (hFlip, vFlip) switch {
-                (false, false) => 0x00,
-                (true, false) => 0x10,
-                (false, true) => 0x20,
-                (true, true) => 0x30,
-            };
-        }
     }
 }
