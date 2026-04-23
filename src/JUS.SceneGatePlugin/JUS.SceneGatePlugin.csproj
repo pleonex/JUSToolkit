@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="../../docs/index.md" Pack="true" PackagePath="$(PackageReadmeFile)"/>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="SceneGate.UI.Formats"/>
   </ItemGroup>
 

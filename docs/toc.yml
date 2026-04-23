@@ -1,8 +1,11 @@
-- name: Home
-  href: index.md
+- name: Tool
+  href: articles/tool/
 
-- name: Format Specifications
-  href: dev/
+- name: Format specs
+  href: articles/specs/
 
-- name: GitHub
+- name: Dev guides
+  href: articles/dev/
+
+- name: Source code
   href: https://github.com/priverop/JUSToolkit

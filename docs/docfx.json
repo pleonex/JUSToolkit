@@ -23,18 +23,13 @@
     "build": {
       "content": [
         {
-          "files": [ "api/**.yml", "api/index.md", "dev/**" ]
+          "files": [
+            "api/**.yml",
+            "api/index.md"
+          ]
         },
-        {
-          "files": [ "toc.yml", "index.md" ]
-        },
-        {
-          "files": [ "guides/**" ]
-        },
-        {
-          "files": ["README.md", "CONTRIBUTING.md"],
-          "src": "../"
-        }
+        { "files": "**/*.{md,yml}", "src": "articles", "dest": "docs" },
+        { "files": [ "toc.yml", "*.md" ] }
       ],
       "resource": [
         {

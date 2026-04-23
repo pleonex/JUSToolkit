@@ -1,8 +1,9 @@
 # DTX Sprites
 
-DTX files contains sprites used in animations and UI layers. 
+DTX files contains sprites used in animations and UI layers.
 
-## Sprite Types 
+## Sprite Types
+
 We have some types:
 
 - Type 01: Unknown format.
@@ -15,11 +16,11 @@ We have some types:
 
 ## Tools and Specifications
 
-Use the [ImHex pattern file](./dtx.hexpat) to automatically parse and visualize DTX files in the [ImHex](https://imhex.werwolv.net/) hex editor. I fully recommend using this to explore the format.
+Use the [ImHex pattern file](./resources/dtx.hexpat) to automatically parse and visualize DTX files in the [ImHex](https://imhex.werwolv.net/) hex editor. I fully recommend using this to explore the format.
 
 In Ubuntu, copy it to `/usr/share/imhex/pattern` for automatic file recognition.
 
-### Tinke Workflow:
+### Tinke Workflow
 
 You can use my [Tinke branch](https://github.com/priverop/tinke/tree/feat/jus_dtx) to automatically watch DTX files. If you don't have it, follow these instructions:
 
@@ -31,7 +32,7 @@ You can use my [Tinke branch](https://github.com/priverop/tinke/tree/feat/jus_dt
 Example: `Commu/commu_pack.aar -> leader00.dtx`
 
 - Palette offset: 0x264
-- Tile offset: 0x304 
+- Tile offset: 0x304
 
 ### DTX 03
 
@@ -68,33 +69,34 @@ Offsets are relative to position 0xA (10). Absolute address = 0xA + offset.
 | short       | Tile index    |
 | signed byte | X Position    |
 | signed byte | Y Position    |
-| byte        | Shape*        |
+| byte        | Shape\*       |
 | byte        | Palette index |
 
-*More info at the bottom of the document.
+\*More info at the bottom of the document.
 
 ### Image Types (DTX03)
 
 DTX03 supports two image modes based on the swizzling:
+
 - **Tiled ("sp")**: Regular sprites compatible with Texim's sprite system. The base DSIG is tiled.
 - **Linear ("tx")**: Textures stored as sprites. The base DSIG is linear.
 
 #### Linear Sprite Workflow
 
-1. Cut segments from the DSIG image using tile index and size (shape*).
+1. Cut segments from the DSIG image using tile index and size (shape\*).
 2. Paste segments into a new empty image to compose the sprite using the coordinates (starting from the center of the image).
 
 To import them back, we use a .yaml file with all the sprite & segment info in case we want to modify them.
 
-*More info at the bottom of the document.
+\*More info at the bottom of the document.
 
 #### TileIndex
 
 The Tile Index indicates the tile of the image (DSIG) where the segment starts. The image is divided into a grid of 8x8 pixel tiles, numbered sequentially from left to right, top to bottom.
 
-Our DSIG images are usually 256 pixels wide, so each row contains 32 tiles (256 / 8 = 32). 
+Our DSIG images are usually 256 pixels wide, so each row contains 32 tiles (256 / 8 = 32).
 
-##### Example: Tile Index 65 
+##### Example: Tile Index 65
 
 - Row: 65 ÷ 32 = 2 (third row, zero-based).
 - Column: 65 % 32 = 1 (second column, zero-based).
@@ -109,7 +111,7 @@ The tile coordinates are (8, 16) to (15, 23).
 
 ### DTX 04 - Komas
 
-See [Koma Specification](Koma-Specification.md) for more details.
+See [the Koma specification](./koma.md) for more details.
 
 | Offset | Type    | Description                                             |
 | ------ | ------- | ------------------------------------------------------- |
@@ -133,6 +135,7 @@ However, this format uses the Sprite info from the KSHape file, we don't know wh
 ## Shape Property
 
 The **Shape** byte encodes both segment size and flip transformations:
+
 - **Lower 4 bits (shape & 0x0F):** Segment size (width and height).
 - **Upper 4 bits (shape >> 4):** Flip transformations.
 

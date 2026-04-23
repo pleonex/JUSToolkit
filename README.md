@@ -32,13 +32,14 @@ Done ✔️ To test / with issues ⚠️ Not done 🛑
 
 ### Scripts
 
-- **beta.sh:** generates a new beta translation rom if you have access to the Translation repo.
+- **beta.sh:** generates a new beta translation rom if you have access to the
+  Translation repo.
 - **copy_text_format:** generates a new text format.
 - The rest are testing scripts for devs.
 
 ## Tinke
 
-You can use [Tinke by PleoNex](https://github.com/pleonex/tinke) to unpack
+You can use [Tinke by pleonex](https://github.com/pleonex/tinke) to unpack
 containers and view .dig files.
 
 ## Build
@@ -78,17 +79,18 @@ Examples:
 
 ### Documents
 
-You can find these documents in our `docs/dev` folder:
+You can find these documents in our [`docs/articles/dev`](docs/articles/)
+folder:
 
 - Alar Specification
 - Text Specification
-- DTX Specification by PleoNex
-- DTX Research by PleoNex
+- DTX Specification by pleonex
+- DTX Research by pleonex
 - [FileFormats by Uknown Hacker](https://web.archive.org/web/20100111220659/http://jumpstars.wikispaces.com/File+Formats#toc10)
 
 ### Videos
 
-PleoNex did some research on Streaming:
+pleonex did some research on Streaming:
 
 - [DIRECTO ROM Hacking: Triple reto de imágenes](https://www.youtube.com/watch?v=r1Rsx6RRe1U)
 - [DIRECTO Domingos de desensamblador: imágenes de Devil Survivor y JUS y ordenar textos de MetalMax 3](https://www.youtube.com/watch?v=R2h-UEcO_-k)
@@ -97,12 +99,14 @@ PleoNex did some research on Streaming:
 ## Stack
 
 - C# / .NET 8.0
-- [Yarhl by PleoNex](https://github.com/SceneGate/Yarhl)
-- [PleOps.Cake by PleoNex](https://github.com/pleonex/PleOps.Cake)
+- [Yarhl by pleonex](https://code.pleonex.dev/sceneGate/yarhl)
+- [PleOps.Cake by pleonex](https://codeberg.org/pleonex/PleOps.Cake)
 
 ## Credits
 
-Special thanks to [PleoNex](https://github.com/pleonex) for his help, for Yarhl
-and PleOps.Cake. Thanks to [TraduSquare](https://tradusquare.es) for the
-inspiration and support. Thanks to the Jump Ultimate Stars! devs for this
-amazing game.
+Special thanks to [pleonex](https://fosstodon.org/@pleonex) for his help, for
+Yarhl, and PleOps.Cake.
+
+Thanks to [TraduSquare](https://tradusquare.es) for the inspiration and support.
+
+Thanks to the Jump Ultimate Stars! devs for this amazing game.
