@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Drawing2D;
 using JUS.Tool.Containers.Converters;
 using JUS.Tool.Graphics;
 using JUS.Tool.Graphics.Converters;
@@ -45,8 +46,48 @@ public class SecretCommands
 
         CopySegment(starImage, spaceImage.Pixels);
 
-        new RgbImage2BinaryPng().Convert(spaceImage)
-            .Stream.WriteTo("space.png");
+        var pngImage = new RgbImage2BinaryPng().Convert(spaceImage);
+        pngImage.Stream.WriteTo(@"space_bg.png");
+
+        pngImage.Stream.Position = 0;
+        var drawingImage = System.Drawing.Image.FromStream(pngImage.Stream);
+        var drawer = System.Drawing.Graphics.FromImage(drawingImage);
+
+        Stream secretData = root.Children["data"].Children["opening"].Children["pattern.bin"]?.Stream!;
+        var secretReader = new DataReader(secretData);
+        uint pointCount = secretReader.ReadUInt32();
+        secretReader.Stream.Position = 0x14;
+
+        Color[] colors = [
+            Color.FromArgb(0x4D, 0x9D, 0xE0),
+            Color.FromArgb(0xE1,0x55, 0x54),
+            Color.FromArgb(0xE1, 0xBC, 0x29),
+            Color.FromArgb(0x3B, 0xB2, 0x73),
+            Color.FromArgb(0x77, 0x68, 0xAE),
+            Color.FromArgb(0x8E, 0x83, 0x58),
+            Color.FromArgb(0x26, 0x46, 0x53),
+        ];
+
+        int colorIdx = 0;
+        Pen pen = new Pen(colors[colorIdx++]);
+        Point lastPoint = new(secretReader.ReadUInt16(), secretReader.ReadUInt16());
+        for (int i = 1; i < pointCount; i++) {
+            Point nextPoint = new(secretReader.ReadUInt16(), secretReader.ReadUInt16());
+            if (nextPoint.X == 0xFFFF) {
+                lastPoint = new(secretReader.ReadUInt16(), secretReader.ReadUInt16());
+                i++;
+                pen = new Pen(colors[colorIdx++]);
+                continue;
+            }
+
+            drawer.DrawLine(pen, lastPoint, nextPoint);
+
+            lastPoint = nextPoint;
+        }
+
+        drawer.Flush(FlushIntention.Sync);
+        drawer.Save();
+        drawingImage.Save(@"space.png");
     }
 
     public static void CopySegment(IRgbImage segmentImage, Span<Rgb> output)

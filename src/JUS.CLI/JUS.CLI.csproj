@@ -9,6 +9,7 @@
   <ItemGroup>
     <!-- <None Include="../../docs/images/logo_128.png" Pack="true" PackagePath="$(PackageIcon)" Visible="false" /> -->
     <None Include="../../docs/index.md" Pack="true" PackagePath="$(PackageReadmeFile)"/>
+    <PackageReference Include="System.Drawing.Common" />
 
     <ProjectReference Include="../JUS.Tool/JUS.Tool.csproj" />
 
