@@ -1,12 +1,10 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.Versioning;
-using JUS.Tool.Containers.Converters;
 using JUS.Tool.Graphics;
 using JUS.Tool.Graphics.Converters;
 using JUS.Tool.Utils;
 using SceneGate.Ekona.Containers.Rom;
-using Texim.Colors;
 using Texim.Games.Nitro.Backgrounds.ScreenMaps;
 using Texim.Images;
 using Texim.Images.Standard;
@@ -17,19 +15,19 @@ using Yarhl.IO;
 namespace JUS.CLI.JUS;
 
 [SupportedOSPlatform("windows")]
-public class SecretCommands
+public class SuperSecretCommands
 {
     public static void DrawSecret(string gamePath, string outputPath)
     {
         using Node root = NodeFactory.FromFile(gamePath, FileOpenMode.Read)
-            .TransformWith(new Binary2NitroRom());
+            .TransformWith(new Binary2NitroRom())
+            .Children["data"]
+            ?.Children["Data"]!;
 
-        Node opening = root.Children["data"]?.Children["opening"]?.Children["opening.aar"]!;
-        opening = opening.TransformWith(new Binary2Alar3())
-            .Children["opening"]!;
+        Node opening = root.Children["opening"]!;
 
-        var spaceAtm = opening.Children["space.atm"]!.TransformWith(new Binary2Almt());
-        var spaceDig = opening.Children["space.dig"]!
+        var spaceAtm = opening.Children["jump_bg.atm"]!.TransformWith(new Binary2Almt());
+        var spaceDig = opening.Children["jump_bg.dig"]!
             .TransformWith(new LzssDecompression())
             .TransformWith(new Binary2Dig());
         Dig space = spaceDig.GetFormatAs<Dig>()!;
@@ -37,24 +35,14 @@ public class SecretCommands
             .ConvertWith(new MapDecompression(new MapDecompressionParams { Map = spaceAtm.GetFormatAs<IScreenMap>()!, OutOfBoundsTileIndex = 0 }))
             .ConvertWith(new IndexedImage2RgbImage(new IndexedImage2RgbImageParams(space) { FirstColorAsTransparent = true }));
 
-        var starAtm = opening.Children["star00.atm"]!.TransformWith(new Binary2Almt());
-        Dig starDig = opening.Children["star00.dig"]!
-            .TransformWith(new LzssDecompression())
-            .TransformWith(new Binary2Dig())
-            .GetFormatAs<Dig>()!;
-        RgbImage starImage = starDig.ConvertWith(new MapDecompression(new MapDecompressionParams { Map = starAtm.GetFormatAs<IScreenMap>()!, OutOfBoundsTileIndex = 0 }))
-            .ConvertWith(new IndexedImage2RgbImage(new IndexedImage2RgbImageParams(starDig) { FirstColorAsTransparent = true }));
-
-        CopySegment(starImage, spaceImage.Pixels);
-
         var pngImage = new RgbImage2BinaryPng().Convert(spaceImage);
-        pngImage.Stream.WriteTo(Path.Combine(outputPath, "space_bg.png"));
+        pngImage.Stream.WriteTo(Path.Combine(outputPath, "jump_bg.png"));
 
         pngImage.Stream.Position = 0;
         var drawingImage = System.Drawing.Image.FromStream(pngImage.Stream);
         var drawer = System.Drawing.Graphics.FromImage(drawingImage);
 
-        Stream secretData = root.Children["data"]?.Children["opening"]?.Children["pattern.bin"]?.Stream!;
+        Stream secretData = root.Children["title"]?.Children["pattern.bin"]?.Stream!;
         var secretReader = new DataReader(secretData);
         uint pointCount = secretReader.ReadUInt32();
         secretReader.Stream.Position = 0x14;
@@ -88,24 +76,6 @@ public class SecretCommands
 
         drawer.Flush(FlushIntention.Sync);
         drawer.Save();
-        drawingImage.Save(Path.Combine(outputPath, "space.png"));
-    }
-
-    private static void CopySegment(IRgbImage segmentImage, Span<Rgb> output)
-    {
-        for (int x = 0; x < segmentImage.Width; x++) {
-            for (int y = 0; y < segmentImage.Height; y++) {
-                int inIdx = (y * segmentImage.Width) + x;
-                Rgb pixel = segmentImage.Pixels[inIdx];
-                if (pixel.Alpha == 0) {
-                    // Do not set transparent pixel, so when copying one segment on top of another
-                    // a transparent color doesn't override the color from a bottom layer.
-                    continue;
-                }
-
-                int outIdx = (y * segmentImage.Width) + x;
-                output[outIdx] = pixel;
-            }
-        }
+        drawingImage.Save(Path.Combine(outputPath, "jump.png"));
     }
 }
